@@ -122,7 +122,7 @@ function toWords(amount) {
 }
 
 // ─── MAIN APP ───────────────────────────────────────────────────────────────
-export default function InvoiceApp() {
+export default function InvoiceApp({ onLock }) {
   const [inv, setInv] = useState(() => {
     try { const s = localStorage.getItem("invoice_app_v4"); return s ? JSON.parse(s) : INITIAL_STATE; }
     catch { return INITIAL_STATE; }
@@ -295,6 +295,11 @@ export default function InvoiceApp() {
           <button onClick={resetAll}
             className="px-3.5 py-1 rounded-md text-sm text-white cursor-pointer"
             style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>↺ Reset</button>
+          {onLock && (
+            <button onClick={onLock}
+              className="px-3.5 py-1 rounded-md text-sm text-white cursor-pointer hover:bg-white/10 transition-colors"
+              style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>🔒 Lock</button>
+          )}
         </div>
       </div>
 

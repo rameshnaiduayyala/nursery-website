@@ -19,20 +19,40 @@ import ShowcaseDetailModal from './components/ShowcaseDetailModal';
 
 const InvoiceApp = lazy(() => import('./billing/InvoiceGenerator'));
 const LogisticsCalculator = lazy(() => import('./logistics/LogisticsCalculator'));
+const BillingPasswordGate = lazy(() => import('./billing/BillingPasswordGate'));
 
 function App() {
+  const [isBillingAuthenticated, setIsBillingAuthenticated] = useState(() => {
+    return sessionStorage.getItem("billing_auth") === "true";
+  });
+
   // Direct subpath routing for billing portal
   const isBilling = window.location.pathname === '/billing' || window.location.pathname.startsWith('/billing');
   const isLogistics = window.location.pathname === '/logistics' || window.location.pathname.startsWith('/logistics');
 
   if (isBilling) {
+    if (!isBillingAuthenticated) {
+      return (
+        <Suspense fallback={
+          <div className="min-h-screen bg-[#08120B] flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-[#C6A969]"></div>
+          </div>
+        }>
+          <BillingPasswordGate onSuccess={() => setIsBillingAuthenticated(true)} />
+        </Suspense>
+      );
+    }
+
     return (
       <Suspense fallback={
         <div className="min-h-screen bg-slate-100 flex items-center justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-slate-700"></div>
         </div>
       }>
-        <InvoiceApp />
+        <InvoiceApp onLock={() => {
+          sessionStorage.removeItem("billing_auth");
+          setIsBillingAuthenticated(false);
+        }} />
       </Suspense>
     );
   }

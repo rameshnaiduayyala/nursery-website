@@ -17,6 +17,7 @@ export const companyDetails = {
   ifsc: "HDFC0001234",
   branch: "Banjara Hills Branch",
   whatsappNumber: "917989419864",
+  billingPassword: "admin123",
 };
 
 // 1. Hero Slideshow Database
