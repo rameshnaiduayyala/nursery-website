@@ -94,6 +94,11 @@ export default function Footer({ onOpenQuote }) {
                 Get a Quote
               </button>
             </li>
+            <li className="pt-1.5 border-t border-white/5">
+              <a href="/billing" className="hover:text-luxury-gold transition-colors text-[11px] font-bold uppercase tracking-wider text-luxury-gold/90">
+                Invoice System
+              </a>
+            </li>
           </ul>
         </div>
 

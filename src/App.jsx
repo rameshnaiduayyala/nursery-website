@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
@@ -17,7 +17,24 @@ import Footer from './components/Footer';
 import BulkQuoteModal from './components/BulkQuoteModal';
 import ShowcaseDetailModal from './components/ShowcaseDetailModal';
 
+const InvoiceApp = lazy(() => import('./billing/InvoiceGenerator'));
+
 function App() {
+  // Direct subpath routing for billing portal
+  const isBilling = window.location.pathname === '/billing' || window.location.pathname.startsWith('/billing');
+
+  if (isBilling) {
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-slate-700"></div>
+        </div>
+      }>
+        <InvoiceApp />
+      </Suspense>
+    );
+  }
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
