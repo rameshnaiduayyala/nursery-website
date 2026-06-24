@@ -202,7 +202,6 @@ export default function InvoiceApp({ onLock }) {
     { id: "details",  icon: "📋", label: "Details"  },
     { id: "client",   icon: "👤", label: "Client"   },
     { id: "items",    icon: "📦", label: "Items"    },
-    { id: "charges",  icon: "➕", label: "Charges"  },
     { id: "settings", icon: "⚙",  label: "Settings" },
   ];
 
@@ -258,59 +257,66 @@ export default function InvoiceApp({ onLock }) {
       )}
 
       {/* ── TOPBAR ── */}
-      <div className="no-print sticky top-0 z-40 flex items-center gap-3.5 px-6 h-14 shadow-md"
+      <div className="no-print sticky top-0 z-40 flex items-center gap-2 px-3 h-14 shadow-md overflow-x-auto no-scrollbar whitespace-nowrap"
         style={{ background: theme.primary }}>
-        <span className="text-white text-lg font-extrabold tracking-wider">⚡{companyDetails.name} Invoice</span>
-        <a href="/" className="text-white/80 hover:text-white hover:bg-white/10 transition-all text-xs font-bold uppercase tracking-wider flex items-center gap-1 border border-white/20 rounded-lg px-3 py-1.5 ml-2">
-          ← Back to Site
+        <span className="text-white text-sm sm:text-base md:text-lg font-extrabold tracking-wider flex-shrink-0 truncate max-w-[100px] sm:max-w-[200px] md:max-w-none">
+          ⚡{companyDetails.name}
+        </span>
+        <a href="/" className="flex-shrink-0 text-white/80 hover:text-white hover:bg-white/10 transition-all text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1 border border-white/20 rounded-lg px-2 py-1 sm:ml-2">
+          ← <span className="hidden sm:inline">Back to Site</span><span className="sm:hidden">Site</span>
         </a>
-        <div className="flex-1" />
+        <div className="flex-1 min-w-[5px]" />
 
         <select value={inv.docType} onChange={(e) => upd({ docType: e.target.value })}
-          className="text-sm font-semibold rounded-md px-3 py-1 cursor-pointer focus:outline-none"
-          style={{ background: "rgba(255,255,255,0.18)", color: "#fff", border: "1px solid rgba(255,255,255,0.35)" }}>
+          className="flex-shrink-0 text-[11px] sm:text-sm font-semibold rounded-md px-1.5 py-1 cursor-pointer focus:outline-none bg-white/20 text-white border border-white/30"
+          style={{ color: "#fff" }}>
           {docTypes.map(t => <option key={t} value={t} className="text-black bg-white">{t}</option>)}
         </select>
 
         <select value={inv.theme} onChange={(e) => upd({ theme: e.target.value })}
-          className="text-sm rounded-md px-3 py-1 cursor-pointer focus:outline-none"
-          style={{ background: "rgba(255,255,255,0.18)", color: "#fff", border: "1px solid rgba(255,255,255,0.35)" }}>
+          className="flex-shrink-0 text-[11px] sm:text-sm font-semibold rounded-md px-1.5 py-1 cursor-pointer focus:outline-none bg-white/20 text-white border border-white/30"
+          style={{ color: "#fff" }}>
           {Object.keys(THEMES).map(t => <option key={t} value={t} className="text-black bg-white">{t.charAt(0).toUpperCase()+t.slice(1)}</option>)}
         </select>
 
-        <div className="flex gap-1.5">
-          {["edit","preview"].map(v => (
-            <button key={v} onClick={() => setView(v)}
-              className="px-3.5 py-1 rounded-md text-sm font-semibold transition-all cursor-pointer"
-              style={{ background: view===v ? "#fff" : "transparent", color: view===v ? theme.primary : "#fff", border: "1px solid rgba(255,255,255,0.4)" }}>
-              {v === "edit" ? "✏ Edit" : "👁 Preview"}
-            </button>
-          ))}
+        <div className="flex gap-1 flex-shrink-0">
           <button onClick={handlePrint}
-            className="px-3.5 py-1 rounded-md text-sm font-semibold text-white cursor-pointer border-0"
-            style={{ background: theme.accent }}>🖨 Print</button>
+            className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm font-semibold text-white cursor-pointer border-0 flex items-center gap-1"
+            style={{ background: theme.accent }}>
+            <span>🖨</span>
+            <span className="hidden sm:inline">Print</span>
+          </button>
           <button onClick={newDoc}
-            className="px-3.5 py-1 rounded-md text-sm text-white cursor-pointer"
-            style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>+ New</button>
+            className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm text-white cursor-pointer"
+            style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>
+            <span className="hidden sm:inline">+ New</span>
+            <span className="sm:hidden">+</span>
+          </button>
           <button onClick={resetAll}
-            className="px-3.5 py-1 rounded-md text-sm text-white cursor-pointer"
-            style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>↺ Reset</button>
+            className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm text-white cursor-pointer"
+            style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>
+            <span className="hidden sm:inline">↺ Reset</span>
+            <span className="sm:hidden">↺</span>
+          </button>
           {onLock && (
             <button onClick={onLock}
-              className="px-3.5 py-1 rounded-md text-sm text-white cursor-pointer hover:bg-white/10 transition-colors"
-              style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>🔒 Lock</button>
+              className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm text-white cursor-pointer hover:bg-white/10 transition-colors"
+              style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>
+              <span className="hidden sm:inline">🔒 Lock</span>
+              <span className="sm:hidden">🔒</span>
+            </button>
           )}
         </div>
       </div>
 
       {/* ── BODY ── */}
-      <div className="no-print flex" style={{ height: "calc(100vh - 56px)" }}>
+      <div className="no-print flex flex-col lg:flex-row" style={{ height: "calc(100vh - 56px)" }}>
 
         {/* SIDEBAR */}
-        <div className="w-72 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden billing-sidebar">
+        <div className={`w-full lg:w-72 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden billing-sidebar ${view === "edit" ? "block" : "hidden lg:flex"}`}>
 
-          {/* Tab bar */}
-          <div className="flex border-b border-slate-200 flex-shrink-0">
+          {/* Tab bar (Desktop only - Mobile has bottom nav tab bar) */}
+          <div className="hidden lg:flex border-b border-slate-200 flex-shrink-0">
             {tabs.map(({ id, icon, label }) => (
               <button key={id} onClick={() => setActiveTab(id)}
                 className="flex-1 flex flex-col items-center py-2.5 gap-0.5 border-b-2 transition-colors cursor-pointer"
@@ -322,7 +328,7 @@ export default function InvoiceApp({ onLock }) {
           </div>
 
           {/* Scrollable tab content */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-5">
+          <div className="flex-1 overflow-y-auto p-4 pb-24 lg:pb-4 space-y-5">
 
             {/* DETAILS */}
             {activeTab === "details" && <>
@@ -412,7 +418,7 @@ export default function InvoiceApp({ onLock }) {
                     <div>
                       <SideLabel>Type</SideLabel>
                       <select value={newColType} onChange={e => setNewColType(e.target.value)}
-                        className="w-full border border-slate-200 rounded px-2 py-1.5 text-sm bg-white text-slate-800 focus:outline-none">
+                        className="w-full border border-slate-200 rounded px-2.5 py-2 text-sm bg-white text-slate-800 focus:outline-none">
                         <option value="text">Text</option>
                         <option value="number">Number</option>
                       </select>
@@ -437,19 +443,35 @@ export default function InvoiceApp({ onLock }) {
               <Sec title="Overall Discount">
                 <div className="flex gap-2">
                   <select value={inv.discount.type} onChange={e => upd({ discount: { ...inv.discount, type: e.target.value } })}
-                    className="w-20 border border-slate-200 rounded px-2 py-1.5 text-sm bg-white text-slate-800 focus:outline-none">
+                    className="w-20 border border-slate-200 rounded px-2.5 py-2 text-sm bg-white text-slate-800 focus:outline-none">
                     <option value="percent">%</option>
                     <option value="fixed">Fixed</option>
                   </select>
                   <input type="number" placeholder="0" value={inv.discount.value}
                     onChange={e => upd({ discount: { ...inv.discount, value: e.target.value } })}
-                    className="flex-1 border border-slate-200 rounded px-2 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
+                    className="flex-1 border border-slate-200 rounded px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
                 </div>
               </Sec>
+
+              {/* Mobile-only item card list (to add/edit plants natively on mobile viewport) */}
+              <div className="block lg:hidden mt-4 pt-4 border-t border-slate-200">
+                <Sec title="Invoice Items / Plants">
+                  <MobileItemsEditor
+                    inv={inv}
+                    theme={theme}
+                    sym={sym}
+                    onUpdRow={updRow}
+                    onDelRow={delRow}
+                    onMoveRow={moveRow}
+                    onAddRow={addRow}
+                    onAddHeadingRow={addHeadingRow}
+                  />
+                </Sec>
+              </div>
             </>}
 
-            {/* CHARGES */}
-            {activeTab === "charges" && (
+            {/* SETTINGS (Includes both settings and extra charges merged) */}
+            {activeTab === "settings" && <>
               <Sec title="Extra Charges">
                 <div className="space-y-3">
                   {inv.extraCharges.map(c => (
@@ -457,10 +479,10 @@ export default function InvoiceApp({ onLock }) {
                       <div className="flex-1 space-y-1">
                         <input value={c.label} onChange={e => updCharge(c.id, { label: e.target.value })}
                           placeholder="Charge name"
-                          className="w-full border border-slate-200 rounded px-2 py-1 text-xs text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
+                          className="w-full border border-slate-200 rounded px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
                         <input type="number" value={c.amount} onChange={e => updCharge(c.id, { amount: e.target.value })}
                           placeholder="Amount"
-                          className="w-full border border-slate-200 rounded px-2 py-1 text-xs text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
+                          className="w-full border border-slate-200 rounded px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
                       </div>
                       <button onClick={() => delCharge(c.id)}
                         className="mt-1 px-2 py-0.5 text-xs rounded border border-red-200 bg-red-50 text-red-600 cursor-pointer hover:bg-red-100">×</button>
@@ -476,27 +498,25 @@ export default function InvoiceApp({ onLock }) {
                   <Toggle label="Apply tax on extra charges" checked={inv.taxOnCharges} onChange={v => upd({ taxOnCharges: v })} theme={theme} />
                 )}
               </Sec>
-            )}
 
-            {/* SETTINGS */}
-            {activeTab === "settings" && <>
               <Sec title="Invoice Options">
                 <Toggle label="Show Signature Block" checked={inv.showSignature}  onChange={v => upd({ showSignature: v })}  theme={theme} />
                 <Toggle label="Show Stamp"           checked={inv.showStamp}      onChange={v => upd({ showStamp: v })}      theme={theme} />
                 <Toggle label="Show Bank Details"    checked={inv.showBankDetails} onChange={v => upd({ showBankDetails: v })} theme={theme} />
               </Sec>
+              
               <Sec title="Terms & Notes">
                 <Field label="Terms Title" value={inv.termsTitle} onChange={v => upd({ termsTitle: v })} />
                 <div>
                   <SideLabel>Terms & Conditions</SideLabel>
                   <textarea value={inv.terms} onChange={e => upd({ terms: e.target.value })} rows={5}
-                    className="w-full border border-slate-200 rounded px-2 py-1.5 text-xs font-sans text-slate-800 resize-y focus:outline-none focus:border-blue-400 bg-white" />
+                    className="w-full border border-slate-200 rounded px-2.5 py-2 text-xs font-sans text-slate-800 resize-y focus:outline-none focus:border-blue-400 bg-white" />
                 </div>
                 <div>
                   <SideLabel>Notes / Remarks</SideLabel>
                   <textarea value={inv.notes} onChange={e => upd({ notes: e.target.value })} rows={3}
                     placeholder="Notes for client..."
-                    className="w-full border border-slate-200 rounded px-2 py-1.5 text-xs font-sans text-slate-800 resize-y focus:outline-none focus:border-blue-400 bg-white" />
+                    className="w-full border border-slate-200 rounded px-2.5 py-2 text-xs font-sans text-slate-800 resize-y focus:outline-none focus:border-blue-400 bg-white" />
                 </div>
               </Sec>
             </>}
@@ -505,7 +525,7 @@ export default function InvoiceApp({ onLock }) {
         </div>
 
         {/* ── MAIN CONTENT ── */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className={`flex-1 overflow-y-auto p-3 sm:p-6 pb-24 lg:pb-6 ${view === "preview" ? "block" : "hidden lg:block"}`}>
           <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
             <InvoiceDocument
               inv={inv} theme={theme} sym={sym}
@@ -515,6 +535,35 @@ export default function InvoiceApp({ onLock }) {
             />
           </div>
         </div>
+      </div>
+
+      {/* BOTTOM TAB BAR (MOBILE ONLY) */}
+      <div className="no-print fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/80 flex justify-around items-center h-16 pb-safe lg:hidden shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        {tabs.map(({ id, icon, label }) => {
+          const isActive = activeTab === id && view === "edit";
+          return (
+            <button
+              key={id}
+              onClick={() => {
+                setView("edit");
+                setActiveTab(id);
+              }}
+              className="flex-1 flex flex-col items-center justify-center py-2 transition-all cursor-pointer border-0 bg-transparent"
+              style={{ color: isActive ? theme.accent : "#94a3b8" }}
+            >
+              <span className={`text-xl mb-0.5 transition-transform duration-200 ${isActive ? "scale-110" : ""}`}>{icon}</span>
+              <span className="font-extrabold uppercase tracking-wide animate-fade-in" style={{ fontSize: "8.5px" }}>{label}</span>
+            </button>
+          );
+        })}
+        <button
+          onClick={() => setView("preview")}
+          className="flex-1 flex flex-col items-center justify-center py-2 transition-all cursor-pointer border-0 bg-transparent"
+          style={{ color: view === "preview" ? theme.accent : "#94a3b8" }}
+        >
+          <span className={`text-xl mb-0.5 transition-transform duration-200 ${view === "preview" ? "scale-110" : ""}`}>👁</span>
+          <span className="font-extrabold uppercase tracking-wide" style={{ fontSize: "8.5px" }}>Preview</span>
+        </button>
       </div>
     </div>
   );
@@ -528,23 +577,23 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
     <div className="font-sans text-slate-800 print-color-exact invoice-document">
 
       {/* HEADER BAND */}
-      <div className="flex justify-between items-start px-8 py-6 text-white" style={{ background: theme.primary }}>
+      <div className="flex flex-col md:flex-row md:justify-between items-start gap-6 px-4 sm:px-8 py-4 sm:py-6 text-white" style={{ background: theme.primary }}>
         <div>
           {inv.company.logo
-            ? <img src={inv.company.logo} alt="logo" className="h-14 max-w-[160px] object-contain mb-2" style={{ filter: "brightness(0) invert(1)" }} />
-            : <div className="text-2xl font-extrabold tracking-wide mb-1">{inv.company.name}</div>
+            ? <img src={inv.company.logo} alt="logo" className="h-12 sm:h-14 max-w-[140px] sm:max-w-[160px] object-contain mb-2" style={{ filter: "brightness(0) invert(1)" }} />
+            : <div className="text-xl sm:text-2xl font-extrabold tracking-wide mb-1">{inv.company.name}</div>
           }
-          {inv.company.logo && <div className="text-base font-bold mb-1">{inv.company.name}</div>}
-          <div className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.8)" }}>
+          {inv.company.logo && <div className="text-sm sm:text-base font-bold mb-1">{inv.company.name}</div>}
+          <div className="text-[11px] sm:text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.8)" }}>
             <div>{inv.company.address}</div>
             <div>{inv.company.city}</div>
             <div>{inv.company.phone} | {inv.company.email}</div>
             {inv.company.gstin && <div>GSTIN: {inv.company.gstin} | PAN: {inv.company.pan}</div>}
           </div>
         </div>
-        <div className="text-right flex-shrink-0 ml-4">
-          <div className="text-3xl font-extrabold tracking-widest mb-3">{inv.docType}</div>
-          <table className="text-xs ml-auto" style={{ color: "rgba(255,255,255,0.9)", borderCollapse: "collapse" }}>
+        <div className="text-left md:text-right flex-shrink-0 w-full md:w-auto">
+          <div className="text-2xl sm:text-3xl font-extrabold tracking-widest mb-2 md:mb-3">{inv.docType}</div>
+          <table className="text-[11px] sm:text-xs md:ml-auto" style={{ color: "rgba(255,255,255,0.9)", borderCollapse: "collapse" }}>
             <tbody>
               <InfoRow label="Number"   value={inv.invoiceNo} />
               <InfoRow label="Date"     value={inv.invoiceDate} />
@@ -557,9 +606,9 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
       </div>
 
       {/* BILL TO + TOTAL PILL */}
-      <div className="flex justify-between items-start px-8 py-4 border-b-2" style={{ background: theme.light, borderColor: theme.border }}>
+      <div className="flex flex-col sm:flex-row sm:justify-between items-start gap-4 px-4 sm:px-8 py-3 sm:py-4 border-b-2" style={{ background: theme.light, borderColor: theme.border }}>
         <div className="flex-1">
-          <div className="text-[10px] font-extrabold uppercase tracking-widest mb-1.5" style={{ color: theme.accent }}>Bill To</div>
+          <div className="text-[10px] font-extrabold uppercase tracking-widest mb-1" style={{ color: theme.accent }}>Bill To</div>
           <div className="text-base font-bold mb-1" style={{ color: theme.primary }}>{inv.client.name || "— Client Name —"}</div>
           <div className="text-xs text-slate-500 leading-relaxed">
             {inv.client.address && <div>{inv.client.address}</div>}
@@ -576,7 +625,7 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
       </div>
 
       {/* ITEMS TABLE */}
-      <div className="px-8 py-5">
+      <div className="px-2 sm:px-8 py-4 sm:py-5">
         <div className="overflow-x-auto rounded-lg border" style={{ borderColor: theme.border }}>
           <table className="w-full text-sm" style={{ borderCollapse: "collapse" }}>
             <thead>
@@ -730,8 +779,8 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
       </div>
 
       {/* BANK + TERMS + SIGNATURE */}
-      <div className="px-8 pb-6 flex gap-6">
-        <div className="flex-[2] space-y-4">
+      <div className="px-4 sm:px-8 pb-6 flex flex-col md:flex-row gap-6">
+        <div className="flex-1 md:flex-[2] space-y-4">
           {inv.showBankDetails && (
             <div className="p-4 rounded-lg border" style={{ background: theme.light, borderColor: theme.border }}>
               <div className="text-[10px] font-extrabold uppercase tracking-widest mb-2" style={{ color: theme.accent }}>Bank Details</div>
@@ -756,7 +805,7 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
         </div>
 
         {inv.showSignature && (
-          <div className="flex-1 flex flex-col items-center justify-end">
+          <div className="flex-1 flex flex-col items-center justify-end min-h-[140px]">
             {inv.showStamp && (
               <div className="w-20 h-20 rounded-full border-4 flex items-center justify-center mb-3 opacity-20"
                 style={{ borderColor: theme.accent }}>
@@ -772,7 +821,7 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
       </div>
 
       {/* FOOTER */}
-      <div className="flex justify-between items-center px-8 py-2.5" style={{ background: theme.primary }}>
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-2 px-4 sm:px-8 py-3 text-center sm:text-left" style={{ background: theme.primary }}>
         <span className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>Thank you for your business!</span>
         <span className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>Developed For {companyDetails.name} • {new Date().getFullYear()}</span>
       </div>
@@ -825,16 +874,195 @@ function Field({ label, type = "text", value, onChange }) {
 
 function Toggle({ label, checked, onChange, theme }) {
   return (
-    <div className="flex items-center gap-2 mt-1">
+    <div className="flex items-center gap-3 mt-1.5 py-1">
       <button
         onClick={() => onChange(!checked)}
-        className="relative flex-shrink-0 w-9 h-5 rounded-full transition-colors duration-200 cursor-pointer border-0 p-0"
+        className="relative flex-shrink-0 w-10 h-6 rounded-full transition-colors duration-200 cursor-pointer border-0 p-0"
         style={{ background: checked ? theme.accent : "#cbd5e1" }}>
         <span
-          className="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 block"
+          className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all duration-200 block"
           style={{ left: checked ? "18px" : "2px" }} />
       </button>
-      <span className="text-xs text-slate-500 select-none">{label}</span>
+      <span className="text-xs font-medium text-slate-600 select-none">{label}</span>
+    </div>
+  );
+}
+
+// ─── MOBILE ONLY CARD EDITOR FOR ITEMS ───────────────────────────────────────
+function MobileItemsEditor({ inv, theme, sym, onUpdRow, onDelRow, onMoveRow, onAddRow, onAddHeadingRow }) {
+  const f = (n) => fmt(n, sym);
+
+  return (
+    <div className="space-y-4">
+      {inv.rows.map((row, idx) => {
+        const isHeading = row.rowType === "heading";
+        const amt = computeAmount(row);
+
+        return (
+          <div
+            key={row.id}
+            className="p-3.5 rounded-xl border transition-all shadow-sm bg-white"
+            style={{ borderColor: isHeading ? theme.border : "#e2e8f0" }}
+          >
+            {/* Header of Item Card */}
+            <div className="flex justify-between items-center mb-2.5">
+              <span
+                className="text-[11px] font-extrabold px-2 py-0.5 rounded-full"
+                style={{
+                  background: isHeading ? theme.light : "#f1f5f9",
+                  color: isHeading ? theme.primary : "#475569",
+                }}
+              >
+                {isHeading ? "SECTION" : `ITEM #${idx + 1}`}
+              </span>
+              <div className="flex gap-1.5">
+                <button
+                  onClick={() => onMoveRow(idx, -1)}
+                  disabled={idx === 0}
+                  className="p-1.5 text-xs border border-slate-200 rounded-md bg-slate-50 text-slate-500 hover:bg-slate-100 disabled:opacity-30 cursor-pointer"
+                >
+                  ↑
+                </button>
+                <button
+                  onClick={() => onMoveRow(idx, 1)}
+                  disabled={idx === inv.rows.length - 1}
+                  className="p-1.5 text-xs border border-slate-200 rounded-md bg-slate-50 text-slate-500 hover:bg-slate-100 disabled:opacity-30 cursor-pointer"
+                >
+                  ↓
+                </button>
+                <button
+                  onClick={() => onDelRow(row.id)}
+                  className="p-1.5 text-xs border border-red-200 rounded-md bg-red-50 text-red-500 hover:bg-red-100 cursor-pointer"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+
+            {/* Inputs inside Item Card */}
+            {isHeading ? (
+              <div>
+                <SideLabel>Section Title</SideLabel>
+                <input
+                  type="text"
+                  value={row.description || ""}
+                  onChange={(e) => onUpdRow(row.id, "description", e.target.value)}
+                  placeholder="e.g. EXOTIC PALMS"
+                  className="w-full border border-slate-200 rounded-md px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white font-bold"
+                />
+              </div>
+            ) : (
+              <div className="space-y-2.5">
+                <div>
+                  <SideLabel>Description / Plant Name</SideLabel>
+                  <input
+                    type="text"
+                    value={row.description || ""}
+                    onChange={(e) => onUpdRow(row.id, "description", e.target.value)}
+                    placeholder="e.g. Areca Palm"
+                    className="w-full border border-slate-200 rounded-md px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-2.5">
+                  {inv.columns.some((c) => c.id === "size") && (
+                    <div className="col-span-2">
+                      <SideLabel>Size / Bag Size</SideLabel>
+                      <input
+                        type="text"
+                        list="invoice-size-options-mobile"
+                        value={row.size || ""}
+                        onChange={(e) => onUpdRow(row.id, "size", e.target.value)}
+                        placeholder="Select or enter size"
+                        className="w-full border border-slate-200 rounded-md px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white"
+                      />
+                      <datalist id="invoice-size-options-mobile">
+                        {SIZE_SUGGESTIONS.map((size) => (
+                          <option key={size} value={size} />
+                        ))}
+                      </datalist>
+                    </div>
+                  )}
+
+                  <div>
+                    <SideLabel>Qty</SideLabel>
+                    <input
+                      type="number"
+                      value={row.qty || ""}
+                      onChange={(e) => onUpdRow(row.id, "qty", e.target.value)}
+                      placeholder="0"
+                      className="w-full border border-slate-200 rounded-md px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white"
+                    />
+                  </div>
+
+                  <div>
+                    <SideLabel>Rate</SideLabel>
+                    <input
+                      type="number"
+                      value={row.rate || ""}
+                      onChange={(e) => onUpdRow(row.id, "rate", e.target.value)}
+                      placeholder="0.00"
+                      className="w-full border border-slate-200 rounded-md px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white"
+                    />
+                  </div>
+
+                  {inv.columns.some((c) => c.id === "discount") && (
+                    <div>
+                      <SideLabel>Disc %</SideLabel>
+                      <input
+                        type="number"
+                        value={row.discount || ""}
+                        onChange={(e) => onUpdRow(row.id, "discount", e.target.value)}
+                        placeholder="0"
+                        className="w-full border border-slate-200 rounded-md px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white"
+                      />
+                    </div>
+                  )}
+
+                  {inv.columns.some((c) => c.id === "tax") && (
+                    <div>
+                      <SideLabel>Tax %</SideLabel>
+                      <input
+                        type="number"
+                        value={row.tax || ""}
+                        onChange={(e) => onUpdRow(row.id, "tax", e.target.value)}
+                        placeholder="0"
+                        className="w-full border border-slate-200 rounded-md px-2.5 py-2 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Card footer: subtotal */}
+                <div className="flex justify-between items-center pt-2 mt-1 border-t border-dashed border-slate-100 text-xs">
+                  <span className="text-slate-400 uppercase tracking-wider font-semibold">Total Amount</span>
+                  <span className="font-bold text-sm" style={{ color: theme.primary }}>
+                    {f(amt)}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {/* Add buttons */}
+      <div className="flex gap-2 pt-2">
+        <button
+          onClick={onAddRow}
+          className="flex-1 py-2 px-3 rounded-lg text-sm font-semibold border border-dashed transition-all cursor-pointer text-center"
+          style={{ background: "#fff", color: theme.text, borderColor: theme.border }}
+        >
+          + Add Plant
+        </button>
+        <button
+          onClick={onAddHeadingRow}
+          className="flex-1 py-2 px-3 rounded-lg text-sm font-semibold border transition-all cursor-pointer text-center"
+          style={{ background: theme.light, color: theme.primary, borderColor: theme.border }}
+        >
+          + Add Section
+        </button>
+      </div>
     </div>
   );
 }
