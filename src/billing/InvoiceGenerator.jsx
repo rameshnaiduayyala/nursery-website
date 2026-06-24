@@ -210,7 +210,7 @@ export default function InvoiceApp() {
 
   return (
     <div className="min-h-screen bg-slate-100 font-sans">
-      {/* Print CSS */}
+      {/* Print CSS & Override styles for input text visibility */}
       <style>{`
         .print-color-exact {
           -webkit-print-color-adjust: exact;
@@ -226,6 +226,23 @@ export default function InvoiceApp() {
           }
         }
         .print-only { display: none; }
+
+        /* Direct overrides to fix input/textarea/select text visibility */
+        .billing-sidebar input:not([type="file"]),
+        .billing-sidebar select,
+        .billing-sidebar textarea,
+        .invoice-document input,
+        .invoice-document select,
+        .invoice-document textarea {
+          color: #1e293b !important;
+        }
+        .billing-sidebar input::placeholder,
+        .billing-sidebar textarea::placeholder,
+        .invoice-document input::placeholder,
+        .invoice-document textarea::placeholder {
+          color: #94a3b8 !important;
+          opacity: 1;
+        }
       `}</style>
 
       {/* Print-only invoice */}
@@ -285,7 +302,7 @@ export default function InvoiceApp() {
       <div className="no-print flex" style={{ height: "calc(100vh - 56px)" }}>
 
         {/* SIDEBAR */}
-        <div className="w-72 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden">
+        <div className="w-72 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col overflow-hidden billing-sidebar">
 
           {/* Tab bar */}
           <div className="flex border-b border-slate-200 flex-shrink-0">
@@ -312,7 +329,7 @@ export default function InvoiceApp() {
                 <div>
                   <SideLabel>Currency</SideLabel>
                   <select value={inv.currency.code} onChange={e => upd({ currency: CURRENCY_OPTIONS.find(c => c.code===e.target.value) })}
-                    className="w-full border border-slate-200 rounded-md px-2 py-1.5 text-sm bg-white focus:outline-none focus:border-blue-400">
+                    className="w-full border border-slate-200 rounded-md px-2 py-1.5 text-sm bg-white text-slate-800 focus:outline-none focus:border-blue-400">
                     {CURRENCY_OPTIONS.map(c => <option key={c.code} value={c.code}>{c.symbol} {c.label}</option>)}
                   </select>
                 </div>
@@ -375,7 +392,7 @@ export default function InvoiceApp() {
                   {inv.columns.map(col => (
                     <div key={col.id} className="flex items-center gap-1.5">
                       <input value={col.label} onChange={e => renameColumn(col.id, e.target.value)}
-                        className="flex-1 border border-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:border-blue-400 bg-white" />
+                        className="flex-1 border border-slate-200 rounded px-2 py-1 text-xs text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
                       {col.deletable && (
                         <button onClick={() => delColumn(col.id)}
                           className="px-2 py-0.5 text-xs rounded border border-red-200 bg-red-50 text-red-600 cursor-pointer hover:bg-red-100">×</button>
@@ -390,7 +407,7 @@ export default function InvoiceApp() {
                     <div>
                       <SideLabel>Type</SideLabel>
                       <select value={newColType} onChange={e => setNewColType(e.target.value)}
-                        className="w-full border border-slate-200 rounded px-2 py-1.5 text-sm bg-white focus:outline-none">
+                        className="w-full border border-slate-200 rounded px-2 py-1.5 text-sm bg-white text-slate-800 focus:outline-none">
                         <option value="text">Text</option>
                         <option value="number">Number</option>
                       </select>
@@ -415,13 +432,13 @@ export default function InvoiceApp() {
               <Sec title="Overall Discount">
                 <div className="flex gap-2">
                   <select value={inv.discount.type} onChange={e => upd({ discount: { ...inv.discount, type: e.target.value } })}
-                    className="w-20 border border-slate-200 rounded px-2 py-1.5 text-sm bg-white focus:outline-none">
+                    className="w-20 border border-slate-200 rounded px-2 py-1.5 text-sm bg-white text-slate-800 focus:outline-none">
                     <option value="percent">%</option>
                     <option value="fixed">Fixed</option>
                   </select>
                   <input type="number" placeholder="0" value={inv.discount.value}
                     onChange={e => upd({ discount: { ...inv.discount, value: e.target.value } })}
-                    className="flex-1 border border-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-blue-400 bg-white" />
+                    className="flex-1 border border-slate-200 rounded px-2 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
                 </div>
               </Sec>
             </>}
@@ -435,10 +452,10 @@ export default function InvoiceApp() {
                       <div className="flex-1 space-y-1">
                         <input value={c.label} onChange={e => updCharge(c.id, { label: e.target.value })}
                           placeholder="Charge name"
-                          className="w-full border border-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:border-blue-400 bg-white" />
+                          className="w-full border border-slate-200 rounded px-2 py-1 text-xs text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
                         <input type="number" value={c.amount} onChange={e => updCharge(c.id, { amount: e.target.value })}
                           placeholder="Amount"
-                          className="w-full border border-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:border-blue-400 bg-white" />
+                          className="w-full border border-slate-200 rounded px-2 py-1 text-xs text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
                       </div>
                       <button onClick={() => delCharge(c.id)}
                         className="mt-1 px-2 py-0.5 text-xs rounded border border-red-200 bg-red-50 text-red-600 cursor-pointer hover:bg-red-100">×</button>
@@ -468,13 +485,13 @@ export default function InvoiceApp() {
                 <div>
                   <SideLabel>Terms & Conditions</SideLabel>
                   <textarea value={inv.terms} onChange={e => upd({ terms: e.target.value })} rows={5}
-                    className="w-full border border-slate-200 rounded px-2 py-1.5 text-xs font-sans resize-y focus:outline-none focus:border-blue-400 bg-white" />
+                    className="w-full border border-slate-200 rounded px-2 py-1.5 text-xs font-sans text-slate-800 resize-y focus:outline-none focus:border-blue-400 bg-white" />
                 </div>
                 <div>
                   <SideLabel>Notes / Remarks</SideLabel>
                   <textarea value={inv.notes} onChange={e => upd({ notes: e.target.value })} rows={3}
                     placeholder="Notes for client..."
-                    className="w-full border border-slate-200 rounded px-2 py-1.5 text-xs font-sans resize-y focus:outline-none focus:border-blue-400 bg-white" />
+                    className="w-full border border-slate-200 rounded px-2 py-1.5 text-xs font-sans text-slate-800 resize-y focus:outline-none focus:border-blue-400 bg-white" />
                 </div>
               </Sec>
             </>}
@@ -503,7 +520,7 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
   const f = (n) => fmt(n, sym);
 
   return (
-    <div className="font-sans text-slate-800 print-color-exact">
+    <div className="font-sans text-slate-800 print-color-exact invoice-document">
 
       {/* HEADER BAND */}
       <div className="flex justify-between items-start px-8 py-6 text-white" style={{ background: theme.primary }}>
@@ -796,7 +813,7 @@ function Field({ label, type = "text", value, onChange }) {
     <div>
       <SideLabel>{label}</SideLabel>
       <input type={type} value={value} onChange={e => onChange(e.target.value)}
-        className="w-full border border-slate-200 rounded-md px-2 py-1.5 text-sm focus:outline-none focus:border-blue-400 bg-white" />
+        className="w-full border border-slate-200 rounded-md px-2 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
     </div>
   );
 }

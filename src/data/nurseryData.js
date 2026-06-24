@@ -3,7 +3,7 @@ import nurseryAerial from '../assets/nursery_aerial.png';
 
 // 0. Centralized Nursery Branding & Contact Info (For website and billing portal fallback)
 export const companyDetails = {
-  name: "Gangadhara Nursery f",
+  name: "Gangadhara Nursery",
   subtitle: "Nursery & Exports",
   address: "Nh-5, Venkayammapeta",
   city: "Rajahmundry, Andhra Pradesh 533126",

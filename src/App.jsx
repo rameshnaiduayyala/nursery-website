@@ -119,10 +119,10 @@ function App() {
         {/* 2. Editorial Story Section (About) */}
         <About />
 
-        {/* 3. Before/After Landscape drag slider & Portfolios (ProjectShowcase) */}
-        <ProjectShowcase 
-          onSelectProject={handleSelectProject} 
-          onViewDetails={(project) => handleOpenDetail(project, 'project')} 
+        {/* 3. Botanical Plant Directory Catalog */}
+        <PlantCatalog
+          onSelectPlant={handleSelectPlant}
+          onViewDetails={(plant) => handleOpenDetail(plant, 'plant')}
         />
 
         {/* 4. Showcase Panels Services */}
@@ -131,17 +131,17 @@ function App() {
         {/* 5. Categorized Specimen Grids */}
         <FeaturedCategories />
 
-        {/* 6. Botanical Plant Directory Catalog */}
-        <PlantCatalog 
-          onSelectPlant={handleSelectPlant} 
-          onViewDetails={(plant) => handleOpenDetail(plant, 'plant')} 
+        {/* 6. Before/After Landscape drag slider & Portfolios (ProjectShowcase) */}
+        <ProjectShowcase
+          onSelectProject={handleSelectProject}
+          onViewDetails={(project) => handleOpenDetail(project, 'project')}
         />
 
-        {/* 7. Vector cargo route interactive map */}
-        <ExportSupply />
-
-        {/* 8. Cinematic Operations parallax (Nursery Experience) */}
+        {/* 7. Cinematic Operations parallax (Nursery Experience) */}
         <NurseryExperience />
+
+        {/* 8. Vector cargo route interactive map */}
+        <ExportSupply />
 
         {/* 9. Interactive Standards timeline (Why Choose Us) */}
         <WhyChooseUs />
@@ -157,14 +157,14 @@ function App() {
       <Footer onOpenQuote={handleOpenQuote} />
 
       {/* Quote Inquiry Wizard Modal */}
-      <BulkQuoteModal 
-        isOpen={modalOpen} 
+      <BulkQuoteModal
+        isOpen={modalOpen}
         onClose={() => {
           setModalOpen(false);
           setSelectedPlant(null);
           setSelectedCategory(null);
           setSelectedProject(null);
-        }} 
+        }}
         preselectedPlant={selectedPlant}
         preselectedCategory={selectedCategory}
         preselectedProject={selectedProject}
