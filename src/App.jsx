@@ -20,6 +20,7 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   // Initialize Lenis Smooth Scroll (Awwwards Style)
   useEffect(() => {
@@ -53,6 +54,11 @@ function App() {
     setModalOpen(true);
   };
 
+  const handleSelectProject = (projectName) => {
+    setSelectedProject(projectName);
+    setModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-forest-black text-warm-ivory antialiased selection:bg-luxury-gold selection:text-forest-black">
       {/* Custom trailing interactive cursor */}
@@ -82,7 +88,7 @@ function App() {
         <PlantCatalog onSelectPlant={handleSelectPlant} />
 
         {/* Before/After Landscape drag slider */}
-        <ProjectShowcase />
+        <ProjectShowcase onSelectProject={handleSelectProject} />
 
         {/* Cinematic Operations parallax */}
         <NurseryExperience />
@@ -107,9 +113,11 @@ function App() {
           setModalOpen(false);
           setSelectedPlant(null);
           setSelectedCategory(null);
+          setSelectedProject(null);
         }} 
         preselectedPlant={selectedPlant}
         preselectedCategory={selectedCategory}
+        preselectedProject={selectedProject}
       />
     </div>
   );

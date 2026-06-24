@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight, ChevronLeft, Check, Send, Sparkles, MessageSquare } from 'lucide-react';
 
-export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, preselectedCategory }) {
+export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, preselectedCategory, preselectedProject }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     role: '',
@@ -18,13 +18,28 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
 
   useEffect(() => {
     if (isOpen) {
-      setFormData(prev => ({
-        ...prev,
-        category: preselectedCategory || prev.category || '',
-        message: preselectedPlant ? `Bulk order inquiry for: ${preselectedPlant} (${preselectedCategory || ''})` : prev.message || '',
-      }));
+      setFormData(prev => {
+        let msg = prev.message || '';
+        let cat = preselectedCategory || prev.category || '';
+        let r = prev.role || '';
+        
+        if (preselectedProject) {
+          msg = `Landscaping supply inquiry for project: ${preselectedProject}`;
+          cat = 'General Mixed Landscape';
+          r = 'landscaper';
+        } else if (preselectedPlant) {
+          msg = `Bulk order inquiry for: ${preselectedPlant} (${preselectedCategory || ''})`;
+        }
+        
+        return {
+          ...prev,
+          category: cat,
+          role: r,
+          message: msg,
+        };
+      });
     }
-  }, [isOpen, preselectedPlant, preselectedCategory]);
+  }, [isOpen, preselectedPlant, preselectedCategory, preselectedProject]);
 
   const roles = [
     { label: 'Farmer / Agro Planter', value: 'farmer' },
