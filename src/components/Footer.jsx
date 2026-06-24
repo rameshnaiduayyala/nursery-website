@@ -1,5 +1,6 @@
 import React from 'react';
 import { Leaf, Phone, Mail, MapPin, Send, MessageSquare } from 'lucide-react';
+import { companyDetails } from '../data/nurseryData';
 
 export default function Footer({ onOpenQuote }) {
   const currentYear = new Date().getFullYear();
@@ -24,16 +25,16 @@ export default function Footer({ onOpenQuote }) {
             </div>
             <div className="flex flex-col">
               <span className="font-display font-bold text-lg tracking-tight text-warm-ivory leading-none">
-                GANGADHARA
+                {companyDetails.name.toUpperCase()}
               </span>
               <span className="font-sans text-[9px] tracking-[0.25em] text-luxury-gold font-semibold uppercase leading-none mt-1.5">
-                Nursery & Exports
+                {companyDetails.subtitle}
               </span>
             </div>
           </a>
 
           <p className="text-xs sm:text-sm text-stone-gray/75 leading-relaxed font-sans">
-            Gangadhara Nursery is a premier 50-acre botanical hub specializing in pan-India transit and global export of premium agricultural, avenue, palm, and landscaping plant varieties.
+            {companyDetails.name} is a premier botanical hub specializing in pan-India transit and global export of premium agricultural, avenue, palm, and landscaping plant varieties.
           </p>
 
           {/* Social icons */}
@@ -137,15 +138,15 @@ export default function Footer({ onOpenQuote }) {
           <div className="space-y-2.5 text-xs sm:text-sm font-sans text-stone-gray/70 pt-2">
             <div className="flex items-center space-x-2.5">
               <MapPin className="w-4 h-4 text-luxury-gold shrink-0" />
-              <span>Kadiyam Nursery Zone, Andhra Pradesh, India</span>
+              <span>{companyDetails.address}, {companyDetails.city}</span>
             </div>
             <div className="flex items-center space-x-2.5">
               <Phone className="w-4 h-4 text-luxury-gold shrink-0" />
-              <span>+91 98765 43210</span>
+              <span>{companyDetails.phone}</span>
             </div>
             <div className="flex items-center space-x-2.5">
               <Mail className="w-4 h-4 text-luxury-gold shrink-0" />
-              <span>export@gangadharanursery.com</span>
+              <span>{companyDetails.email}</span>
             </div>
           </div>
         </div>
@@ -153,11 +154,11 @@ export default function Footer({ onOpenQuote }) {
       </div>
 
       {/* Bottom Legal bar */}
-      <div className="border-t border-white/5 py-8 bg-[#050B07]">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between text-xs md:text-sm gap-4 text-stone-gray/50 font-sans">
+      <div className="border-t border-white/5 py-8 bg-[#040a06] relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-sans text-stone-gray/50">
           
           <div className="flex flex-wrap items-center justify-center gap-6">
-            <span>© {currentYear} Gangadhara Nursery. All rights reserved.</span>
+            <p>&copy; {currentYear} {companyDetails.name}. All rights reserved.</p>
             <a href="#" className="hover:text-warm-ivory">Privacy Policy</a>
             <a href="#" className="hover:text-warm-ivory">Terms of Cargo</a>
           </div>

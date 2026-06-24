@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight, ChevronLeft, Check, Send, Sparkles, MessageSquare } from 'lucide-react';
+import { companyDetails } from '../data/nurseryData';
 
 export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, preselectedCategory, preselectedProject }) {
   const [step, setStep] = useState(1);
@@ -404,7 +405,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
 
                   <div className="pt-6 border-t border-luxury-gold/15 w-full max-w-sm flex flex-col gap-3">
                     <a
-                      href={`https://wa.me/919876543210?text=Hi%20Gangadhara%20Nursery,%20I%2520have%20submitted%20a%20pricing%20request%20for%20${formData.quantity}%20plants%20under%20the%2520${formData.category}%20category.%20My%20name%20is%20${formData.name}.`}
+                      href={`https://wa.me/${companyDetails.whatsappNumber}?text=Hi%20${encodeURIComponent(companyDetails.name)},%20I%2520have%20submitted%20a%20pricing%20request%20for%20${formData.quantity}%20plants%20under%20the%2520${formData.category}%20category.%20My%20name%20is%20${formData.name}.`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full py-4 text-center rounded-xl bg-[#25D366] text-white font-bold text-xs uppercase tracking-wider shadow-md hover:bg-[#20ba56] transition-colors flex items-center justify-center gap-2 cursor-pointer"

@@ -1,8 +1,23 @@
-// Gangadhara Nursery & Exports - Centralized Dynamic Content Config
-// Update images and description text here daily to reflect on the website instantly.
-
 import landscapeAfter from '../assets/landscape_after.png';
 import nurseryAerial from '../assets/nursery_aerial.png';
+
+// 0. Centralized Nursery Branding & Contact Info (For website and billing portal fallback)
+export const companyDetails = {
+  name: "Gangadhara Nursery f",
+  subtitle: "Nursery & Exports",
+  address: "Nh-5, Venkayammapeta",
+  city: "Rajahmundry, Andhra Pradesh 533126",
+  phone: "+91 79894 19864",
+  phoneAlt: "+91 98765 43210",
+  email: "techrammy@gmail.com",
+  gstin: "36AABCU9603R1ZP",
+  pan: "AABCU9603R",
+  bankName: "HDFC Bank Ltd.",
+  accountNo: "50200012345678",
+  ifsc: "HDFC0001234",
+  branch: "Banjara Hills Branch",
+  whatsappNumber: "917989419864",
+};
 
 // 1. Hero Slideshow Database
 export const heroSlides = [

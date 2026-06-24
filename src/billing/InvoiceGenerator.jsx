@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { companyDetails } from "../data/nurseryData";
 
 const CURRENCY_OPTIONS = [
   { code: "INR", symbol: "₹", label: "Indian Rupee" },
@@ -61,18 +62,18 @@ const INITIAL_STATE = {
   poNumber: "",
   currency: CURRENCY_OPTIONS[0],
   company: {
-    name: "Gangadhara Nursery",
-    address: "Nh-5,Venkayammapeta",
-    city: "Rajahmundry, Andhra Pradesh 533126",
-    phone: "+91 79894 19864",
-    email: "techrammy@gmail.com",
-    gstin: "36AABCU9603R1ZP",
-    pan: "AABCU9603R",
+    name: companyDetails.name,
+    address: companyDetails.address,
+    city: companyDetails.city,
+    phone: companyDetails.phone,
+    email: companyDetails.email,
+    gstin: companyDetails.gstin,
+    pan: companyDetails.pan,
     logo: null,
-    bankName: "HDFC Bank Ltd.",
-    accountNo: "50200012345678",
-    ifsc: "HDFC0001234",
-    branch: "Banjara Hills Branch",
+    bankName: companyDetails.bankName,
+    accountNo: companyDetails.accountNo,
+    ifsc: companyDetails.ifsc,
+    branch: companyDetails.branch,
   },
   client: { name: "", address: "", city: "", gstin: "", email: "", phone: "" },
   columns: DEFAULT_COLUMNS,
@@ -242,7 +243,7 @@ export default function InvoiceApp() {
       {/* ── TOPBAR ── */}
       <div className="no-print sticky top-0 z-40 flex items-center gap-3.5 px-6 h-14 shadow-md"
         style={{ background: theme.primary }}>
-        <span className="text-white text-lg font-extrabold tracking-wider">⚡Gangadhara Nursery Invoice</span>
+        <span className="text-white text-lg font-extrabold tracking-wider">⚡{companyDetails.name} Invoice</span>
         <a href="/" className="text-white/80 hover:text-white hover:bg-white/10 transition-all text-xs font-bold uppercase tracking-wider flex items-center gap-1 border border-white/20 rounded-lg px-3 py-1.5 ml-2">
           ← Back to Site
         </a>
@@ -751,7 +752,7 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
       {/* FOOTER */}
       <div className="flex justify-between items-center px-8 py-2.5" style={{ background: theme.primary }}>
         <span className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>Thank you for your business!</span>
-        <span className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>Developed By Ramesh Ayyala • {new Date().getFullYear()}</span>
+        <span className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>Developed For {companyDetails.name} • {new Date().getFullYear()}</span>
       </div>
     </div>
   );

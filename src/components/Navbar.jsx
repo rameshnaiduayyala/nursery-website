@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Leaf, ChevronRight } from 'lucide-react';
+import { companyDetails } from '../data/nurseryData';
 
 export default function Navbar({ onOpenQuote }) {
   const [scrolled, setScrolled] = useState(false);
@@ -42,10 +43,10 @@ export default function Navbar({ onOpenQuote }) {
           </div>
           <div className="flex flex-col text-left">
             <span className="font-display font-black text-lg md:text-xl tracking-tight text-warm-ivory group-hover:text-luxury-gold transition-colors duration-300 leading-none">
-              GANGADHARA
+              {companyDetails.name.toUpperCase()}
             </span>
             <span className="font-sans text-[9px] tracking-[0.25em] text-luxury-gold font-semibold uppercase leading-none mt-1.5">
-              Nursery & Exports
+              {companyDetails.subtitle}
             </span>
           </div>
         </a>
