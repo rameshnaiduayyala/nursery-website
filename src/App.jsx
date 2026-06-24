@@ -15,12 +15,18 @@ import Testimonials from './components/Testimonials';
 import ContactCTA from './components/ContactCTA';
 import Footer from './components/Footer';
 import BulkQuoteModal from './components/BulkQuoteModal';
+import ShowcaseDetailModal from './components/ShowcaseDetailModal';
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
+
+  // Showcase Detail Viewer state
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [activeDetailItem, setActiveDetailItem] = useState(null);
+  const [activeDetailType, setActiveDetailType] = useState(null); // 'plant' or 'project'
 
   // Initialize Lenis Smooth Scroll (Awwwards Style)
   useEffect(() => {
@@ -59,6 +65,27 @@ function App() {
     setModalOpen(true);
   };
 
+  const handleOpenDetail = (item, type) => {
+    setActiveDetailItem(item);
+    setActiveDetailType(type);
+    setDetailModalOpen(true);
+  };
+
+  const handleCloseDetail = () => {
+    setDetailModalOpen(false);
+    setActiveDetailItem(null);
+    setActiveDetailType(null);
+  };
+
+  const handleInquireFromDetail = (item, type) => {
+    setDetailModalOpen(false);
+    if (type === 'plant') {
+      handleSelectPlant(item.name, item.category);
+    } else {
+      handleSelectProject(item.title);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-forest-black text-warm-ivory antialiased selection:bg-luxury-gold selection:text-forest-black">
       {/* Custom trailing interactive cursor */}
@@ -69,37 +96,43 @@ function App() {
 
       {/* Luxury Sections */}
       <main>
-        {/* Carousel Hero with Stagger Reveal headlines */}
+        {/* 1. Carousel Hero with Stagger Reveal headlines */}
         <Hero onOpenQuote={handleOpenQuote} />
 
-        {/* Showcase Panels Services */}
-        <Services />
-
-        {/* Editorial Story Section */}
+        {/* 2. Editorial Story Section (About) */}
         <About />
 
-        {/* Interactive Standards timeline */}
-        <WhyChooseUs />
+        {/* 3. Before/After Landscape drag slider & Portfolios (ProjectShowcase) */}
+        <ProjectShowcase 
+          onSelectProject={handleSelectProject} 
+          onViewDetails={(project) => handleOpenDetail(project, 'project')} 
+        />
 
-        {/* Categorized Specimen Grids */}
+        {/* 4. Showcase Panels Services */}
+        <Services />
+
+        {/* 5. Categorized Specimen Grids */}
         <FeaturedCategories />
 
-        {/* Botanical Plant Directory Catalog */}
-        <PlantCatalog onSelectPlant={handleSelectPlant} />
+        {/* 6. Botanical Plant Directory Catalog */}
+        <PlantCatalog 
+          onSelectPlant={handleSelectPlant} 
+          onViewDetails={(plant) => handleOpenDetail(plant, 'plant')} 
+        />
 
-        {/* Before/After Landscape drag slider */}
-        <ProjectShowcase onSelectProject={handleSelectProject} />
-
-        {/* Cinematic Operations parallax */}
-        <NurseryExperience />
-
-        {/* Vector cargo route interactive map */}
+        {/* 7. Vector cargo route interactive map */}
         <ExportSupply />
 
-        {/* Endorsements review list */}
+        {/* 8. Cinematic Operations parallax (Nursery Experience) */}
+        <NurseryExperience />
+
+        {/* 9. Interactive Standards timeline (Why Choose Us) */}
+        <WhyChooseUs />
+
+        {/* 10. Endorsements review list */}
         <Testimonials />
 
-        {/* Staggered text CTA banner */}
+        {/* 11. Staggered text CTA banner */}
         <ContactCTA onOpenQuote={handleOpenQuote} onOpenVisit={handleOpenQuote} />
       </main>
 
@@ -118,6 +151,15 @@ function App() {
         preselectedPlant={selectedPlant}
         preselectedCategory={selectedCategory}
         preselectedProject={selectedProject}
+      />
+
+      {/* Detailed Presentation Lightbox Modal */}
+      <ShowcaseDetailModal
+        isOpen={detailModalOpen}
+        onClose={handleCloseDetail}
+        item={activeDetailItem}
+        type={activeDetailType}
+        onInquire={handleInquireFromDetail}
       />
     </div>
   );

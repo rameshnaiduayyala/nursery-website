@@ -5,7 +5,7 @@ import { projectMilestones } from '../data/nurseryData';
 import landscapeBefore from '../assets/landscape_before.png';
 import landscapeAfter from '../assets/landscape_after.png';
 
-export default function ProjectShowcase({ onSelectProject = () => {} }) {
+export default function ProjectShowcase({ onSelectProject = () => {}, onViewDetails = () => {} }) {
   const [sliderPos, setSliderPos] = useState(50);
   const [activeFilter, setActiveFilter] = useState('All');
   const containerRef = useRef(null);
@@ -155,7 +155,7 @@ export default function ProjectShowcase({ onSelectProject = () => {} }) {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.5 }}
-                  onClick={() => onSelectProject(project.title)}
+                  onClick={() => onViewDetails(project)}
                   className="relative group rounded-3xl overflow-hidden shadow-xl border border-white/5 cursor-pointer h-[420px] w-full"
                 >
                   {/* Image */}

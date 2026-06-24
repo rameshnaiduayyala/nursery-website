@@ -104,6 +104,7 @@ export const projectMilestones = [
     year: '2024',
     scope: 'Tropical Shrubs & Mature Exotic Palms',
     plantsCount: '8,500+ Specimens Supplied',
+    description: 'A luxurious coastal resort project requiring immediate, mature tropical canopy integration. We cultivated and transported mature specimen palms and salt-tolerant coastal shrubs, creating an instant premium botanical layout for luxury visitors.',
     size: 'col-span-1 lg:col-span-2 h-[380px]',
   },
   {
@@ -114,6 +115,7 @@ export const projectMilestones = [
     year: '2025',
     scope: 'Tissue-Culture Fruit Trees & Boundary Windbreaks',
     plantsCount: '15,000+ Fruits & Saplings',
+    description: 'A commercial agricultural orchard project combined with a luxury private farmhouse. Handled soil enrichment analytics and supplied high-yield commercial mango, guava, and boundary windbreak avenues to ensure sustainable fruit production.',
     size: 'col-span-1 h-[380px]',
   },
   {
@@ -124,6 +126,7 @@ export const projectMilestones = [
     year: '2023',
     scope: 'Avenue Shade Trees & Central Hedges',
     plantsCount: '25,000+ Hardy Hedges & Boulevard Palms',
+    description: 'A massive highway greening campaign aiming for carbon offsets and erosion control. Supplied drought-resistant central median hedges and tall uniformity avenue trees, with automated watering integrations.',
     size: 'col-span-1 h-[380px]',
   },
   {
@@ -134,6 +137,7 @@ export const projectMilestones = [
     year: '2024',
     scope: 'Specimen Coconut Palms & Bermuda Turf Lawns',
     plantsCount: '6,000+ Premium Palms & Hedges',
+    description: 'A high-end residential golf development project. Handled the supply of specimen architectural palms and premium salt-mist resistant Bermuda turf grass to outline fairways and water bodies.',
     size: 'col-span-1 h-[380px]',
   },
   {
@@ -144,6 +148,7 @@ export const projectMilestones = [
     year: '2025',
     scope: 'Indoor Lobbies & Exterior Ornamental Bordering',
     plantsCount: '12,000+ Indoor/Outdoor Ornamental Plants',
+    description: 'A modern multi-phase corporate park layout. Custom styled vertical green walls, potted low-light species for glass lift lobbies, and structured outer evergreen hedges for sound isolation.',
     size: 'col-span-1 lg:col-span-2 h-[380px]',
   },
   {
@@ -154,6 +159,7 @@ export const projectMilestones = [
     year: '2025',
     scope: 'Soil-Binding Groundcovers & Avenue Shade Trees',
     plantsCount: '40,000+ Heavy-Root Saplings',
+    description: 'A public green corridor project. Set up deep-root soil-binding creepers on highway slopes to mitigate landslides and planted heavy avenue trees to lower vehicular sound propagation.',
     size: 'col-span-1 h-[380px]',
   },
 ];
@@ -237,6 +243,7 @@ export const plantsCollection = [
     height: '3 - 5 Feet',
     container: '10 Liter Bag',
     availability: 'In Stock',
+    description: 'The king of mangoes. Our tissue-culture grafted Alphonso plants are highly disease-resistant, robust, and optimized for warm commercial agro orchards, producing premium grade sweet fiberless fruits.',
     image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=400&auto=format&fit=crop',
   },
   {
@@ -247,6 +254,7 @@ export const plantsCollection = [
     height: '8 - 12 Feet',
     container: 'Root-Balled Crate',
     availability: 'Bulk Only',
+    description: 'A striking ornamental avenue shade tree famous for its massive umbrella canopy of fiery orange-red flowers. Fast-growing, drought-tolerant, and perfect for national infrastructure or driveway boundaries.',
     image: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=400&auto=format&fit=crop',
   },
   {
@@ -257,6 +265,7 @@ export const plantsCollection = [
     height: '10 - 15 Feet',
     container: 'Root-Balled Frame',
     availability: 'In Stock',
+    description: 'An iconic luxury landscaping palm featuring a smooth trunk and dense, bright green fronds that resemble a fluffy fox tail. Adds an immediate tropical resort aesthetic to villas, corporate entrances, and parks.',
     image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=400&auto=format&fit=crop',
   },
   {
@@ -267,6 +276,7 @@ export const plantsCollection = [
     height: '1.5 - 3 Feet',
     container: '3 Liter Bag',
     availability: 'In Stock',
+    description: 'A vigorous woody climber that flowers profusely throughout the year in bright hues of pink, magenta, and red. Ideal for covering fences, stone walls, pergolas, and adding rich visual layers to landscapes.',
     image: 'https://images.unsplash.com/photo-1469251189132-cf14b8c567ed?q=80&w=400&auto=format&fit=crop',
   },
   {
@@ -277,6 +287,7 @@ export const plantsCollection = [
     height: '6 - 8 Feet',
     container: 'Large Root-Ball',
     availability: 'Bulk Only',
+    description: 'A majestic structural palm displaying large, stiff, silver-blue fan leaves. Slow-growing and extremely drought-tolerant, it serves as an excellent focal centerpiece for luxury courtyard gardens.',
     image: 'https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=400&auto=format&fit=crop',
   },
   {
@@ -287,6 +298,7 @@ export const plantsCollection = [
     height: '4 - 6 Feet',
     container: '7 Liter Pot',
     availability: 'In Stock',
+    description: 'A popular indoor plant showing clustered bamboo-like stems and elegant feathery fronds. Well-known for its active air-purifying qualities, it is highly suited for office spaces, lobbies, and living rooms.',
     image: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?q=80&w=400&auto=format&fit=crop',
   },
   {
@@ -297,6 +309,7 @@ export const plantsCollection = [
     height: '5 - 7 Feet',
     container: '15 Liter Pot',
     availability: 'In Stock',
+    description: 'An architectural indoor specimen featuring huge, rigid, violin-shaped emerald leaves with strong light-colored veins. Adds a sleek, sophisticated designer element to bright interior lobbies.',
     image: 'https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=400&auto=format&fit=crop',
   },
   {
@@ -307,6 +320,7 @@ export const plantsCollection = [
     height: '4 - 6 Feet',
     container: '15 Liter Bag',
     availability: 'In Stock',
+    description: 'A commercial staple mango variety. Highly praised for its fiberless sweet yellow flesh, heavy bearing characteristics, and excellent shelf-life, making it the top choice for commercial fruit planters.',
     image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=400&auto=format&fit=crop',
   },
 ];

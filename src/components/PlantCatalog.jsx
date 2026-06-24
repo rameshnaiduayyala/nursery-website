@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Compass, SlidersHorizontal, ShoppingBag, Info } from 'lucide-react';
 import { plantsCollection } from '../data/nurseryData';
 
-export default function PlantCatalog({ onSelectPlant }) {
+export default function PlantCatalog({ onSelectPlant, onViewDetails = () => {} }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -99,7 +99,8 @@ export default function PlantCatalog({ onSelectPlant }) {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4 }}
                 key={plant.id}
-                className="group relative bg-white rounded-3xl overflow-hidden border border-luxury-gold/15 shadow-glass-light hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                onClick={() => onViewDetails(plant)}
+                className="group relative bg-white rounded-3xl overflow-hidden border border-luxury-gold/15 shadow-glass-light hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
               >
                 {/* Image Showcase */}
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-gray/20">
@@ -149,7 +150,10 @@ export default function PlantCatalog({ onSelectPlant }) {
                 {/* Card Action */}
                 <div className="p-6 pt-0">
                   <button
-                    onClick={() => onSelectPlant(plant.name, plant.category)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSelectPlant(plant.name, plant.category);
+                    }}
                     className="w-full py-3 rounded-xl bg-forest-black text-warm-ivory text-xs font-bold uppercase tracking-wider shadow hover:bg-forest-black/90 transition-all flex items-center justify-center gap-2 cursor-pointer border border-forest-black/10 group-hover:border-luxury-gold"
                   >
                     <ShoppingBag className="w-4 h-4 text-luxury-gold" />
