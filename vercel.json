@@ -1,8 +1,5 @@
 {
   "rewrites": [
-    { "source": "/billing", "destination": "/" },
-    { "source": "/billing/*", "destination": "/" },
-    { "source": "/logistics", "destination": "/" },
-    { "source": "/logistics/*", "destination": "/" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
