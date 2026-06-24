@@ -95,9 +95,12 @@ export default function Footer({ onOpenQuote }) {
                 Get a Quote
               </button>
             </li>
-            <li className="pt-1.5 border-t border-white/5">
+            <li className="pt-1.5 border-t border-white/5 flex flex-col gap-1">
               <a href="/billing" className="hover:text-luxury-gold transition-colors text-[11px] font-bold uppercase tracking-wider text-luxury-gold/90">
                 Invoice System
+              </a>
+              <a href="/logistics" className="hover:text-luxury-gold transition-colors text-[11px] font-bold uppercase tracking-wider text-luxury-gold/90">
+                Logistics Planner
               </a>
             </li>
           </ul>

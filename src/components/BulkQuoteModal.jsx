@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight, ChevronLeft, Check, Send, Sparkles, MessageSquare } from 'lucide-react';
 import { companyDetails } from '../data/nurseryData';
 
-export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, preselectedCategory, preselectedProject }) {
+export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, preselectedCategory, preselectedProject, preselectedLogistics }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     role: '',
@@ -23,8 +23,14 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
         let msg = prev.message || '';
         let cat = preselectedCategory || prev.category || '';
         let r = prev.role || '';
+        let qty = prev.quantity || '';
         
-        if (preselectedProject) {
+        if (preselectedLogistics) {
+          msg = `Logistics shipping inquiry.\n\nCargo: ${preselectedLogistics.cargoSummary}\nTotal Weight: ${preselectedLogistics.totalWeight}\nTotal Volume: ${preselectedLogistics.totalVolume}\nRecommended Configuration: ${preselectedLogistics.recommendedTruck}`;
+          cat = 'General Mixed Landscape';
+          r = 'exporter';
+          qty = '10000+';
+        } else if (preselectedProject) {
           msg = `Landscaping supply inquiry for project: ${preselectedProject}`;
           cat = 'General Mixed Landscape';
           r = 'landscaper';
@@ -36,11 +42,12 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
           ...prev,
           category: cat,
           role: r,
+          quantity: qty,
           message: msg,
         };
       });
     }
-  }, [isOpen, preselectedPlant, preselectedCategory, preselectedProject]);
+  }, [isOpen, preselectedPlant, preselectedCategory, preselectedProject, preselectedLogistics]);
 
   const roles = [
     { label: 'Farmer / Agro Planter', value: 'farmer' },

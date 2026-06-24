@@ -18,10 +18,12 @@ import BulkQuoteModal from './components/BulkQuoteModal';
 import ShowcaseDetailModal from './components/ShowcaseDetailModal';
 
 const InvoiceApp = lazy(() => import('./billing/InvoiceGenerator'));
+const LogisticsCalculator = lazy(() => import('./logistics/LogisticsCalculator'));
 
 function App() {
   // Direct subpath routing for billing portal
   const isBilling = window.location.pathname === '/billing' || window.location.pathname.startsWith('/billing');
+  const isLogistics = window.location.pathname === '/logistics' || window.location.pathname.startsWith('/logistics');
 
   if (isBilling) {
     return (
@@ -35,10 +37,23 @@ function App() {
     );
   }
 
+  if (isLogistics) {
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen bg-[#08120B] flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-[#C6A969]"></div>
+        </div>
+      }>
+        <LogisticsCalculator onOpenQuote={(logisticsData) => handleOpenQuoteWithLogistics(logisticsData)} />
+      </Suspense>
+    );
+  }
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedLogistics, setSelectedLogistics] = useState(null);
 
   // Showcase Detail Viewer state
   const [detailModalOpen, setDetailModalOpen] = useState(false);
@@ -68,6 +83,11 @@ function App() {
   }, []);
 
   const handleOpenQuote = () => {
+    setModalOpen(true);
+  };
+
+  const handleOpenQuoteWithLogistics = (logisticsData) => {
+    setSelectedLogistics(logisticsData);
     setModalOpen(true);
   };
 
@@ -164,10 +184,12 @@ function App() {
           setSelectedPlant(null);
           setSelectedCategory(null);
           setSelectedProject(null);
+          setSelectedLogistics(null);
         }}
         preselectedPlant={selectedPlant}
         preselectedCategory={selectedCategory}
         preselectedProject={selectedProject}
+        preselectedLogistics={selectedLogistics}
       />
 
       {/* Detailed Presentation Lightbox Modal */}
