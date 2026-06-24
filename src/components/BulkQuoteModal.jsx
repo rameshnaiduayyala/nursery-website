@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight, ChevronLeft, Check, Send, Sparkles, MessageSquare } from 'lucide-react';
 
-export default function BulkQuoteModal({ isOpen, onClose }) {
+export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, preselectedCategory }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     role: '',
@@ -15,6 +15,16 @@ export default function BulkQuoteModal({ isOpen, onClose }) {
     message: '',
     type: 'quote', // 'quote' or 'visit'
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData(prev => ({
+        ...prev,
+        category: preselectedCategory || prev.category || '',
+        message: preselectedPlant ? `Bulk order inquiry for: ${preselectedPlant} (${preselectedCategory || ''})` : prev.message || '',
+      }));
+    }
+  }, [isOpen, preselectedPlant, preselectedCategory]);
 
   const roles = [
     { label: 'Farmer / Agro Planter', value: 'farmer' },

@@ -7,6 +7,7 @@ import Services from './components/Services';
 import About from './components/About';
 import WhyChooseUs from './components/WhyChooseUs';
 import FeaturedCategories from './components/FeaturedCategories';
+import PlantCatalog from './components/PlantCatalog';
 import ProjectShowcase from './components/ProjectShowcase';
 import NurseryExperience from './components/NurseryExperience';
 import ExportSupply from './components/ExportSupply';
@@ -17,6 +18,8 @@ import BulkQuoteModal from './components/BulkQuoteModal';
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPlant, setSelectedPlant] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   // Initialize Lenis Smooth Scroll (Awwwards Style)
   useEffect(() => {
@@ -41,6 +44,12 @@ function App() {
   }, []);
 
   const handleOpenQuote = () => {
+    setModalOpen(true);
+  };
+
+  const handleSelectPlant = (plantName, categoryName) => {
+    setSelectedPlant(plantName);
+    setSelectedCategory(categoryName);
     setModalOpen(true);
   };
 
@@ -69,6 +78,9 @@ function App() {
         {/* Categorized Specimen Grids */}
         <FeaturedCategories />
 
+        {/* Botanical Plant Directory Catalog */}
+        <PlantCatalog onSelectPlant={handleSelectPlant} />
+
         {/* Before/After Landscape drag slider */}
         <ProjectShowcase />
 
@@ -89,7 +101,16 @@ function App() {
       <Footer onOpenQuote={handleOpenQuote} />
 
       {/* Quote Inquiry Wizard Modal */}
-      <BulkQuoteModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+      <BulkQuoteModal 
+        isOpen={modalOpen} 
+        onClose={() => {
+          setModalOpen(false);
+          setSelectedPlant(null);
+          setSelectedCategory(null);
+        }} 
+        preselectedPlant={selectedPlant}
+        preselectedCategory={selectedCategory}
+      />
     </div>
   );
 }

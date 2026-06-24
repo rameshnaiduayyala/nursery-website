@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ShieldCheck, Truck, Users, Leaf, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { horticulturalSteps } from '../data/nurseryData';
 import nurseryAerial from '../assets/nursery_aerial.png';
 
 export default function NurseryExperience() {
@@ -15,36 +16,7 @@ export default function NurseryExperience() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const yTranslate = useTransform(scrollYProgress, [0, 1], [-60, 60]);
 
-  const steps = [
-    {
-      num: '01',
-      title: 'Precision Propagation',
-      subtitle: 'Seedlings & Tissue Culture',
-      desc: 'Expert care begins in our tissue culture labs and modern greenhouses, where optimal moisture and root train trays prepare healthy seedlings.',
-      icon: Leaf,
-    },
-    {
-      num: '02',
-      title: 'Horticulture Training',
-      subtitle: 'Nurturing & Quality Control',
-      desc: 'Experienced horticultural workers supervise plant growth, executing systematic trimming, root training, and micro-nutrient enrichments.',
-      icon: Users,
-    },
-    {
-      num: '03',
-      title: 'Packaging & Loading',
-      subtitle: 'Protected Transit Crates',
-      desc: 'Root-balls are wrapped in organic coco-husks and secured inside shipping frames, maintaining moisture and preventing shift shocks.',
-      icon: Truck,
-    },
-    {
-      num: '04',
-      title: 'Site Integration',
-      subtitle: 'Landscaping Masterpieces',
-      desc: 'Our logistics arrive synchronized with landscaping crews, who place and secure specimens to build immediate green canopies.',
-      icon: ShieldCheck,
-    },
-  ];
+  const steps = horticulturalSteps;
 
   return (
     <section ref={containerRef} id="experience" className="relative bg-warm-ivory overflow-hidden text-forest-black">

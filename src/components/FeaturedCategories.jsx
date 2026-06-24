@@ -1,76 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { plantCategories } from '../data/nurseryData';
 
 export default function FeaturedCategories() {
   const [filter, setFilter] = useState('all');
 
-  const categories = [
-    {
-      id: 1,
-      name: 'Avenue Trees',
-      description: 'Stately roadside shade trees and boundary boundary species.',
-      image: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=600&auto=format&fit=crop',
-      group: 'outdoor',
-      count: '45 Varieties',
-    },
-    {
-      id: 2,
-      name: 'Flowering Plants',
-      description: 'Vibrant perennial and seasonal blooms for landscape color.',
-      image: 'https://images.unsplash.com/photo-1469251189132-cf14b8c567ed?q=80&w=600&auto=format&fit=crop',
-      group: 'outdoor',
-      count: '120 Varieties',
-    },
-    {
-      id: 3,
-      name: 'Fruit Plants',
-      description: 'High-yielding commercial agricultural and hybrid fruit trees.',
-      image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=600&auto=format&fit=crop',
-      group: 'commercial',
-      count: '80 Varieties',
-    },
-    {
-      id: 4,
-      name: 'Palm Trees',
-      description: 'Luxury exotic palms for resorts, villas, and avenues.',
-      image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop',
-      group: 'outdoor',
-      count: '35 Varieties',
-    },
-    {
-      id: 5,
-      name: 'Ornamental Plants',
-      description: 'Decorative foliage and structural plants for manicured designs.',
-      image: 'https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=600&auto=format&fit=crop',
-      group: 'indoor',
-      count: '95 Varieties',
-    },
-    {
-      id: 6,
-      name: 'Indoor Plants',
-      description: 'Air-purifying shade-loving greens for offices and residential lobbies.',
-      image: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?q=80&w=600&auto=format&fit=crop',
-      group: 'indoor',
-      count: '60 Varieties',
-    },
-    {
-      id: 7,
-      name: 'Landscape Shrubs',
-      description: 'Hardy dwarf hedges and privacy screening borders.',
-      image: 'https://images.unsplash.com/photo-1558905619-17154973372c?q=80&w=600&auto=format&fit=crop',
-      group: 'outdoor',
-      count: '70 Varieties',
-    },
-    {
-      id: 8,
-      name: 'Medicinal Plants',
-      description: 'Traditional herbs and wellness species for botanical gardens.',
-      image: 'https://images.unsplash.com/photo-1598902108854-10e335adac99?q=80&w=600&auto=format&fit=crop',
-      group: 'commercial',
-      count: '50 Varieties',
-    },
-  ];
+  const categories = plantCategories;
 
   const filteredCategories = filter === 'all' 
     ? categories 

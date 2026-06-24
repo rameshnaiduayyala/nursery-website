@@ -1,42 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
+import { testimonialsData } from '../data/nurseryData';
 
 export default function Testimonials() {
-  const reviews = [
-    {
-      name: 'Ramesh Patel',
-      role: 'Commercial Agro Farmer',
-      location: 'Andhra Pradesh, India',
-      quote: 'We ordered over 15,000 hybrid mango and guava tissue culture plants. The survival rate exceeded 98%, far better than our local nurseries. The soil advice from their horticultural team was invaluable.',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop',
-    },
-    {
-      name: 'Sarah Al-Mansoori',
-      role: 'VP Development, Oasis Resorts',
-      location: 'Dubai, UAE',
-      quote: 'Importing palm trees and ornamental plants to the UAE requires complex quarantine filings and soil-less roots. Gangadhara Nursery managed the entire phytosanitary process and delivered pristine specimens.',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop',
-    },
-    {
-      name: 'Vikram Malhotra',
-      role: 'Chief Landscape Architect',
-      location: 'Horizon Greens, Bengaluru',
-      quote: 'Their project supply capability is unmatched. They delivered uniform, healthy avenue trees and landscape hedges for our township projects exactly on our tight scheduling slots.',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop',
-    },
-    {
-      name: 'Priya Nair',
-      role: 'Owner, Bloom Garden Retailers',
-      location: 'Mumbai, India',
-      quote: 'Direct nursery pricing and robust wooden crate packaging have made Gangadhara our sole wholesale supplier. Our retail garden center customers love the lush condition of the indoor and flowering plants.',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop',
-    },
-  ];
+  const reviews = testimonialsData;
 
   return (
     <section className="relative py-24 md:py-32 bg-warm-ivory text-forest-black overflow-hidden">

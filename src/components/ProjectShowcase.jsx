@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Eye } from 'lucide-react';
+import { projectMilestones } from '../data/nurseryData';
 import landscapeBefore from '../assets/landscape_before.png';
 import landscapeAfter from '../assets/landscape_after.png';
 
@@ -26,32 +27,7 @@ export default function ProjectShowcase() {
     }
   };
 
-  const projects = [
-    {
-      title: 'Grand Orchid Resort',
-      category: 'Resorts & Hotels',
-      image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600&auto=format&fit=crop',
-      size: 'col-span-1 lg:col-span-2 h-[320px]',
-    },
-    {
-      title: 'Vedic Farms & Orchards',
-      category: 'Farmhouses',
-      image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600&auto=format&fit=crop',
-      size: 'col-span-1 h-[320px]',
-    },
-    {
-      title: 'Palm Boulevard Highway',
-      category: 'Highways & Infrastructure',
-      image: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=600&auto=format&fit=crop',
-      size: 'col-span-1 h-[320px]',
-    },
-    {
-      title: 'TechHub Green Plaza',
-      category: 'Corporate Parks',
-      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop',
-      size: 'col-span-1 lg:col-span-2 h-[320px]',
-    },
-  ];
+  const projects = projectMilestones;
 
   return (
     <section id="showcase" className="relative py-24 md:py-32 bg-forest-black text-warm-ivory overflow-hidden">

@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Leaf, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
-import landscapeAfter from '../assets/landscape_after.png';
-import nurseryAerial from '../assets/nursery_aerial.png';
+import { heroSlides } from '../data/nurseryData';
 
 // Custom CountUp helper for stats
 function CountUp({ end, duration = 2000, suffix = "" }) {
@@ -57,26 +56,7 @@ export default function Hero({ onOpenQuote }) {
   const [progress, setProgress] = useState(0);
   const timerRef = useRef(null);
 
-  const slides = [
-    {
-      label: 'India’s Premium Landscaping Partner',
-      lines: ['GROWING NATURE.', 'SHAPING LANDSCAPES.', 'EXPORTING EXCELLENCE.'],
-      subheadline: 'Premium nursery plants for farmers, landscapers, resorts, developers, infrastructure projects, and export markets.',
-      image: landscapeAfter,
-    },
-    {
-      label: 'Propagation Fields & Automated Glasshouses',
-      lines: ['MASSIVE CAPACITY.', 'UNCOMPROMISING CARE.', 'BOTANICAL SCALE.'],
-      subheadline: 'Over 50 acres of dedicated botanical cultivation zones and automated greenhouse tunnels for infrastructure project supply.',
-      image: nurseryAerial,
-    },
-    {
-      label: 'Global Phytosanitary Certified Exports',
-      lines: ['SIGNATURE FLORA.', 'EXCLUSIVE PALMS.', 'GLOBAL LOGISTICS.'],
-      subheadline: 'Phytosanitary certified soil-less plants packaged professionally in double-net coco wraps and shipped worldwide.',
-      image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1600&auto=format&fit=crop',
-    },
-  ];
+  const slides = heroSlides;
 
   const SLIDE_DURATION = 6500; // 6.5 seconds per slide
 
