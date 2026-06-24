@@ -88,7 +88,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="mt-20 md:mt-28 rounded-3xl overflow-hidden shadow-2xl border border-forest-black/5 aspect-[21/9]"
+          className="mt-20 md:mt-28 rounded-3xl overflow-hidden shadow-2xl border border-forest-black/5 aspect-[16/9] md:aspect-[21/9]"
         >
           <img
             src="https://images.unsplash.com/photo-1463936575829-25148e1db1b8?q=80&w=1400&auto=format&fit=crop"

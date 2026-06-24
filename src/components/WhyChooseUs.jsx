@@ -122,13 +122,30 @@ export default function WhyChooseUs() {
                   <p className="text-xs sm:text-sm text-stone-gray/75 leading-relaxed font-sans">
                     {point.short}
                   </p>
+
+                  {/* Mobile-only inline expanding accordion details */}
+                  <div className="lg:hidden overflow-hidden">
+                    <AnimatePresence initial={false}>
+                      {isActive && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                          animate={{ height: 'auto', opacity: 1, marginTop: 16 }}
+                          exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="pt-4 border-t border-white/10 text-xs text-stone-gray/80 leading-relaxed font-sans"
+                        >
+                          {point.details}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </motion.div>
               );
             })}
           </div>
 
-          {/* Interactive details showcase card (Right 5 Cols) */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28">
+          {/* Interactive details showcase card (Right 5 Cols - Hidden on mobile) */}
+          <div className="hidden lg:block lg:col-span-5 lg:sticky lg:top-28">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
