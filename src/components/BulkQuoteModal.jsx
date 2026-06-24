@@ -14,7 +14,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
     phone: '',
     location: '',
     message: '',
-    type: 'quote', // 'quote' or 'visit'
+    type: 'quote',
   });
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
         let cat = preselectedCategory || prev.category || '';
         let r = prev.role || '';
         let qty = prev.quantity || '';
-        
+
         if (preselectedLogistics) {
           msg = `Logistics shipping inquiry.\n\nCargo: ${preselectedLogistics.cargoSummary}\nTotal Weight: ${preselectedLogistics.totalWeight}\nTotal Volume: ${preselectedLogistics.totalVolume}\nRecommended Configuration: ${preselectedLogistics.recommendedTruck}`;
           cat = 'General Mixed Landscape';
@@ -37,14 +37,8 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
         } else if (preselectedPlant) {
           msg = `Bulk order inquiry for: ${preselectedPlant} (${preselectedCategory || ''})`;
         }
-        
-        return {
-          ...prev,
-          category: cat,
-          role: r,
-          quantity: qty,
-          message: msg,
-        };
+
+        return { ...prev, category: cat, role: r, quantity: qty, message: msg };
       });
     }
   }, [isOpen, preselectedPlant, preselectedCategory, preselectedProject, preselectedLogistics]);
@@ -60,21 +54,16 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
   ];
 
   const plantCategories = [
-    'Avenue Trees',
-    'Flowering Plants',
-    'Fruit Plants (Bulk Agro)',
-    'Palm Trees',
-    'Ornamental Plants',
-    'Indoor & Office Plants',
-    'Medicinal / Herby Plants',
-    'General Mixed Landscape',
+    'Avenue Trees', 'Flowering Plants', 'Fruit Plants (Bulk Agro)',
+    'Palm Trees', 'Ornamental Plants', 'Indoor & Office Plants',
+    'Medicinal / Herby Plants', 'General Mixed Landscape',
   ];
 
   const quantities = [
     { label: 'Under 100 plants', value: '<100' },
-    { label: '100 - 500 plants', value: '100-500' },
-    { label: '500 - 2,000 plants', value: '500-2000' },
-    { label: '2,000 - 10,000 plants', value: '2000-10000' },
+    { label: '100 – 500 plants', value: '100-500' },
+    { label: '500 – 2,000 plants', value: '500-2000' },
+    { label: '2,000 – 10,000 plants', value: '2000-10000' },
     { label: '10,000+ plants (Bulk Cargo)', value: '10000+' },
   ];
 
@@ -91,9 +80,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
     setStep(step + 1);
   };
 
-  const handlePrevStep = () => {
-    setStep(step - 1);
-  };
+  const handlePrevStep = () => setStep(step - 1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -105,17 +92,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
   };
 
   const resetForm = () => {
-    setFormData({
-      role: '',
-      category: '',
-      quantity: '',
-      name: '',
-      email: '',
-      phone: '',
-      location: '',
-      message: '',
-      type: 'quote',
-    });
+    setFormData({ role: '', category: '', quantity: '', name: '', email: '', phone: '', location: '', message: '', type: 'quote' });
     setStep(1);
   };
 
@@ -124,98 +101,112 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
     onClose();
   };
 
+  const totalSteps = 3;
+  const currentDisplayStep = step === 4 ? 3 : step;
+  const progressPercent = (currentDisplayStep / totalSteps) * 100;
+
   if (!isOpen) return null;
+
+  const inputClass = "w-full p-4 rounded-xl border border-[#C6A969]/18 bg-[#FAF8F2]/60 text-sm text-[#08120B] focus:outline-none focus:border-[#C6A969] focus:shadow-[0_0_0_3px_rgba(198,169,105,0.1)] transition-all duration-200 placeholder:text-[#08120B]/35 font-medium";
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={handleClose}
-          className="absolute inset-0 bg-forest-black/85 backdrop-blur-md"
+          className="absolute inset-0 bg-[#08120B]/88 backdrop-blur-lg"
         />
 
         {/* Modal Window */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          initial={{ opacity: 0, scale: 0.92, y: 24 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-2xl bg-warm-ivory rounded-3xl overflow-hidden shadow-2xl border border-luxury-gold/15 z-10 text-left text-forest-black"
+          exit={{ opacity: 0, scale: 0.92, y: 24 }}
+          transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+          className="relative w-full max-w-2xl bg-[#FAF8F2] rounded-3xl overflow-hidden shadow-[0_32px_80px_rgba(8,18,11,0.4)] border border-[#C6A969]/12 z-10 text-left text-[#08120B]"
         >
+          {/* Subtle gradient header strip */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#C6A969]/0 via-[#C6A969] to-[#C6A969]/0" />
+
           {/* Header */}
-          <div className="flex justify-between items-center px-8 py-6 border-b border-luxury-gold/15">
-            <div>
-              <h3 className="font-display font-extrabold text-xl md:text-2xl text-forest-black tracking-tight uppercase">
-                {formData.type === 'quote' ? 'Request Bulk Quote' : 'Schedule Nursery Visit'}
-              </h3>
-              <p className="text-xs text-forest-black/65 font-sans mt-1">
-                Step {step === 4 ? 3 : step} of 3 • Gangadhara VIP Desk
-              </p>
+          <div className="flex justify-between items-start px-7 md:px-8 pt-7 pb-5 border-b border-[#C6A969]/12">
+            <div className="space-y-3 flex-1 mr-4">
+              <div>
+                <h3 className="font-display font-extrabold text-xl md:text-2xl text-[#08120B] tracking-tight uppercase">
+                  {formData.type === 'quote' ? 'Request Bulk Quote' : 'Schedule Nursery Visit'}
+                </h3>
+                <p className="text-[11px] text-[#08120B]/50 font-sans mt-1 tracking-wide">
+                  Step {currentDisplayStep} of {totalSteps} · Gangadhara VIP Desk
+                </p>
+              </div>
+              {/* Step progress bar */}
+              <div className="step-line">
+                <div className="step-line-fill" style={{ width: `${progressPercent}%` }} />
+              </div>
             </div>
             <button
               onClick={handleClose}
-              className="p-2 rounded-full hover:bg-forest-black/5 text-forest-black/70 hover:text-forest-black transition-colors cursor-pointer"
+              className="p-2.5 rounded-full hover:bg-[#08120B]/7 text-[#08120B]/55 hover:text-[#08120B] transition-all duration-200 cursor-pointer flex-shrink-0"
             >
-              <X className="w-5.5 h-5.5" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Form steps container */}
-          <div className="p-8 max-h-[75vh] overflow-y-auto">
+          <div className="px-7 md:px-8 pb-8 max-h-[72vh] overflow-y-auto">
             <AnimatePresence mode="wait">
               {step === 1 && (
                 <motion.div
                   key="step1"
-                  initial={{ opacity: 0, x: 10 }}
+                  initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  className="space-y-6"
+                  exit={{ opacity: 0, x: -16 }}
+                  transition={{ duration: 0.25 }}
+                  className="space-y-6 pt-6"
                 >
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <h4 className="font-display font-bold text-lg uppercase tracking-wide">Which best describes your role?</h4>
-                    <p className="text-sm text-forest-black/70 font-sans">Select a category to customize our logistics matching.</p>
-                  </div>
-                  
-                  {/* Inquiry Type toggle */}
-                  <div className="flex gap-4 p-1 bg-stone-gray/30 rounded-xl border border-stone-gray/50">
-                    <button
-                      type="button"
-                      onClick={() => setFormData({ ...formData, type: 'quote' })}
-                      className={`flex-1 py-3 text-center rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                        formData.type === 'quote' ? 'bg-forest-black text-warm-ivory' : 'text-forest-black/75 hover:text-forest-black'
-                      }`}
-                    >
-                      Request Pricing Catalog
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setFormData({ ...formData, type: 'visit' })}
-                      className={`flex-1 py-3 text-center rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                        formData.type === 'visit' ? 'bg-forest-black text-warm-ivory' : 'text-forest-black/75 hover:text-forest-black'
-                      }`}
-                    >
-                      Schedule Guided Tour
-                    </button>
+                    <p className="text-sm text-[#08120B]/60 font-sans">Select a category to customize your inquiry.</p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                  {/* Inquiry Type toggle */}
+                  <div className="flex gap-2 p-1.5 bg-[#E8E6DF]/40 rounded-2xl border border-[#E8E6DF]/80">
+                    {['quote', 'visit'].map((t) => (
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => setFormData({ ...formData, type: t })}
+                        className={`flex-1 py-2.5 text-center rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+                          formData.type === t
+                            ? 'bg-[#08120B] text-[#FAF8F2] shadow-md'
+                            : 'text-[#08120B]/60 hover:text-[#08120B] hover:bg-[#E8E6DF]/60'
+                        }`}
+                      >
+                        {t === 'quote' ? 'Request Pricing Catalog' : 'Schedule Guided Tour'}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {roles.map((r) => (
                       <button
                         key={r.value}
                         type="button"
                         onClick={() => handleSelectRole(r.value)}
-                        className={`text-left p-4 rounded-xl border text-sm font-bold transition-all duration-200 flex items-center justify-between cursor-pointer ${
+                        className={`text-left px-4 py-3.5 rounded-xl border text-sm font-semibold transition-all duration-200 flex items-center justify-between cursor-pointer group ${
                           formData.role === r.value
-                            ? 'bg-luxury-gold/15 border-luxury-gold text-forest-black'
-                            : 'bg-white border-luxury-gold/15 hover:border-luxury-gold/45'
+                            ? 'bg-[#C6A969]/12 border-[#C6A969] text-[#08120B] shadow-[0_0_0_3px_rgba(198,169,105,0.08)]'
+                            : 'bg-white border-[#E8E6DF] hover:border-[#C6A969]/50 hover:bg-[#C6A969]/5 text-[#08120B]/85'
                         }`}
                       >
                         <span>{r.label}</span>
-                        <ChevronRight className="w-4 h-4 text-luxury-gold" />
+                        <ChevronRight className={`w-4 h-4 transition-all duration-200 ${
+                          formData.role === r.value ? 'text-[#C6A969]' : 'text-[#08120B]/25 group-hover:text-[#C6A969]/60'
+                        }`} />
                       </button>
                     ))}
                   </div>
@@ -225,44 +216,46 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
               {step === 2 && (
                 <motion.div
                   key="step2"
-                  initial={{ opacity: 0, x: 10 }}
+                  initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  className="space-y-6"
+                  exit={{ opacity: 0, x: -16 }}
+                  transition={{ duration: 0.25 }}
+                  className="space-y-6 pt-6"
                 >
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     <h4 className="font-display font-bold text-lg uppercase tracking-wide">What are you looking to supply?</h4>
-                    <p className="text-sm text-forest-black/70 font-sans font-medium">Select primary variety and expected quantities.</p>
+                    <p className="text-sm text-[#08120B]/60 font-sans">Select primary variety and expected quantities.</p>
                   </div>
 
-                  {/* Categories Dropdown */}
                   <div className="space-y-2 text-left">
-                    <label className="text-xs font-bold uppercase tracking-widest text-forest-black/70">Primary Plant Category</label>
-                    <select
-                      value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full p-4 rounded-xl border border-luxury-gold/20 bg-white text-sm font-semibold focus:outline-none focus:border-luxury-gold transition-colors cursor-pointer"
-                    >
-                      <option value="">Select category...</option>
-                      {plantCategories.map((c) => (
-                        <option key={c} value={c}>{c}</option>
-                      ))}
-                    </select>
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-[#08120B]/55">Primary Plant Category</label>
+                    <div className="relative">
+                      <select
+                        value={formData.category}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                        className={`${inputClass} appearance-none pr-10 bg-white`}
+                      >
+                        <option value="">Select category...</option>
+                        {plantCategories.map((c) => (
+                          <option key={c} value={c}>{c}</option>
+                        ))}
+                      </select>
+                      <ChevronRight className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#08120B]/35 rotate-90 pointer-events-none" />
+                    </div>
                   </div>
 
-                  {/* Quantity options */}
-                  <div className="space-y-3.5 text-left">
-                    <label className="text-xs font-bold uppercase tracking-widest text-forest-black/70">Required Plant Quantity</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="space-y-3 text-left">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-[#08120B]/55">Required Plant Quantity</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {quantities.map((q) => (
                         <button
                           key={q.value}
                           type="button"
                           onClick={() => setFormData({ ...formData, quantity: q.value })}
-                          className={`text-left p-4 rounded-xl border text-sm font-bold transition-all duration-200 cursor-pointer ${
+                          className={`text-left px-4 py-3.5 rounded-xl border text-sm font-semibold transition-all duration-200 cursor-pointer ${
                             formData.quantity === q.value
-                              ? 'bg-luxury-gold/15 border-luxury-gold'
-                              : 'bg-white border-luxury-gold/15 hover:border-luxury-gold/45'
+                              ? 'bg-[#C6A969]/12 border-[#C6A969] text-[#08120B] shadow-[0_0_0_3px_rgba(198,169,105,0.08)]'
+                              : 'bg-white border-[#E8E6DF] hover:border-[#C6A969]/50 hover:bg-[#C6A969]/5 text-[#08120B]/80'
                           }`}
                         >
                           {q.label}
@@ -271,12 +264,11 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                     </div>
                   </div>
 
-                  {/* Navigation */}
-                  <div className="flex justify-between items-center pt-6 border-t border-luxury-gold/15">
+                  <div className="flex justify-between items-center pt-5 border-t border-[#C6A969]/12 mt-2">
                     <button
                       type="button"
                       onClick={handlePrevStep}
-                      className="flex items-center gap-1.5 px-5 py-3 rounded-full hover:bg-forest-black/5 font-bold uppercase text-xs tracking-wider transition-colors cursor-pointer"
+                      className="flex items-center gap-1.5 px-5 py-2.5 rounded-full hover:bg-[#08120B]/6 font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer text-[#08120B]/70"
                     >
                       <ChevronLeft className="w-4 h-4" />
                       Back
@@ -284,10 +276,10 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                     <button
                       type="button"
                       onClick={handleNextStep}
-                      className="flex items-center gap-1.5 px-6 py-3 rounded-full bg-luxury-gold hover:bg-[#B29555] text-forest-black font-bold uppercase text-xs tracking-wider transition-all cursor-pointer"
+                      className="flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#C6A969] to-[#B29555] hover:shadow-[0_6px_20px_rgba(198,169,105,0.3)] text-[#08120B] font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer btn-press"
                     >
                       Continue
-                      <ChevronRight className="w-4 h-4 text-forest-black" />
+                      <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                 </motion.div>
@@ -296,93 +288,67 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
               {step === 3 && (
                 <motion.div
                   key="step3"
-                  initial={{ opacity: 0, x: 10 }}
+                  initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  className="space-y-6"
+                  exit={{ opacity: 0, x: -16 }}
+                  transition={{ duration: 0.25 }}
+                  className="space-y-6 pt-6"
                 >
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     <h4 className="font-display font-bold text-lg uppercase tracking-wide">Contact Information</h4>
-                    <p className="text-sm text-forest-black/70 font-sans">Our cargo desk will reach back to coordinate within 4 working hours.</p>
+                    <p className="text-sm text-[#08120B]/60 font-sans">Our cargo desk responds within 4 business hours.</p>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-1.5 text-left">
-                        <label className="text-[10px] font-bold uppercase tracking-wider text-forest-black/60">Full Name</label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          placeholder="e.g. Ramesh Patel"
-                          className="w-full p-4 rounded-xl border border-luxury-gold/20 bg-white text-sm focus:outline-none focus:border-luxury-gold transition-colors"
-                        />
-                      </div>
-                      <div className="space-y-1.5 text-left">
-                        <label className="text-[10px] font-bold uppercase tracking-wider text-forest-black/60">Email Address</label>
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="e.g. ramesh@farm.com"
-                          className="w-full p-4 rounded-xl border border-luxury-gold/20 bg-white text-sm focus:outline-none focus:border-luxury-gold transition-colors"
-                        />
-                      </div>
+                      {[
+                        { label: 'Full Name', key: 'name', type: 'text', placeholder: 'e.g. Ramesh Patel', required: true },
+                        { label: 'Email Address', key: 'email', type: 'email', placeholder: 'e.g. ramesh@farm.com', required: true },
+                        { label: 'Phone Number', key: 'phone', type: 'tel', placeholder: 'e.g. +91 98765 43210', required: true },
+                        { label: 'Site Location', key: 'location', type: 'text', placeholder: 'e.g. Bangalore, KA', required: false },
+                      ].map(({ label, key, type, placeholder, required }) => (
+                        <div key={key} className="space-y-1.5">
+                          <label className="text-[10px] font-bold uppercase tracking-wider text-[#08120B]/50">
+                            {label}{required && <span className="text-[#C6A969] ml-0.5">*</span>}
+                          </label>
+                          <input
+                            type={type}
+                            required={required}
+                            value={formData[key]}
+                            onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
+                            placeholder={placeholder}
+                            className={inputClass}
+                          />
+                        </div>
+                      ))}
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-1.5 text-left">
-                        <label className="text-[10px] font-bold uppercase tracking-wider text-forest-black/60">Phone Number</label>
-                        <input
-                          type="tel"
-                          required
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="e.g. +91 98765 43210"
-                          className="w-full p-4 rounded-xl border border-luxury-gold/20 bg-white text-sm focus:outline-none focus:border-luxury-gold transition-colors"
-                        />
-                      </div>
-                      <div className="space-y-1.5 text-left">
-                        <label className="text-[10px] font-bold uppercase tracking-wider text-forest-black/60">Site Location</label>
-                        <input
-                          type="text"
-                          value={formData.location}
-                          onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                          placeholder="e.g. Bangalore, KA"
-                          className="w-full p-4 rounded-xl border border-luxury-gold/20 bg-white text-sm focus:outline-none focus:border-luxury-gold transition-colors"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-1.5 text-left">
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-forest-black/60">Additional Message / Blueprint Specs</label>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-[#08120B]/50">Additional Message / Blueprint Specs</label>
                       <textarea
                         rows="3"
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         placeholder="Mention custom height specifications, site drawings, or specific botanical hybrids."
-                        className="w-full p-4 rounded-xl border border-luxury-gold/20 bg-white text-sm focus:outline-none focus:border-luxury-gold transition-colors resize-none"
+                        className={`${inputClass} resize-none`}
                       />
                     </div>
 
-                    {/* Navigation */}
-                    <div className="flex justify-between items-center pt-6 border-t border-luxury-gold/15">
+                    <div className="flex justify-between items-center pt-5 border-t border-[#C6A969]/12">
                       <button
                         type="button"
                         onClick={handlePrevStep}
-                        className="flex items-center gap-1.5 px-5 py-3 rounded-full hover:bg-forest-black/5 font-bold uppercase text-xs tracking-wider transition-colors cursor-pointer"
+                        className="flex items-center gap-1.5 px-5 py-2.5 rounded-full hover:bg-[#08120B]/6 font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer text-[#08120B]/70"
                       >
                         <ChevronLeft className="w-4 h-4" />
                         Back
                       </button>
                       <button
                         type="submit"
-                        className="flex items-center gap-2 px-8 py-4 rounded-full bg-luxury-gold hover:bg-[#B29555] text-forest-black font-bold uppercase text-xs tracking-wider transition-all shadow-lg shadow-luxury-gold/10 cursor-pointer"
+                        className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-[#C6A969] to-[#B29555] hover:shadow-[0_8px_24px_rgba(198,169,105,0.35)] text-[#08120B] font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer btn-press"
                       >
                         <span>Submit Details</span>
-                        <Send className="w-4 h-4 text-forest-black" />
+                        <Send className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </form>
@@ -392,38 +358,42 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
               {step === 4 && (
                 <motion.div
                   key="step4"
-                  initial={{ opacity: 0, scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.94 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="py-12 flex flex-col items-center text-center space-y-6"
+                  transition={{ duration: 0.4 }}
+                  className="py-14 flex flex-col items-center text-center space-y-6"
                 >
-                  <div className="w-20 h-20 rounded-full bg-luxury-gold/10 border-2 border-luxury-gold text-luxury-gold flex items-center justify-center shadow-lg relative">
-                    <Check className="w-10 h-10" />
-                    <div className="absolute -top-1 -right-1 bg-luxury-gold text-forest-black p-1 rounded-full animate-bounce">
-                      <Sparkles className="w-4 h-4 text-forest-black" />
+                  {/* Success icon */}
+                  <div className="relative">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#C6A969]/15 to-[#0E9F6E]/10 border border-[#C6A969]/30 text-[#C6A969] flex items-center justify-center shadow-[0_0_40px_rgba(198,169,105,0.12)] animate-gold-pulse">
+                      <Check className="w-9 h-9" strokeWidth={2.5} />
+                    </div>
+                    <div className="absolute -top-1.5 -right-1.5 bg-gradient-to-br from-[#C6A969] to-[#B29555] text-[#08120B] p-1.5 rounded-full shadow-md">
+                      <Sparkles className="w-3.5 h-3.5" />
                     </div>
                   </div>
-                  
-                  <div className="space-y-2">
+
+                  <div className="space-y-2.5">
                     <h4 className="font-display font-black text-2xl tracking-tight uppercase">Request Logged!</h4>
-                    <p className="text-sm text-forest-black/70 font-sans max-w-md mx-auto leading-relaxed">
-                      Thank you, <strong className="text-forest-black">{formData.name}</strong>. Our botanical accounts desk will compile your details and connect shortly.
+                    <p className="text-sm text-[#08120B]/65 font-sans max-w-sm mx-auto leading-relaxed">
+                      Thank you, <strong className="text-[#08120B]">{formData.name}</strong>. Our botanical accounts desk will compile your details and connect within 4 hours.
                     </p>
                   </div>
 
-                  <div className="pt-6 border-t border-luxury-gold/15 w-full max-w-sm flex flex-col gap-3">
+                  <div className="pt-5 border-t border-[#C6A969]/15 w-full max-w-xs flex flex-col gap-3">
                     <a
-                      href={`https://wa.me/${companyDetails.whatsappNumber}?text=Hi%20${encodeURIComponent(companyDetails.name)},%20I%2520have%20submitted%20a%20pricing%20request%20for%20${formData.quantity}%20plants%20under%20the%2520${formData.category}%20category.%20My%20name%20is%20${formData.name}.`}
+                      href={`https://wa.me/${companyDetails.whatsappNumber}?text=Hi%20${encodeURIComponent(companyDetails.name)},%20I%20have%20submitted%20a%20pricing%20request%20for%20${formData.quantity}%20plants%20under%20the%20${formData.category}%20category.%20My%20name%20is%20${formData.name}.`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-4 text-center rounded-xl bg-[#25D366] text-white font-bold text-xs uppercase tracking-wider shadow-md hover:bg-[#20ba56] transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full py-3.5 text-center rounded-xl bg-[#25D366] text-white font-bold text-xs uppercase tracking-wider shadow-md hover:bg-[#20ba56] hover:shadow-[0_6px_20px_rgba(37,211,102,0.25)] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer btn-press"
                     >
-                      <MessageSquare className="w-5 h-5 fill-white" />
+                      <MessageSquare className="w-4 h-4 fill-white" />
                       WhatsApp Connect
                     </a>
                     <button
                       type="button"
                       onClick={handleClose}
-                      className="w-full py-4 text-center rounded-xl bg-forest-black text-warm-ivory font-bold text-xs uppercase tracking-wider hover:bg-forest-black/95 transition-colors cursor-pointer"
+                      className="w-full py-3.5 text-center rounded-xl bg-[#08120B] text-[#FAF8F2] font-bold text-xs uppercase tracking-wider hover:bg-[#08120B]/90 transition-all duration-200 cursor-pointer btn-press"
                     >
                       Close Dialog
                     </button>

@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Heart, 
-  Layers, 
-  Users, 
-  Clock, 
-  Shuffle, 
-  Award, 
-  Tag, 
-  MapPin, 
-  ArrowRight,
-  ShieldCheck
+  Heart, Layers, Users, Clock, Shuffle, Award, Tag, MapPin, ArrowRight, ShieldCheck
 } from 'lucide-react';
 
 export default function WhyChooseUs() {
@@ -68,71 +59,81 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section id="why-us" className="relative py-24 md:py-32 bg-forest-black text-warm-ivory overflow-hidden">
+    <section id="why-us" className="relative py-24 md:py-36 bg-[#08120B] text-[#FAF8F2] overflow-hidden">
       {/* Decorative gradients */}
-      <div className="absolute top-[10%] right-[-5%] w-[35vw] h-[35vw] rounded-full bg-emerald-green/5 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-[10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-luxury-gold/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-[10%] right-[-5%] w-[35vw] h-[35vw] rounded-full bg-[#0E9F6E]/5 blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-[10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-[#C6A969]/5 blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        
+
         {/* Title */}
-        <div className="max-w-3xl mb-16 md:mb-24 space-y-4 text-left">
-          <span className="text-luxury-gold font-display font-semibold tracking-[0.2em] text-xs md:text-sm uppercase block">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="max-w-3xl mb-16 md:mb-24 space-y-4 text-left"
+        >
+          <span className="text-[#C6A969] font-display font-semibold tracking-[0.22em] text-xs md:text-sm uppercase block">
             Nursery Standards
           </span>
-          <h2 className="font-display font-black text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight uppercase">
-            WHY GANGADHARA
+          <h2 className="font-display font-black text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.02] uppercase">
+            Why Gangadhara
           </h2>
-          <div className="w-12 h-[1px] bg-luxury-gold" />
-        </div>
+          <div className="section-divider" />
+        </motion.div>
 
         {/* Interactive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
-          {/* List of items (Left 7 Cols) */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+
+          {/* Left — Grid of reason cards */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
             {points.map((point, index) => {
               const IconComp = point.icon;
               const isActive = index === activeIndex;
-              
+
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  transition={{ duration: 0.5, delay: index * 0.045 }}
                   onClick={() => setActiveIndex(index)}
-                  className={`cursor-pointer text-left p-6 rounded-2xl border transition-all duration-300 ${
+                  className={`cursor-pointer text-left p-5 rounded-2xl border transition-all duration-300 ${
                     isActive
-                      ? 'bg-luxury-gold/10 border-luxury-gold shadow-lg shadow-luxury-gold/5'
-                      : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10'
+                      ? 'bg-[#C6A969]/10 border-[#C6A969]/50 shadow-[0_0_32px_rgba(198,169,105,0.08)]'
+                      : 'bg-white/[0.035] border-white/[0.055] hover:bg-white/[0.06] hover:border-white/10'
                   }`}
                 >
-                  <div className="flex items-center space-x-3.5 mb-3">
-                    <div className={`p-2.5 rounded-xl ${
-                      isActive ? 'bg-luxury-gold text-forest-black' : 'bg-white/5 text-luxury-gold'
-                    } transition-colors duration-300`}>
-                      <IconComp className="w-5 h-5" />
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+                      isActive
+                        ? 'bg-[#C6A969] text-[#08120B] shadow-[0_4px_16px_rgba(198,169,105,0.3)]'
+                        : 'bg-white/5 text-[#C6A969]'
+                    }`}>
+                      <IconComp className="w-4 h-4" />
                     </div>
-                    <h3 className="font-display font-bold text-base sm:text-lg tracking-tight">
+                    <h3 className={`font-display font-bold text-sm sm:text-base tracking-tight transition-colors duration-200 ${
+                      isActive ? 'text-[#C6A969]' : 'text-[#FAF8F2]'
+                    }`}>
                       {point.title}
                     </h3>
                   </div>
-                  <p className="text-xs sm:text-sm text-stone-gray/75 leading-relaxed font-sans">
+                  <p className="text-xs text-[#E8E6DF]/60 leading-relaxed font-sans pl-[48px]">
                     {point.short}
                   </p>
 
-                  {/* Mobile-only inline expanding accordion details */}
-                  <div className="lg:hidden overflow-hidden">
+                  {/* Mobile accordion */}
+                  <div className="lg:hidden overflow-hidden pl-[48px]">
                     <AnimatePresence initial={false}>
                       {isActive && (
                         <motion.div
                           initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                          animate={{ height: 'auto', opacity: 1, marginTop: 16 }}
+                          animate={{ height: 'auto', opacity: 1, marginTop: 12 }}
                           exit={{ height: 0, opacity: 0, marginTop: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="pt-4 border-t border-white/10 text-xs text-stone-gray/80 leading-relaxed font-sans"
+                          className="pt-3 border-t border-white/8 text-xs text-[#E8E6DF]/70 leading-relaxed font-sans"
                         >
                           {point.details}
                         </motion.div>
@@ -144,48 +145,48 @@ export default function WhyChooseUs() {
             })}
           </div>
 
-          {/* Interactive details showcase card (Right 5 Cols - Hidden on mobile) */}
+          {/* Right — Detail card, sticky on desktop */}
           <div className="hidden lg:block lg:col-span-5 lg:sticky lg:top-28">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4 }}
-                className="glass-dark p-8 rounded-3xl border border-luxury-gold/15 text-left shadow-2xl relative overflow-hidden"
+                initial={{ opacity: 0, x: 18, y: 4 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                exit={{ opacity: 0, x: -18, y: -4 }}
+                transition={{ duration: 0.35 }}
+                className="relative rounded-3xl overflow-hidden p-[1px] bg-gradient-to-br from-[#C6A969]/30 via-[#C6A969]/5 to-transparent"
               >
-                {/* Glow Spot */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/15 rounded-full blur-2xl pointer-events-none" />
+                <div className="glass-dark rounded-3xl p-8 text-left shadow-[0_32px_80px_rgba(8,18,11,0.5)] relative overflow-hidden">
+                  {/* Glow spot */}
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-[#C6A969]/10 rounded-full blur-3xl pointer-events-none" />
 
-                <div className="flex items-center justify-between mb-8">
-                  <div className="p-4 rounded-2xl bg-luxury-gold/10 text-luxury-gold">
-                    {React.createElement(points[activeIndex].icon, { className: 'w-7 h-7' })}
+                  <div className="flex items-center justify-between mb-7">
+                    <div className="w-12 h-12 rounded-2xl bg-[#C6A969]/12 text-[#C6A969] flex items-center justify-center">
+                      {React.createElement(points[activeIndex].icon, { className: 'w-6 h-6' })}
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs text-[#C6A969] font-bold uppercase tracking-wider bg-[#C6A969]/10 px-3 py-1.5 rounded-full border border-[#C6A969]/20">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      <span>Verified</span>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-1.5 text-xs text-luxury-gold font-bold uppercase tracking-wider bg-luxury-gold/10 px-3 py-1 rounded-full border border-luxury-gold/25">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Verified</span>
+
+                  <h3 className="font-display font-bold text-2xl tracking-tight text-[#FAF8F2] mb-4 uppercase leading-tight">
+                    {points[activeIndex].title}
+                  </h3>
+
+                  <p className="text-sm text-[#E8E6DF]/75 leading-relaxed font-sans mb-8">
+                    {points[activeIndex].details}
+                  </p>
+
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#C6A969] hover:text-[#FAF8F2] cursor-pointer group transition-colors duration-200">
+                    <span>Botanical Protocol</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                   </div>
-                </div>
-
-                <h3 className="font-display font-bold text-2xl tracking-tight text-warm-ivory mb-4 uppercase">
-                  {points[activeIndex].title}
-                </h3>
-                
-                <p className="text-sm sm:text-base text-stone-gray/80 leading-relaxed font-sans mb-8">
-                  {points[activeIndex].details}
-                </p>
-
-                <div className="flex items-center space-x-2.5 text-xs sm:text-sm font-bold uppercase tracking-widest text-luxury-gold hover:text-warm-ivory cursor-pointer group transition-colors">
-                  <span>Botanical Protocol</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
-
         </div>
-
       </div>
     </section>
   );

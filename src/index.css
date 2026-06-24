@@ -7,11 +7,14 @@
   --color-forest-black: #08120B;
   --color-emerald-green: #0E9F6E;
   --color-luxury-gold: #C6A969;
+  --color-luxury-gold-deep: #B29555;
   --color-warm-ivory: #FAF8F2;
   --color-stone-gray: #E8E6DF;
   
   --shadow-glass: 0 8px 32px 0 rgba(8, 18, 11, 0.45);
-  --shadow-glass-light: 0 8px 32px 0 rgba(8, 18, 11, 0.05);
+  --shadow-glass-light: 0 4px 24px 0 rgba(8, 18, 11, 0.06);
+  --shadow-gold-glow: 0 0 40px 0 rgba(198, 169, 105, 0.12);
+  --shadow-card: 0 2px 16px rgba(8, 18, 11, 0.08), 0 1px 4px rgba(8,18,11,0.06);
 }
 
 /* Custom Base Styles */
@@ -50,10 +53,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar styling */
+/* Refined scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -61,19 +64,25 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C6A969;
-  border-radius: 4px;
+  background: linear-gradient(180deg, #C6A969, #B29555);
+  border-radius: 99px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B29555;
+  background: #C6A969;
+}
+
+/* Selection highlight */
+::selection {
+  background: #C6A969;
+  color: #08120B;
 }
 
 /* Trailing Custom Cursor Classes (Awwwards Style) */
 .custom-cursor {
   width: 24px;
   height: 24px;
-  border: 1px solid #C6A969;
+  border: 1.5px solid #C6A969;
   border-radius: 50%;
   position: fixed;
   transform: translate(-50%, -50%);
@@ -84,109 +93,103 @@ body {
 }
 
 .custom-cursor-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   background-color: #C6A969;
   border-radius: 50%;
   position: fixed;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 9999;
+  transition: transform 0.08s ease-out;
 }
 
-/* Custom animations */
+/* ===== ANIMATIONS ===== */
+
 @keyframes float-slow {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(6deg);
-  }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(6deg); }
 }
 
 @keyframes float-medium {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-30px) rotate(-10deg);
-  }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(-10deg); }
 }
 
 @keyframes float-fast {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-12px) rotate(3deg);
-  }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
 }
 
 @keyframes float-reverse {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(20px) rotate(-6deg);
-  }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(20px) rotate(-6deg); }
 }
 
 @keyframes pulse-soft {
-  0%, 100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(1.05);
-  }
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.05); }
 }
 
 @keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
+  to { stroke-dashoffset: 0; }
 }
 
 @keyframes kenburns {
-  0% {
-    transform: scale(1) translate(0, 0);
-  }
-  100% {
-    transform: scale(1.08) translate(-0.5%, -0.5%);
-  }
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.08) translate(-0.5%, -0.5%); }
 }
 
-.animate-float-slow {
-  animation: float-slow 10s ease-in-out infinite;
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 
-.animate-float-medium {
-  animation: float-medium 7s ease-in-out infinite;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-float-fast {
-  animation: float-fast 5s ease-in-out infinite;
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-.animate-float-reverse {
-  animation: float-reverse 9s ease-in-out infinite;
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(198, 169, 105, 0.2); }
+  50% { border-color: rgba(198, 169, 105, 0.5); }
 }
 
-.animate-pulse-soft {
-  animation: pulse-soft 8s ease-in-out infinite;
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(198, 169, 105, 0); }
+  50% { box-shadow: 0 0 20px 4px rgba(198, 169, 105, 0.15); }
 }
 
-.animate-kenburns {
-  animation: kenburns 7s ease-out forwards;
-}
+.animate-float-slow { animation: float-slow 10s ease-in-out infinite; }
+.animate-float-medium { animation: float-medium 7s ease-in-out infinite; }
+.animate-float-fast { animation: float-fast 5s ease-in-out infinite; }
+.animate-float-reverse { animation: float-reverse 9s ease-in-out infinite; }
+.animate-pulse-soft { animation: pulse-soft 8s ease-in-out infinite; }
+.animate-kenburns { animation: kenburns 7s ease-out forwards; }
+.animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+.animate-scale-in { animation: scaleIn 0.4s ease-out forwards; }
+.animate-border-glow { animation: borderGlow 3s ease-in-out infinite; }
+.animate-gold-pulse { animation: gold-pulse 2.5s ease-in-out infinite; }
 
-/* Glassmorphism utility classes */
+/* ===== GLASSMORPHISM UTILITIES ===== */
+
 .glass-dark {
-  background: rgba(8, 18, 11, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(8, 18, 11, 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-dark-heavy {
+  background: rgba(8, 18, 11, 0.90);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(198, 169, 105, 0.12);
 }
 
 .glass-emerald {
@@ -197,13 +200,55 @@ body {
 }
 
 .glass-light {
-  background: rgba(250, 248, 242, 0.85);
+  background: rgba(250, 248, 242, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(8, 18, 11, 0.06);
 }
 
-/* Clip Path for Before/After Slider */
+.glass-gold {
+  background: rgba(198, 169, 105, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(198, 169, 105, 0.18);
+}
+
+/* ===== SHIMMER TEXT ===== */
+
+.text-shimmer {
+  background: linear-gradient(
+    120deg,
+    #C6A969 0%,
+    #FAF8F2 40%,
+    #C6A969 60%,
+    #B29555 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ===== SECTION DIVIDERS ===== */
+
+.section-divider {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #C6A969, rgba(198, 169, 105, 0));
+  border-radius: 2px;
+}
+
+.section-divider-centered {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(198,169,105,0), #C6A969, rgba(198,169,105,0));
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+/* ===== CLIP PATH ===== */
+
 .clip-before {
   clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
 }
@@ -212,7 +257,118 @@ body {
   clip-path: polygon(var(--slider-pos) 0, 100% 0, 100% 100%, var(--slider-pos) 100%);
 }
 
-/* Hide default cursor inside before/after slider area to allow custom cursor */
+/* ===== SLIDER CURSOR ===== */
+
 .slider-container:hover {
   cursor: ew-resize;
+}
+
+/* ===== INPUT FOCUS RING ===== */
+
+.input-focus-ring {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-focus-ring:focus {
+  border-color: #C6A969;
+  box-shadow: 0 0 0 3px rgba(198, 169, 105, 0.12);
+  outline: none;
+}
+
+/* ===== BUTTON PRESS EFFECT ===== */
+
+.btn-press {
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* ===== CARD HOVER LIFT ===== */
+
+.card-lift {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* ===== GRADIENT BORDER ===== */
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(198,169,105,0.4), rgba(198,169,105,0.05), rgba(198,169,105,0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ===== NOISE TEXTURE OVERLAY ===== */
+
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ===== LUXURY BADGE ===== */
+
+.badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(198, 169, 105, 0.1);
+  border: 1px solid rgba(198, 169, 105, 0.22);
+  color: #C6A969;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ===== STEP INDICATOR ===== */
+
+.step-line {
+  height: 2px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+  position: relative;
+}
+
+.step-line-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #C6A969, #B29555);
+  transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Utility: override uppercase for mixed-case italic spans */
+.not-uppercase {
+  text-transform: none !important;
 }
