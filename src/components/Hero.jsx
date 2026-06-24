@@ -185,7 +185,7 @@ export default function Hero({ onOpenQuote }) {
           {/* Luxury Staggered Headline */}
           <div className="space-y-2">
             {slides[currentSlide].lines.map((line, idx) => (
-              <div key={idx} className="overflow-hidden h-[44px] sm:h-[65px] md:h-[80px] lg:h-[95px] flex items-center">
+              <div key={idx} className="overflow-hidden py-1 sm:py-2 flex items-center">
                 <AnimatePresence mode="wait">
                   <motion.h1
                     key={currentSlide + '-' + idx}
