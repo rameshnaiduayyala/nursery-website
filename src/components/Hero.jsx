@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Leaf, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
+import { ArrowRight, Leaf, ChevronRight, ChevronLeft } from 'lucide-react';
 import { heroSlides } from '../data/nurseryData';
 
 // Custom CountUp helper for stats
@@ -70,17 +70,17 @@ export default function Hero({ onOpenQuote }) {
   const handlePrev = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   const stats = [
-    { value: '10000', label: 'Happy Customers',   suffix: '+', accent: '#4ade80' },
-    { value: '500',   label: 'Plant Varieties',    suffix: '+', accent: '#0E9F6E' },
-    { value: '1000',  label: 'Projects Delivered', suffix: '+', accent: '#4ade80' },
-    { value: '10',    label: 'Years Experience',   suffix: '+', accent: '#0E9F6E' },
+    { value: '10000', label: 'Happy Customers', suffix: '+', accent: '#4ade80' },
+    { value: '500', label: 'Plant Varieties', suffix: '+', accent: '#0E9F6E' },
+    { value: '1000', label: 'Projects Delivered', suffix: '+', accent: '#4ade80' },
+    { value: '10', label: 'Years Experience', suffix: '+', accent: '#0E9F6E' },
   ];
 
   return (
     <section
       id="home"
       style={{ height: '100svh' }}
-      className="relative flex flex-col justify-between bg-[#08120B] text-[#FAF8F2] pt-20 overflow-hidden"
+      className="relative flex flex-col justify-between bg-[#08120B] text-[#FAF8F2] pt-16 sm:pt-20 overflow-hidden"
     >
       {/* Cinematic Background Image Carousel */}
       <div className="absolute inset-0 z-0">
@@ -120,10 +120,10 @@ export default function Hero({ onOpenQuote }) {
       </div>
 
       {/* Main Slide Content Area */}
-      <div className="flex-grow max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center z-20 py-6 relative text-left w-full">
+      <div className="flex-grow max-w-7xl mx-auto px-5 sm:px-8 md:px-12 flex flex-col justify-center z-20 py-4 relative text-left w-full">
 
-        {/* Navigation arrows */}
-        <div className="absolute right-6 md:right-12 bottom-1/3 flex flex-col space-y-2.5 z-30">
+        {/* Navigation arrows — desktop only */}
+        <div className="absolute right-4 md:right-12 bottom-1/3 hidden md:flex flex-col space-y-2.5 z-30">
           <button
             onClick={handlePrev}
             className="p-3 rounded-full border border-[#FAF8F2]/10 hover:border-[#C6A969]/60 bg-[#08120B]/40 hover:bg-[#C6A969] text-[#FAF8F2] hover:text-[#08120B] hover:scale-105 transition-all duration-300 cursor-pointer backdrop-blur-sm"
@@ -141,34 +141,61 @@ export default function Hero({ onOpenQuote }) {
         </div>
 
         {/* Text content */}
-        <div className="max-w-4xl space-y-5">
+        <div className="max-w-2xl space-y-4">
 
-          {/* Slide Badge */}
-          <div className="badge-gold">
-            <Sparkles className="w-3 h-3" />
-            <span>{slides[currentSlide].label}</span>
-          </div>
+          {/* Location pill badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 self-start"
+          >
+            <div
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full"
+              style={{
+                background: 'rgba(14,159,110,0.1)',
+                border: '1px solid rgba(14,159,110,0.25)',
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#4ade80] flex-shrink-0" style={{ boxShadow: '0 0 6px #4ade80' }} />
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={currentSlide}
+                  initial={{ opacity: 0, x: 6 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -6 }}
+                  transition={{ duration: 0.35 }}
+                  className="text-[10px] tracking-[0.2em] uppercase font-semibold text-[#4ade80]/80"
+                >
+                  {slides[currentSlide].label}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+          </motion.div>
 
-          {/* Luxury Staggered Headline */}
-          <div className="space-y-1">
+          {/* Headline */}
+          <div className="space-y-0">
             {slides[currentSlide].lines.map((line, idx) => (
-              <div key={idx} className="overflow-hidden py-0.5 sm:py-1 flex items-center">
+              <div key={idx} className="overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.h1
                     key={currentSlide + '-' + idx}
-                    initial={{ y: '105%', opacity: 0.5 }}
+                    initial={{ y: '105%', opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: '-105%', opacity: 0 }}
-                    transition={{ duration: 1.0, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-display font-light text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-[0.04em] leading-[1.05] text-[#FAF8F2]"
+                    transition={{ duration: 0.9, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="font-display block leading-[1.02] uppercase font-black tracking-tight"
+                    style={{
+                      fontSize: 'clamp(30px, 7vw, 76px)',
+                      color: idx === slides[currentSlide].lines.length - 1
+                        ? '#4ade80'
+                        : 'rgba(250,248,242,0.92)',
+                      textShadow: idx === slides[currentSlide].lines.length - 1
+                        ? '0 0 40px rgba(74,222,128,0.25)'
+                        : 'none',
+                    }}
                   >
-                    {idx === 2 ? (
-                      <span className="text-shimmer">
-                        {line}
-                      </span>
-                    ) : (
-                      line
-                    )}
+                    {line}
                   </motion.h1>
                 </AnimatePresence>
               </div>
@@ -179,32 +206,49 @@ export default function Hero({ onOpenQuote }) {
           <AnimatePresence mode="wait">
             <motion.p
               key={currentSlide}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.8, delay: 0.45 }}
-              className="text-sm sm:text-base text-[#E8E6DF]/55 leading-relaxed font-sans max-w-lg text-left font-light tracking-wide"
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.7, delay: 0.38 }}
+              className="font-sans font-light leading-relaxed max-w-md text-sm sm:text-[15px]"
+              style={{ color: 'rgba(232,230,223,0.55)', letterSpacing: '0.02em' }}
             >
               {slides[currentSlide].subheadline}
             </motion.p>
           </AnimatePresence>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-1"
+          >
             <button
               onClick={onOpenQuote}
-              className="px-8 py-4 rounded-full bg-gradient-to-r from-[#C6A969] to-[#B29555] hover:shadow-[0_12px_32px_rgba(198,169,105,0.3)] text-[#08120B] font-medium text-[10px] uppercase tracking-widest text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer group hover:scale-[1.03] btn-press"
+              className="group flex items-center justify-center gap-2 px-6 py-3 rounded-full text-[#060E08] font-semibold text-[10px] uppercase tracking-[0.18em] transition-all duration-300 hover:scale-[1.03] cursor-pointer btn-press"
+              style={{
+                background: 'linear-gradient(135deg, #0E9F6E, #4ade80)',
+                boxShadow: '0 8px 28px rgba(14,159,110,0.3)',
+              }}
             >
               Request Bulk Quote
-              <ArrowRight className="w-4 h-4 text-[#08120B] group-hover:translate-x-1 transition-transform duration-200" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
             </button>
             <a
               href="#categories"
-              className="px-8 py-4 rounded-full bg-[#08120B]/50 hover:bg-[#FAF8F2]/6 border border-[#FAF8F2]/15 hover:border-[#C6A969]/50 text-[#FAF8F2] transition-all duration-300 font-medium text-[10px] uppercase tracking-widest text-center backdrop-blur-sm"
+              className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium text-[10px] uppercase tracking-[0.18em] transition-all duration-300 hover:scale-[1.02]"
+              style={{
+                background: 'rgba(250,248,242,0.04)',
+                border: '1px solid rgba(250,248,242,0.12)',
+                color: 'rgba(250,248,242,0.75)',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(74,222,128,0.3)'; e.currentTarget.style.color = '#FAF8F2'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(250,248,242,0.12)'; e.currentTarget.style.color = 'rgba(250,248,242,0.75)'; }}
             >
-              Explore Plant Collection
+              Explore Plants
             </a>
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -276,7 +320,7 @@ export default function Hero({ onOpenQuote }) {
             {stats.map((stat, i) => (
               <div
                 key={i}
-                className="flex items-center gap-2.5 px-4 md:px-6 first:pl-0 last:pr-0 group"
+                className="flex items-center gap-2 px-3 sm:px-4 md:px-6 first:pl-0 last:pr-0 group"
               >
                 {/* Accent bar */}
                 <div
@@ -286,13 +330,13 @@ export default function Hero({ onOpenQuote }) {
                 <div className="flex flex-col">
                   {/* Number */}
                   <span
-                    className="font-display font-light text-xl sm:text-2xl leading-none tracking-wide text-[#FAF8F2]"
+                    className="font-display font-semibold text-lg sm:text-xl md:text-2xl leading-none tracking-wide text-[#FAF8F2]"
                   >
                     <CountUp end={stat.value} suffix={stat.suffix} />
                   </span>
                   {/* Label */}
                   <span
-                    className="text-[9px] font-sans tracking-[0.2em] uppercase font-semibold mt-0.5"
+                    className="text-[8px] sm:text-[9px] font-sans tracking-[0.18em] uppercase font-semibold mt-0.5"
                     style={{ color: stat.accent, opacity: 0.65 }}
                   >
                     {stat.label}

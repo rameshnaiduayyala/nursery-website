@@ -23,21 +23,21 @@ export const companyDetails = {
 // 1. Hero Slideshow Database
 export const heroSlides = [
   {
-    label: 'India’s Premium Landscaping Partner',
-    lines: ['GROWING NATURE.', 'SHAPING LANDSCAPES.', 'EXPORTING EXCELLENCE.'],
-    subheadline: 'Premium nursery plants for farmers, landscapers, resorts, developers, infrastructure projects, and export markets.',
+    label: 'Rajahmundry, Andhra Pradesh',
+    lines: ['Gangadhara', 'Nursery &', 'Exports.'],
+    subheadline: 'Premium plants grown across. Trusted by landscapers, developers, and export markets across India.',
     image: landscapeAfter,
   },
   {
-    label: 'Propagation Fields & Automated Glasshouses',
-    lines: ['MASSIVE CAPACITY.', 'UNCOMPROMISING CARE.', 'BOTANICAL SCALE.'],
-    subheadline: 'Over 50 acres of dedicated botanical cultivation zones and automated greenhouse tunnels for infrastructure project supply.',
+    label: '10,000+ Plants Ready for Delivery',
+    lines: ['10,000+', 'Plants Ready', 'for Delivery.'],
+    subheadline: '10,000+ plants in sizes 2ft to 12ft ready for immediate delivery across South India.',
     image: nurseryAerial,
   },
   {
-    label: 'Global Phytosanitary Certified Exports',
-    lines: ['SIGNATURE FLORA.', 'EXCLUSIVE PALMS.', 'GLOBAL LOGISTICS.'],
-    subheadline: 'Phytosanitary certified soil-less plants packaged professionally in double-net coco wraps and shipped worldwide.',
+    label: 'Phytosanitary Certified · Global Export',
+    lines: ['Plants for', 'every corner', 'of the world.'],
+    subheadline: 'Certified soil-less exports, double-net packed and shipped to 30+ countries. Freshness guaranteed.',
     image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1600&auto=format&fit=crop',
   },
 ];
