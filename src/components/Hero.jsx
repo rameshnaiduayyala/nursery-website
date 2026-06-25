@@ -21,7 +21,8 @@ function CountUp({ end, duration = 2000, suffix = "" }) {
   useEffect(() => {
     if (!isVisible) return;
     let start = 0;
-    const endValue = parseInt(end, 10);
+    // strip commas so '10,000' parses correctly
+    const endValue = parseInt(String(end).replace(/,/g, ''), 10);
     if (start === endValue) return;
     let totalMiliseconds = duration;
     let incrementTime = Math.max(Math.floor(totalMiliseconds / endValue), 15);
@@ -38,8 +39,8 @@ function CountUp({ end, duration = 2000, suffix = "" }) {
   }, [end, duration, isVisible]);
 
   return (
-    <span ref={elementRef} className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-[#C6A969]">
-      {count}{suffix}
+    <span ref={elementRef}>
+      {count.toLocaleString()}{suffix}
     </span>
   );
 }
@@ -69,16 +70,17 @@ export default function Hero({ onOpenQuote }) {
   const handlePrev = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   const stats = [
-    { value: '50', label: 'Acres Nursery', suffix: '+' },
-    { value: '500', label: 'Plant Varieties', suffix: '+' },
-    { value: '1000', label: 'Projects Delivered', suffix: '+' },
-    { value: '10', label: 'Years Experience', suffix: '+' },
+    { value: '10000', label: 'Happy Customers',   suffix: '+', accent: '#4ade80' },
+    { value: '500',   label: 'Plant Varieties',    suffix: '+', accent: '#0E9F6E' },
+    { value: '1000',  label: 'Projects Delivered', suffix: '+', accent: '#4ade80' },
+    { value: '10',    label: 'Years Experience',   suffix: '+', accent: '#0E9F6E' },
   ];
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col justify-between bg-[#08120B] text-[#FAF8F2] pt-24 overflow-hidden"
+      style={{ height: '100svh' }}
+      className="relative flex flex-col justify-between bg-[#08120B] text-[#FAF8F2] pt-20 overflow-hidden"
     >
       {/* Cinematic Background Image Carousel */}
       <div className="absolute inset-0 z-0">
@@ -118,7 +120,7 @@ export default function Hero({ onOpenQuote }) {
       </div>
 
       {/* Main Slide Content Area */}
-      <div className="flex-grow max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center z-20 py-20 relative text-left w-full">
+      <div className="flex-grow max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center z-20 py-6 relative text-left w-full">
 
         {/* Navigation arrows */}
         <div className="absolute right-6 md:right-12 bottom-1/3 flex flex-col space-y-2.5 z-30">
@@ -139,7 +141,7 @@ export default function Hero({ onOpenQuote }) {
         </div>
 
         {/* Text content */}
-        <div className="max-w-4xl space-y-7">
+        <div className="max-w-4xl space-y-5">
 
           {/* Slide Badge */}
           <div className="badge-gold">
@@ -158,7 +160,7 @@ export default function Hero({ onOpenQuote }) {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: '-105%', opacity: 0 }}
                     transition={{ duration: 1.0, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-tight leading-[0.95] text-[#FAF8F2] uppercase"
+                    className="font-display font-light text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-[0.04em] leading-[1.05] text-[#FAF8F2]"
                   >
                     {idx === 2 ? (
                       <span className="text-shimmer">
@@ -181,7 +183,7 @@ export default function Hero({ onOpenQuote }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.8, delay: 0.45 }}
-              className="text-sm sm:text-base md:text-lg text-[#E8E6DF]/75 leading-relaxed font-sans max-w-lg text-left"
+              className="text-sm sm:text-base text-[#E8E6DF]/55 leading-relaxed font-sans max-w-lg text-left font-light tracking-wide"
             >
               {slides[currentSlide].subheadline}
             </motion.p>
@@ -191,14 +193,14 @@ export default function Hero({ onOpenQuote }) {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
             <button
               onClick={onOpenQuote}
-              className="px-8 py-4 rounded-full bg-gradient-to-r from-[#C6A969] to-[#B29555] hover:shadow-[0_12px_32px_rgba(198,169,105,0.3)] text-[#08120B] font-bold text-xs uppercase tracking-wider text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer group hover:scale-[1.03] btn-press"
+              className="px-8 py-4 rounded-full bg-gradient-to-r from-[#C6A969] to-[#B29555] hover:shadow-[0_12px_32px_rgba(198,169,105,0.3)] text-[#08120B] font-medium text-[10px] uppercase tracking-widest text-center transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer group hover:scale-[1.03] btn-press"
             >
               Request Bulk Quote
               <ArrowRight className="w-4 h-4 text-[#08120B] group-hover:translate-x-1 transition-transform duration-200" />
             </button>
             <a
               href="#categories"
-              className="px-8 py-4 rounded-full bg-[#08120B]/50 hover:bg-[#FAF8F2]/6 border border-[#FAF8F2]/15 hover:border-[#C6A969]/50 text-[#FAF8F2] transition-all duration-300 font-bold text-xs uppercase tracking-wider text-center backdrop-blur-sm"
+              className="px-8 py-4 rounded-full bg-[#08120B]/50 hover:bg-[#FAF8F2]/6 border border-[#FAF8F2]/15 hover:border-[#C6A969]/50 text-[#FAF8F2] transition-all duration-300 font-medium text-[10px] uppercase tracking-widest text-center backdrop-blur-sm"
             >
               Explore Plant Collection
             </a>
@@ -206,48 +208,99 @@ export default function Hero({ onOpenQuote }) {
         </div>
       </div>
 
-      {/* Slide Navigation Progress Bars */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-3 gap-5 md:gap-8 mb-8 text-left w-full">
+      {/* Slide Navigation — modern numbered tabs */}
+      <div className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 flex items-center gap-3 mb-4 w-full">
         {slides.map((slide, idx) => {
           const isActive = idx === currentSlide;
           return (
             <button
               key={idx}
               onClick={() => setCurrentSlide(idx)}
-              className="flex flex-col space-y-2 group cursor-pointer focus:outline-none"
+              className="group flex items-center gap-2.5 cursor-pointer focus:outline-none transition-all duration-300"
             >
-              <div className="step-line">
-                <div
-                  className="step-line-fill"
-                  style={{ width: isActive ? `${progress}%` : '0%' }}
-                />
+              {/* Number pill */}
+              <div
+                className="relative flex items-center justify-center w-7 h-7 rounded-full text-[10px] font-bold transition-all duration-300"
+                style={{
+                  background: isActive ? 'rgba(198,169,105,0.15)' : 'transparent',
+                  border: isActive ? '1px solid rgba(198,169,105,0.5)' : '1px solid rgba(250,248,242,0.12)',
+                  color: isActive ? '#C6A969' : 'rgba(250,248,242,0.3)',
+                }}
+              >
+                {String(idx + 1).padStart(2, '0')}
+                {/* Arc progress ring */}
+                {isActive && (
+                  <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 28 28">
+                    <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(198,169,105,0.12)" strokeWidth="1.5" />
+                    <circle
+                      cx="14" cy="14" r="12"
+                      fill="none"
+                      stroke="#C6A969"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeDasharray={`${2 * Math.PI * 12}`}
+                      strokeDashoffset={`${2 * Math.PI * 12 * (1 - progress / 100)}`}
+                      style={{ transition: 'stroke-dashoffset 0.5s cubic-bezier(0.65,0,0.35,1)' }}
+                    />
+                  </svg>
+                )}
               </div>
-              <span className={`text-[9.5px] tracking-[0.14em] uppercase font-bold transition-colors duration-300 ${
-                isActive ? 'text-[#C6A969]' : 'text-[#E8E6DF]/35 group-hover:text-[#E8E6DF]/60'
-              }`}>
-                0{idx + 1}. {slide.lines[0].split(' ')[0]}
+              {/* Label */}
+              <span
+                className="text-[9px] tracking-[0.16em] uppercase font-semibold transition-all duration-300 hidden sm:block"
+                style={{ color: isActive ? '#C6A969' : 'rgba(250,248,242,0.25)' }}
+              >
+                {slide.lines[0].split(' ')[0]}
               </span>
+              {/* Separator dot */}
+              {idx < slides.length - 1 && (
+                <span className="w-px h-3 bg-white/8 ml-1 hidden sm:block" />
+              )}
             </button>
           );
         })}
       </div>
 
       {/* Statistics Section in Hero Footer */}
-      <div className="relative z-20 border-t border-[#C6A969]/12 bg-[#08120B]/92 backdrop-blur-md py-10 md:py-12 w-full">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 w-full">
-          {stats.map((stat, i) => (
-            <div
-              key={i}
-              className="flex flex-col space-y-1.5 border-l border-[#C6A969]/25 pl-4 md:pl-6 text-left group"
-            >
-              <div className="flex items-baseline">
-                <CountUp end={stat.value} suffix={stat.suffix} />
+      <div
+        className="relative z-20 w-full flex-shrink-0"
+        style={{
+          background: 'rgba(4,12,6,0.92)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          borderTop: '1px solid rgba(14,159,110,0.2)',
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/[0.06] py-3 md:py-4">
+            {stats.map((stat, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2.5 px-4 md:px-6 first:pl-0 last:pr-0 group"
+              >
+                {/* Accent bar */}
+                <div
+                  className="w-0.5 h-6 rounded-full flex-shrink-0 opacity-70"
+                  style={{ background: stat.accent }}
+                />
+                <div className="flex flex-col">
+                  {/* Number */}
+                  <span
+                    className="font-display font-light text-xl sm:text-2xl leading-none tracking-wide text-[#FAF8F2]"
+                  >
+                    <CountUp end={stat.value} suffix={stat.suffix} />
+                  </span>
+                  {/* Label */}
+                  <span
+                    className="text-[9px] font-sans tracking-[0.2em] uppercase font-semibold mt-0.5"
+                    style={{ color: stat.accent, opacity: 0.65 }}
+                  >
+                    {stat.label}
+                  </span>
+                </div>
               </div>
-              <span className="text-[10px] font-sans tracking-[0.2em] text-[#FAF8F2]/55 font-bold uppercase">
-                {stat.label}
-              </span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
