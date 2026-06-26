@@ -12,10 +12,10 @@ export default function Footer({ onOpenQuote }) {
   };
 
   return (
-    <footer className="relative bg-[#08120B] text-[#FAF8F2]/80 border-t border-[#C6A969]/12 overflow-hidden text-left">
+    <footer className="relative bg-forest-black text-warm-ivory/80 border-t border-luxury-gold/12 overflow-hidden text-left">
 
       {/* Ambient background glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60vw] h-[40vh] bg-[#C6A969]/3 blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60vw] h-[40vh] bg-luxury-gold/3 blur-[140px] pointer-events-none" />
 
       {/* Top Footer Section */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 relative z-10">
@@ -31,14 +31,14 @@ export default function Footer({ onOpenQuote }) {
               />
             ) : (
               <>
-                <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-[#C6A969] to-[#B29555] shadow-md shadow-[#C6A969]/15 group-hover:rotate-6 transition-transform duration-300">
-                  <Leaf className="w-5 h-5 text-[#08120B]" />
+                <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-luxury-gold to-luxury-gold-deep shadow-md shadow-luxury-gold/15 group-hover:rotate-6 transition-transform duration-300">
+                  <Leaf className="w-5 h-5 text-bg-opposite" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-display font-bold text-base tracking-tight text-[#FAF8F2] leading-none group-hover:text-[#C6A969] transition-colors duration-300">
+                  <span className="font-display font-bold text-base tracking-tight text-warm-ivory leading-none group-hover:text-luxury-gold transition-colors duration-300">
                     {companyDetails.name.toUpperCase()}
                   </span>
-                  <span className="font-sans text-[8px] tracking-[0.25em] text-[#C6A969] font-semibold uppercase leading-none mt-1.5">
+                  <span className="font-sans text-[8px] tracking-[0.25em] text-luxury-gold font-semibold uppercase leading-none mt-1.5">
                     {companyDetails.subtitle}
                   </span>
                 </div>
@@ -46,7 +46,7 @@ export default function Footer({ onOpenQuote }) {
             )}
           </a>
 
-          <p className="text-xs sm:text-sm text-[#E8E6DF]/60 leading-relaxed font-sans max-w-[280px]">
+          <p className="text-xs sm:text-sm text-stone-gray/60 leading-relaxed font-sans max-w-[280px]">
             {companyDetails.name} is a premier botanical hub specializing in pan-India transit and global export of premium agricultural, avenue, palm, and landscaping plant varieties.
           </p>
 
@@ -61,7 +61,7 @@ export default function Footer({ onOpenQuote }) {
               <a
                 key={label}
                 href="#"
-                className="w-9 h-9 rounded-xl bg-white/5 hover:bg-[#C6A969] hover:text-[#08120B] text-[#C6A969] flex items-center justify-center transition-all duration-300 hover:scale-[1.08]"
+                className="w-9 h-9 rounded-xl bg-warm-ivory/[0.04] border border-warm-ivory/8 hover:bg-luxury-gold hover:text-bg-opposite text-luxury-gold flex items-center justify-center transition-all duration-300 hover:scale-[1.08]"
                 aria-label={label}
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -77,13 +77,13 @@ export default function Footer({ onOpenQuote }) {
 
         {/* Plant Catalog links */}
         <div className="lg:col-span-2 space-y-5">
-          <h4 className="font-display font-bold text-xs tracking-widest text-[#FAF8F2] uppercase">
+          <h4 className="font-display font-bold text-xs tracking-widest text-warm-ivory uppercase">
             Plant Catalog
           </h4>
-          <ul className="space-y-3 text-xs sm:text-sm font-sans text-[#E8E6DF]/55">
+          <ul className="space-y-3 text-xs sm:text-sm font-sans text-stone-gray/75">
             {['Avenue Trees', 'Fruit Plants', 'Palm Trees', 'Ornamental Shrubs', 'Indoor Greens'].map((item) => (
               <li key={item}>
-                <a href="#categories" className="hover:text-[#C6A969] transition-colors duration-200">
+                <a href="#categories" className="hover:text-luxury-gold transition-colors duration-200">
                   {item}
                 </a>
               </li>
@@ -93,24 +93,24 @@ export default function Footer({ onOpenQuote }) {
 
         {/* Quick Links */}
         <div className="lg:col-span-2 space-y-5">
-          <h4 className="font-display font-bold text-xs tracking-widest text-[#FAF8F2] uppercase">
+          <h4 className="font-display font-bold text-xs tracking-widest text-warm-ivory uppercase">
             Quick Links
           </h4>
-          <ul className="space-y-3 text-xs sm:text-sm font-sans text-[#E8E6DF]/55">
-            <li><a href="#services" className="hover:text-[#C6A969] transition-colors duration-200">Project Supply</a></li>
-            <li><a href="#services" className="hover:text-[#C6A969] transition-colors duration-200">Agro Bulk Orders</a></li>
-            <li><a href="#export" className="hover:text-[#C6A969] transition-colors duration-200">Export Logistics</a></li>
-            <li><a href="#about" className="hover:text-[#C6A969] transition-colors duration-200">Botanical Care</a></li>
+          <ul className="space-y-3 text-xs sm:text-sm font-sans text-stone-gray/75">
+            <li><a href="#services" className="hover:text-luxury-gold transition-colors duration-200">Project Supply</a></li>
+            <li><a href="#services" className="hover:text-luxury-gold transition-colors duration-200">Agro Bulk Orders</a></li>
+            <li><a href="#export" className="hover:text-luxury-gold transition-colors duration-200">Export Logistics</a></li>
+            <li><a href="#about" className="hover:text-luxury-gold transition-colors duration-200">Botanical Care</a></li>
             <li>
-              <button onClick={onOpenQuote} className="hover:text-[#C6A969] transition-colors duration-200 text-left cursor-pointer">
+              <button onClick={onOpenQuote} className="hover:text-luxury-gold transition-colors duration-200 text-left cursor-pointer">
                 Get a Quote
               </button>
             </li>
-            <li className="pt-2 border-t border-white/6 flex flex-col gap-1.5">
-              <a href="/billing" className="hover:text-[#C6A969] transition-colors duration-200 text-[11px] font-bold uppercase tracking-wider text-[#C6A969]/80">
+            <li className="pt-2 border-t border-warm-ivory/8 flex flex-col gap-1.5">
+              <a href="/billing" className="hover:text-luxury-gold transition-colors duration-200 text-[11px] font-bold uppercase tracking-wider text-luxury-gold/80">
                 Invoice System
               </a>
-              <a href="/logistics" className="hover:text-[#C6A969] transition-colors duration-200 text-[11px] font-bold uppercase tracking-wider text-[#C6A969]/80">
+              <a href="/logistics" className="hover:text-luxury-gold transition-colors duration-200 text-[11px] font-bold uppercase tracking-wider text-luxury-gold/80">
                 Logistics Planner
               </a>
             </li>
@@ -119,7 +119,7 @@ export default function Footer({ onOpenQuote }) {
 
         {/* Quick Inquiry + Contact */}
         <div className="lg:col-span-4 space-y-6">
-          <h4 className="font-display font-bold text-xs tracking-widest text-[#FAF8F2] uppercase">
+          <h4 className="font-display font-bold text-xs tracking-widest text-warm-ivory uppercase">
             Quick Inquiry
           </h4>
 
@@ -128,18 +128,18 @@ export default function Footer({ onOpenQuote }) {
               type="email"
               required
               placeholder="Your email address"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/8 text-xs font-medium focus:outline-none focus:border-[#C6A969] focus:shadow-[0_0_0_3px_rgba(198,169,105,0.08)] text-[#FAF8F2] transition-all duration-200 placeholder:text-[#FAF8F2]/30"
+              className="w-full px-4 py-3 rounded-xl bg-warm-ivory/[0.04] border border-warm-ivory/15 text-xs font-medium focus:outline-none focus:border-luxury-gold focus:shadow-[0_0_0_3px_rgba(16,185,129,0.08)] text-warm-ivory transition-all duration-200 placeholder:text-warm-ivory/30"
             />
             <div className="relative">
               <input
                 type="text"
                 required
                 placeholder="Ask about species availability..."
-                className="w-full pl-4 pr-11 py-3 rounded-xl bg-white/5 border border-white/8 text-xs font-medium focus:outline-none focus:border-[#C6A969] focus:shadow-[0_0_0_3px_rgba(198,169,105,0.08)] text-[#FAF8F2] transition-all duration-200 placeholder:text-[#FAF8F2]/30"
+                className="w-full pl-4 pr-11 py-3 rounded-xl bg-warm-ivory/[0.04] border border-warm-ivory/15 text-xs font-medium focus:outline-none focus:border-luxury-gold focus:shadow-[0_0_0_3px_rgba(16,185,129,0.08)] text-warm-ivory transition-all duration-200 placeholder:text-warm-ivory/30"
               />
               <button
                 type="submit"
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg bg-[#C6A969]/15 hover:bg-[#C6A969] text-[#C6A969] hover:text-[#08120B] flex items-center justify-center transition-all duration-200 cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg bg-luxury-gold/15 hover:bg-luxury-gold text-luxury-gold hover:text-forest-black flex items-center justify-center transition-all duration-200 cursor-pointer"
                 aria-label="Submit inquiry"
               >
                 <Send className="w-3 h-3" />
@@ -148,7 +148,7 @@ export default function Footer({ onOpenQuote }) {
           </form>
 
           {/* Contact Details */}
-          <div className="space-y-3 text-xs sm:text-sm font-sans text-[#E8E6DF]/55">
+          <div className="space-y-3 text-xs sm:text-sm font-sans text-stone-gray/55">
             {[
               { Icon: MapPin, text: `${companyDetails.address}, ${companyDetails.city}` },
               { Icon: Phone, text: companyDetails.phone },
@@ -156,7 +156,7 @@ export default function Footer({ onOpenQuote }) {
             ].map(({ Icon, text }, i) => (
               <div key={i} className="flex items-start gap-2.5">
                 <div className="flex-shrink-0 w-5 h-5 mt-0.5 flex items-center justify-center">
-                  <Icon className="w-4 h-4 text-[#C6A969]" />
+                  <Icon className="w-4 h-4 text-luxury-gold" />
                 </div>
                 <span className="leading-relaxed">{text}</span>
               </div>
@@ -166,24 +166,24 @@ export default function Footer({ onOpenQuote }) {
       </div>
 
       {/* Bottom Legal bar */}
-      <div className="border-t border-white/5 py-6 bg-[#040a06]/80 relative z-10">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-sans text-[#E8E6DF]/35">
+      <div className="border-t border-warm-ivory/8 py-6 bg-forest-black-secondary/80 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-sans text-stone-gray/35">
 
           <div className="flex flex-wrap items-center justify-center gap-5">
             <p>&copy; {currentYear} {companyDetails.name}. All rights reserved.</p>
-            <p className="text-[#E8E6DF]/20">|</p>
+            <p className="text-stone-gray/20">|</p>
             <div className="flex items-center gap-2.5">
-              <span className="text-[9px] tracking-[0.2em] uppercase text-[#E8E6DF]/40 font-medium">
+              <span className="text-[9px] tracking-[0.2em] uppercase text-stone-gray/40 font-medium">
                 Designed & Developed by
               </span>
-              <span className="h-3 w-px bg-[#C6A969]/30"></span>
-              <span className="text-[#FAF8F2] font-semibold text-xs tracking-wide bg-gradient-to-r from-[#C6A969] to-[#E8D5A3] bg-clip-text text-transparent">
+              <span className="h-3 w-px bg-luxury-gold/30"></span>
+              <span className="text-warm-ivory font-semibold text-xs tracking-wide bg-gradient-to-r from-luxury-gold to-[#E8D5A3] bg-clip-text text-transparent">
                 Ramesh Ayyala
               </span>
-              <span className="h-3 w-px bg-[#C6A969]/30"></span>
+              <span className="h-3 w-px bg-luxury-gold/30"></span>
               <a
                 href="tel:+917989419864"
-                className="text-[11px] text-[#C6A969]/70 hover:text-[#FAF8F2] transition-colors duration-300 font-mono tracking-wide"
+                className="text-[11px] text-luxury-gold/70 hover:text-warm-ivory transition-colors duration-300 font-mono tracking-wide"
               >
                 +91 79894 19864
               </a>

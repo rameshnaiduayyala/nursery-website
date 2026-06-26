@@ -26,7 +26,7 @@ export default function ProjectShowcase({ onSelectProject = () => {}, onViewDeta
   const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
 
   return (
-    <section id="showcase" className="relative py-24 md:py-36 bg-[#08120B] text-[#FAF8F2] overflow-hidden">
+    <section id="showcase" className="relative py-24 md:py-36 bg-forest-black text-warm-ivory overflow-hidden">
       {/* Background lights */}
       <div className="absolute top-[20%] left-[-10%] w-[35vw] h-[35vw] bg-[#0E9F6E]/5 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-10%] w-[30vw] h-[30vw] bg-[#C6A969]/5 rounded-full blur-[130px] pointer-events-none" />
@@ -79,7 +79,7 @@ export default function ProjectShowcase({ onSelectProject = () => {}, onViewDeta
             {/* After (clipped) */}
             <div className="absolute inset-0 clip-before z-10">
               <img src={landscapeAfter} alt="Landscaped After" className="w-full h-full object-cover" />
-              <div className="absolute top-5 right-5 z-30 bg-gradient-to-r from-[#C6A969] to-[#B29555] px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider text-[#08120B] shadow-lg">
+              <div className="absolute top-5 right-5 z-30 bg-gradient-to-r from-luxury-gold to-luxury-gold-deep px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider text-bg-opposite shadow-lg">
                 AFTER: Gangadhara Execution
               </div>
             </div>
@@ -87,9 +87,9 @@ export default function ProjectShowcase({ onSelectProject = () => {}, onViewDeta
             {/* Drag Handle */}
             <div
               style={{ left: `${sliderPos}%` }}
-              className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#C6A969]/0 via-[#C6A969] to-[#C6A969]/0 z-20 cursor-ew-resize -translate-x-1/2"
+              className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-luxury-gold/0 via-luxury-gold to-luxury-gold/0 z-20 cursor-ew-resize -translate-x-1/2"
             >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-gradient-to-br from-[#C6A969] to-[#B29555] text-[#08120B] flex items-center justify-center shadow-[0_4px_24px_rgba(198,169,105,0.4)] border-2 border-[#FAF8F2]/80 hover:scale-110 transition-transform">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-gradient-to-br from-luxury-gold to-luxury-gold-deep text-bg-opposite flex items-center justify-center shadow-glass border-2 border-warm-ivory/80 hover:scale-110 transition-transform">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l-4 4 4 4m8 0l4-4-4-4" />
                 </svg>
@@ -113,8 +113,8 @@ export default function ProjectShowcase({ onSelectProject = () => {}, onViewDeta
                   onClick={() => setActiveFilter(cat)}
                   className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-wider border transition-all duration-250 cursor-pointer ${
                     activeFilter === cat
-                      ? 'bg-gradient-to-r from-[#C6A969] to-[#B29555] border-transparent text-[#08120B] shadow-[0_4px_16px_rgba(198,169,105,0.25)]'
-                      : 'bg-transparent border-[#C6A969]/15 text-[#E8E6DF]/70 hover:border-[#C6A969]/40 hover:text-[#C6A969]'
+                      ? 'bg-gradient-to-r from-luxury-gold to-luxury-gold-deep border-transparent text-forest-black shadow-[0_4px_16px_rgba(4,120,87,0.25)]'
+                      : 'bg-transparent border-luxury-gold/15 text-stone-gray/70 hover:border-luxury-gold/40 hover:text-luxury-gold'
                   }`}
                 >
                   {cat === 'All' ? 'All Projects' : cat}
@@ -134,16 +134,16 @@ export default function ProjectShowcase({ onSelectProject = () => {}, onViewDeta
                   exit={{ opacity: 0, scale: 0.92 }}
                   transition={{ duration: 0.4 }}
                   onClick={() => onViewDetails(project)}
-                  className="relative group rounded-3xl overflow-hidden shadow-xl border border-white/5 cursor-pointer h-[400px] md:h-[420px] w-full card-lift hover:shadow-[0_24px_64px_rgba(8,18,11,0.5)]"
+                  className="relative group rounded-3xl overflow-hidden shadow-xl border border-warm-ivory/5 cursor-pointer h-[400px] md:h-[420px] w-full card-lift hover:shadow-[0_24px_64px_rgba(8,18,11,0.5)]"
                 >
                   {/* Image */}
-                  <div className="absolute inset-0 bg-[#08120B] overflow-hidden">
+                  <div className="absolute inset-0 bg-forest-black-secondary overflow-hidden">
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#08120B] via-[#08120B]/30 to-transparent z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-forest-black via-forest-black/30 to-transparent z-10" />
                   </div>
 
                   {/* Hover inner border */}
@@ -155,7 +155,7 @@ export default function ProjectShowcase({ onSelectProject = () => {}, onViewDeta
                       <span className="text-[#C6A969] text-[10px] font-bold tracking-widest uppercase bg-[#C6A969]/12 px-3 py-1 rounded-full border border-[#C6A969]/22">
                         {project.category}
                       </span>
-                      <h4 className="font-display font-bold text-xl sm:text-2xl mt-3 text-[#FAF8F2] leading-tight uppercase">
+                      <h4 className="font-display font-bold text-xl sm:text-2xl mt-3 text-warm-ivory leading-tight uppercase">
                         {project.title}
                       </h4>
                     </div>

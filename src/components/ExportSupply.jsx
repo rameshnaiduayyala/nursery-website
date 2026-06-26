@@ -45,7 +45,7 @@ export default function ExportSupply() {
   ];
 
   return (
-    <section id="export" className="relative py-24 md:py-36 bg-[#08120B] text-[#FAF8F2] overflow-hidden">
+    <section id="export" className="relative py-24 md:py-36 bg-forest-black text-warm-ivory overflow-hidden">
       {/* Background gradients */}
       <div className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-[#0E9F6E]/5 blur-[130px] pointer-events-none" />
       <div className="absolute bottom-[20%] left-[-10%] w-[35vw] h-[35vw] rounded-full bg-[#C6A969]/5 blur-[140px] pointer-events-none" />
@@ -63,7 +63,7 @@ export default function ExportSupply() {
             </h2>
             <div className="section-divider" />
           </div>
-          <p className="text-sm sm:text-base text-[#E8E6DF]/65 font-sans max-w-sm text-left leading-relaxed">
+          <p className="text-sm sm:text-base text-stone-gray/65 font-sans max-w-sm text-left leading-relaxed">
             Seamless botanical logistics serving regional developers across India and exporting containerized flora to international destinations.
           </p>
         </div>
@@ -73,7 +73,7 @@ export default function ExportSupply() {
 
           {/* Map display */}
           <div className="lg:col-span-7">
-            <div className="relative w-full aspect-[600/300] bg-[#08120B]/60 border border-[#C6A969]/12 rounded-3xl p-4 md:p-6 backdrop-blur-sm overflow-hidden shadow-[0_24px_80px_rgba(8,18,11,0.5)]">
+            <div className="relative w-full aspect-[600/300] bg-forest-black-secondary/60 border border-luxury-gold/12 rounded-3xl p-4 md:p-6 backdrop-blur-sm overflow-hidden shadow-[0_24px_80px_rgba(8,18,11,0.5)]">
 
               {/* Grid backdrop */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.012)_1px,transparent_1px)] bg-[size:24px_24px] rounded-3xl pointer-events-none" />
@@ -129,11 +129,11 @@ export default function ExportSupply() {
                       <circle
                         cx={node.x} cy={node.y}
                         r={isSource ? 7 : isHovered ? 5.5 : 4}
-                        fill={isSource ? '#C6A969' : isHovered ? '#FAF8F2' : '#E8E6DF'}
+                        fill={isSource ? '#C6A969' : isHovered ? 'var(--text-primary)' : 'var(--text-secondary)'}
                         style={{ transition: 'r 0.2s ease, fill 0.2s ease' }}
                       />
                       {isSource && (
-                        <circle cx={node.x} cy={node.y} r={4} fill="#08120B" />
+                        <circle cx={node.x} cy={node.y} r={4} fill="var(--bg-primary)" />
                       )}
                     </g>
                   );
@@ -141,10 +141,10 @@ export default function ExportSupply() {
               </svg>
 
               {/* Node Tooltip */}
-              <div className="absolute bottom-4 left-4 right-4 glass-dark-heavy px-4 py-3 rounded-xl border border-[#C6A969]/15 text-xs flex items-center justify-between">
+              <div className="absolute bottom-4 left-4 right-4 glass-dark-heavy px-4 py-3 rounded-xl border border-luxury-gold/15 text-xs flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Anchor className="w-4 h-4 text-[#C6A969] flex-shrink-0" />
-                  <span className="font-sans text-[#E8E6DF]/80 font-semibold">
+                  <span className="font-sans text-warm-ivory/80 font-semibold">
                     {hoveredNode
                       ? nodes.find(n => n.id === hoveredNode)?.name
                       : 'Hover route nodes to verify export cargo targets'}
@@ -172,10 +172,10 @@ export default function ExportSupply() {
                     <FeatureIcon className="w-5 h-5" />
                   </div>
                   <div className="space-y-1.5">
-                    <h4 className="font-display font-semibold text-sm sm:text-base tracking-tight uppercase text-[#FAF8F2]">
+                    <h4 className="font-display font-semibold text-sm sm:text-base tracking-tight uppercase text-warm-ivory">
                       {f.title}
                     </h4>
-                    <p className="text-xs text-[#E8E6DF]/60 leading-relaxed font-sans">
+                    <p className="text-xs text-stone-gray/65 leading-relaxed font-sans">
                       {f.desc}
                     </p>
                   </div>

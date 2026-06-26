@@ -43,7 +43,7 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="relative py-24 md:py-36 bg-[#08120B] text-[#FAF8F2] overflow-hidden">
+    <section id="services" className="relative py-24 md:py-36 bg-forest-black text-warm-ivory overflow-hidden">
       {/* Decorative ambient spots */}
       <div className="absolute top-[20%] left-[-10%] w-[35vw] h-[35vw] rounded-full bg-[#0E9F6E]/5 blur-[130px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-[#C6A969]/5 blur-[150px] pointer-events-none" />
@@ -61,7 +61,7 @@ export default function Services() {
           <span className="text-[#C6A969] font-display font-semibold tracking-[0.22em] text-xs md:text-sm uppercase block">
             Our Operations
           </span>
-          <h2 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-[#FAF8F2] tracking-tight leading-[1.02] uppercase">
+          <h2 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-warm-ivory tracking-tight leading-[1.02] uppercase">
             Horticultural<br />Services
           </h2>
           <div className="section-divider" />
@@ -97,19 +97,19 @@ export default function Services() {
                     </span>
                   </div>
 
-                  <h3 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-[#FAF8F2] leading-tight uppercase">
+                  <h3 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-warm-ivory leading-tight uppercase">
                     {service.title}
                   </h3>
 
-                  <p className="text-sm sm:text-base text-[#E8E6DF]/70 leading-relaxed font-sans">
+                  <p className="text-sm sm:text-base text-stone-gray/75 leading-relaxed font-sans">
                     {service.description}
                   </p>
 
                   {/* Highlights */}
                   <div className="space-y-3 pt-1">
                     {service.highlights.map((h, i) => (
-                      <div key={i} className="flex items-center space-x-3 text-xs sm:text-sm text-[#E8E6DF]/85 font-sans group">
-                        <div className="w-5 h-5 rounded-full bg-[#C6A969]/12 flex items-center justify-center flex-shrink-0">
+                      <div className="flex items-center space-x-3 text-xs sm:text-sm text-stone-gray/85 font-sans group">
+                        <div className="w-5 h-5 rounded-full bg-luxury-gold/12 flex items-center justify-center flex-shrink-0">
                           <CheckCircle className="w-3 h-3 text-[#C6A969]" />
                         </div>
                         <span>{h}</span>
@@ -119,7 +119,7 @@ export default function Services() {
 
                   {/* CTA link */}
                   <div className="pt-4">
-                    <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#C6A969] hover:text-[#FAF8F2] transition-colors duration-200 cursor-pointer group">
+                    <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-luxury-gold hover:text-warm-ivory transition-colors duration-200 cursor-pointer group">
                       <span>Enquire About Supply</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-200" />
                     </div>
@@ -134,7 +134,7 @@ export default function Services() {
                   transition={{ duration: 0.9 }}
                   className="w-full lg:w-1/2"
                 >
-                  <div className="relative group rounded-3xl overflow-hidden shadow-[0_32px_80px_rgba(8,18,11,0.5)] border border-[#C6A969]/12 bg-[#08120B] aspect-[4/3] max-w-xl mx-auto">
+                  <div className="relative group rounded-3xl overflow-hidden shadow-[0_32px_80px_rgba(8,18,11,0.5)] border border-luxury-gold/12 bg-forest-black-secondary aspect-[4/3] max-w-xl mx-auto">
                     {/* Background zooming image */}
                     <img
                       src={service.image}
@@ -142,11 +142,11 @@ export default function Services() {
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                     />
                     {/* Bottom gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#08120B]/55 to-transparent pointer-events-none z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-forest-black-secondary/60 to-transparent pointer-events-none z-10" />
                     {/* Hover border inner */}
-                    <div className="absolute inset-0 border border-transparent group-hover:border-[#C6A969]/20 rounded-3xl m-4 transition-all duration-500 z-20 pointer-events-none" />
+                    <div className="absolute inset-0 border border-transparent group-hover:border-luxury-gold/20 rounded-3xl m-4 transition-all duration-500 z-20 pointer-events-none" />
                     {/* Number watermark */}
-                    <div className="absolute bottom-5 right-6 z-20 font-display font-black text-6xl text-[#FAF8F2]/8 select-none pointer-events-none">
+                    <div className="absolute bottom-5 right-6 z-20 font-display font-black text-6xl text-warm-ivory/8 select-none pointer-events-none">
                       {service.num}
                     </div>
                   </div>

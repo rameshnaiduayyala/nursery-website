@@ -10,7 +10,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="relative py-24 md:py-36 bg-[#FAF8F2] text-[#08120B] overflow-hidden">
+    <section id="about" className="relative py-24 md:py-36 bg-bg-opposite text-text-opposite overflow-hidden">
 
       {/* Light decorative patterns */}
       <div className="absolute top-[10%] right-[-10%] w-[35vw] h-[35vw] rounded-full bg-[#E8E6DF]/50 blur-[140px] pointer-events-none" />

@@ -59,7 +59,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section id="why-us" className="relative py-24 md:py-36 bg-[#08120B] text-[#FAF8F2] overflow-hidden">
+    <section id="why-us" className="relative py-24 md:py-36 bg-forest-black text-warm-ivory overflow-hidden">
       {/* Decorative gradients */}
       <div className="absolute top-[10%] right-[-5%] w-[35vw] h-[35vw] rounded-full bg-[#0E9F6E]/5 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-[10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-[#C6A969]/5 blur-[130px] pointer-events-none" />
@@ -102,25 +102,25 @@ export default function WhyChooseUs() {
                   onClick={() => setActiveIndex(index)}
                   className={`cursor-pointer text-left p-5 rounded-2xl border transition-all duration-300 ${
                     isActive
-                      ? 'bg-[#C6A969]/10 border-[#C6A969]/50 shadow-[0_0_32px_rgba(198,169,105,0.08)]'
-                      : 'bg-white/[0.035] border-white/[0.055] hover:bg-white/[0.06] hover:border-white/10'
+                      ? 'bg-luxury-gold/10 border-luxury-gold/50 shadow-[0_0_32px_rgba(4,120,87,0.1)]'
+                      : 'bg-warm-ivory/[0.025] border-warm-ivory/[0.06] hover:bg-warm-ivory/[0.055] hover:border-warm-ivory/10'
                   }`}
                 >
                   <div className="flex items-center space-x-3 mb-3">
                     <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
                       isActive
-                        ? 'bg-[#C6A969] text-[#08120B] shadow-[0_4px_16px_rgba(198,169,105,0.3)]'
-                        : 'bg-white/5 text-[#C6A969]'
+                        ? 'bg-luxury-gold text-forest-black shadow-[0_4px_16px_rgba(4,120,87,0.3)]'
+                        : 'bg-warm-ivory/5 text-luxury-gold'
                     }`}>
                       <IconComp className="w-4 h-4" />
                     </div>
                     <h3 className={`font-display font-bold text-sm sm:text-base tracking-tight transition-colors duration-200 ${
-                      isActive ? 'text-[#C6A969]' : 'text-[#FAF8F2]'
+                      isActive ? 'text-luxury-gold' : 'text-warm-ivory'
                     }`}>
                       {point.title}
                     </h3>
                   </div>
-                  <p className="text-xs text-[#E8E6DF]/60 leading-relaxed font-sans pl-[48px]">
+                  <p className="text-xs text-stone-gray/60 leading-relaxed font-sans pl-[48px]">
                     {point.short}
                   </p>
 
@@ -156,7 +156,7 @@ export default function WhyChooseUs() {
                 transition={{ duration: 0.35 }}
                 className="relative rounded-3xl overflow-hidden p-[1px] bg-gradient-to-br from-[#C6A969]/30 via-[#C6A969]/5 to-transparent"
               >
-                <div className="glass-dark rounded-3xl p-8 text-left shadow-[0_32px_80px_rgba(8,18,11,0.5)] relative overflow-hidden">
+                <div className="glass-light rounded-3xl p-8 text-left shadow-glass relative overflow-hidden">
                   {/* Glow spot */}
                   <div className="absolute top-0 right-0 w-40 h-40 bg-[#C6A969]/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -170,15 +170,15 @@ export default function WhyChooseUs() {
                     </div>
                   </div>
 
-                  <h3 className="font-display font-bold text-2xl tracking-tight text-[#FAF8F2] mb-4 uppercase leading-tight">
+                  <h3 className="font-display font-bold text-2xl tracking-tight text-warm-ivory mb-4 uppercase leading-tight">
                     {points[activeIndex].title}
                   </h3>
 
-                  <p className="text-sm text-[#E8E6DF]/75 leading-relaxed font-sans mb-8">
+                  <p className="text-sm text-stone-gray/75 leading-relaxed font-sans mb-8">
                     {points[activeIndex].details}
                   </p>
 
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#C6A969] hover:text-[#FAF8F2] cursor-pointer group transition-colors duration-200">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-luxury-gold hover:text-warm-ivory cursor-pointer group transition-colors duration-200">
                     <span>Botanical Protocol</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                   </div>

@@ -1,28 +1,95 @@
 @import "tailwindcss";
 
+:root {
+  --bg-primary: #030704;
+  --bg-secondary: #08120B;
+  --bg-opposite: #FAF8F2;
+  --bg-opposite-secondary: #E8E6DF;
+
+  --text-primary: #FAF8F2;
+  --text-secondary: #E8E6DF;
+  --text-opposite: #030704;
+  --text-opposite-secondary: #2C3E35;
+
+  --accent-color: #10B981;
+  --accent-deep: #0E9F6E;
+  --border-color: rgba(16, 185, 129, 0.15);
+  --glass-bg: rgba(3, 7, 4, 0.35);
+  --glass-bg-scrolled: rgba(3, 7, 4, 0.92);
+  --card-bg: rgba(250, 248, 242, 0.04);
+  --card-border: rgba(250, 248, 242, 0.12);
+  --accent-deep: #059669;
+  --border-color: rgba(16, 185, 129, 0.12);
+
+  /* Glass surfaces — deeply immersive, refined */
+  --glass-bg: rgba(5, 10, 8, 0.70);
+  --glass-bg-scrolled: rgba(5, 10, 8, 0.95);
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.08);
+
+  /* Shadows — cinematic, grounded */
+  --glass-shadow: 0 12px 48px -8px rgba(0, 0, 0, 0.40), 0 2px 8px rgba(0, 0, 0, 0.20);
+  --glass-shadow-light: 0 6px 24px -4px rgba(0, 0, 0, 0.20);
+}
+
+:root.light {
+  /* Rich botanical ivory — clean, premium, never muddy */
+  --bg-primary: #F2F7F4;
+  --bg-secondary: #E5EFE8;
+  --bg-opposite: #FFFFFF;
+  --bg-opposite-secondary: #DCE9E0;
+
+  /* Deep forest ink — ultra-legible, maximum contrast */
+  --text-primary: #071610;
+  --text-secondary: #16352A;
+  --text-opposite: #071610;
+  --text-opposite-secondary: #16352A;
+
+  /* Vivid botanical emerald — futuristic, punchy, deep */
+  --accent-color: #047857;
+  --accent-deep: #065f46;
+  --border-color: rgba(4, 120, 87, 0.20);
+
+  /* Glass surfaces — crisp white gloss */
+  --glass-bg: rgba(242, 247, 244, 0.80);
+  --glass-bg-scrolled: rgba(255, 255, 255, 0.98);
+  --card-bg: rgba(4, 120, 87, 0.04);
+  --card-border: rgba(4, 120, 87, 0.14);
+
+  /* Shadows — elevated, cinematic depth */
+  --glass-shadow: 0 12px 48px -8px rgba(4, 120, 87, 0.12), 0 2px 8px rgba(7, 22, 16, 0.06);
+  --glass-shadow-light: 0 6px 24px -4px rgba(4, 120, 87, 0.08);
+}
+
 @theme {
   --font-sans: 'Plus Jakarta Sans', sans-serif;
   --font-display: 'Space Grotesk', sans-serif;
 
-  --color-forest-black: #030704;
-  --color-emerald-green: #0E9F6E;
-  --color-luxury-gold: #10B981;
-  --color-luxury-gold-deep: #0E9F6E;
-  --color-warm-ivory: #FAF8F2;
-  --color-stone-gray: #E8E6DF;
+  --color-forest-black: var(--bg-primary);
+  --color-forest-black-secondary: var(--bg-secondary);
+  --color-warm-ivory: var(--text-primary);
+  --color-stone-gray: var(--text-secondary);
+  --color-luxury-gold: var(--accent-color);
+  --color-luxury-gold-deep: var(--accent-deep);
 
-  --shadow-glass: 0 8px 32px 0 rgba(3, 7, 4, 0.45);
-  --shadow-glass-light: 0 4px 24px 0 rgba(3, 7, 4, 0.06);
-  --shadow-gold-glow: 0 0 40px 0 rgba(16, 185, 129, 0.12);
-  --shadow-card: 0 2px 16px rgba(3, 7, 4, 0.08), 0 1px 4px rgba(3, 7, 4, 0.06);
+  --color-bg-opposite: var(--bg-opposite);
+  --color-bg-opposite-secondary: var(--bg-opposite-secondary);
+  --color-text-opposite: var(--text-opposite);
+  --color-text-opposite-secondary: var(--text-opposite-secondary);
+
+  --shadow-glass: var(--glass-shadow);
+  --shadow-glass-light: var(--glass-shadow-light);
+  --shadow-gold-glow: 0 0 40px 0 rgba(4, 120, 87, 0.16);
+  --shadow-card: 0 2px 16px rgba(7, 22, 16, 0.07), 0 1px 4px rgba(7, 22, 16, 0.05);
 }
 
 /* Custom Base Styles */
 html {
   scroll-behavior: smooth;
-  background-color: #08120B;
-  color: #FAF8F2;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Global scroll styling for Lenis */
@@ -60,29 +127,29 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #030704;
+  background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #10B981, #0E9F6E);
+  background: linear-gradient(180deg, var(--accent-color), var(--accent-deep));
   border-radius: 99px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #10B981;
+  background: var(--accent-color);
 }
 
 /* Selection highlight */
 ::selection {
-  background: #10B981;
-  color: #030704;
+  background: var(--accent-color);
+  color: var(--bg-opposite);
 }
 
 /* Trailing Custom Cursor Classes (Awwwards Style) */
 .custom-cursor {
   width: 24px;
   height: 24px;
-  border: 1.5px solid #10B981;
+  border: 1.5px solid var(--accent-color);
   border-radius: 50%;
   position: fixed;
   transform: translate(-50%, -50%);
@@ -95,7 +162,7 @@ body {
 .custom-cursor-dot {
   width: 5px;
   height: 5px;
-  background-color: #10B981;
+  background-color: var(--accent-color);
   border-radius: 50%;
   position: fixed;
   transform: translate(-50%, -50%);
@@ -285,48 +352,50 @@ body {
 /* ===== GLASSMORPHISM UTILITIES ===== */
 
 .glass-dark {
-  background: rgba(8, 18, 11, 0.78);
+  background: var(--glass-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--card-border);
+  transition: background 0.4s ease;
 }
 
 .glass-dark-heavy {
-  background: rgba(8, 18, 11, 0.90);
+  background: var(--glass-bg-scrolled);
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
-  border: 1px solid rgba(198, 169, 105, 0.12);
+  border: 1px solid var(--border-color);
+  transition: background 0.4s ease;
 }
 
 .glass-emerald {
-  background: rgba(14, 159, 110, 0.08);
+  background: var(--card-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(14, 159, 110, 0.2);
+  border: 1px solid var(--border-color);
 }
 
 .glass-light {
-  background: rgba(250, 248, 242, 0.88);
+  background: var(--glass-bg-scrolled);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(8, 18, 11, 0.06);
+  border: 1px solid var(--card-border);
 }
 
 .glass-gold {
-  background: rgba(198, 169, 105, 0.06);
+  background: var(--card-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(198, 169, 105, 0.18);
+  border: 1px solid var(--border-color);
 }
 
 /* ===== SHIMMER TEXT ===== */
 
 .text-shimmer {
   background: linear-gradient(120deg,
-      #C6A969 0%,
-      #FAF8F2 40%,
-      #C6A969 60%,
-      #B29555 100%);
+      var(--accent-color) 0%,
+      var(--text-primary) 40%,
+      var(--accent-color) 60%,
+      var(--accent-deep) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -339,14 +408,14 @@ body {
 .section-divider {
   width: 40px;
   height: 2px;
-  background: linear-gradient(90deg, #C6A969, rgba(198, 169, 105, 0));
+  background: linear-gradient(90deg, var(--accent-color), transparent);
   border-radius: 2px;
 }
 
 .section-divider-centered {
   width: 60px;
   height: 2px;
-  background: linear-gradient(90deg, rgba(198, 169, 105, 0), #C6A969, rgba(198, 169, 105, 0));
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
   border-radius: 2px;
   margin: 0 auto;
 }

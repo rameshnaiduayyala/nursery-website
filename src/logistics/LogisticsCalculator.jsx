@@ -224,24 +224,24 @@ export default function LogisticsCalculator({ onOpenQuote }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#08120B] text-[#FAF8F2] font-sans antialiased selection:bg-[#C6A969] selection:text-[#08120B] pb-16">
+    <div className="min-h-screen bg-forest-black text-warm-ivory font-sans antialiased selection:bg-luxury-gold selection:text-forest-black pb-16">
       {/* ── HEADER ── */}
-      <header className="border-b border-[#C6A969]/15 sticky top-0 bg-[#08120B]/95 backdrop-blur-md z-40 px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-luxury-gold/15 sticky top-0 bg-forest-black/95 backdrop-blur-md z-40 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <a
             href="/"
-            className="p-2 border border-[#C6A969]/30 rounded-xl hover:bg-[#C6A969]/10 transition-colors group cursor-pointer"
+            className="p-2 border border-luxury-gold/30 rounded-xl hover:bg-luxury-gold/10 transition-colors group cursor-pointer"
           >
-            <ArrowLeft className="w-5 h-5 text-[#C6A969] group-hover:scale-95 transition-transform" />
+            <ArrowLeft className="w-5 h-5 text-luxury-gold group-hover:scale-95 transition-transform" />
           </a>
           <div>
             <h1 className="text-lg font-display font-black tracking-tight uppercase flex items-center gap-1.5">
               <span>{companyDetails.name}</span>
-              <span className="text-[#C6A969] font-sans font-medium text-xs border border-[#C6A969]/30 rounded-full px-2.5 py-0.5">
+              <span className="text-luxury-gold font-sans font-medium text-xs border border-luxury-gold/30 rounded-full px-2.5 py-0.5">
                 Logistics Desk
               </span>
             </h1>
-            <p className="text-[10px] text-[#E8E6DF]/60 font-sans tracking-wide uppercase">
+            <p className="text-[10px] text-stone-gray/60 font-sans tracking-wide uppercase">
               Transportation & Load Capacity Calculator
             </p>
           </div>
@@ -249,7 +249,7 @@ export default function LogisticsCalculator({ onOpenQuote }) {
         <div className="flex items-center gap-4">
           <a
             href="/"
-            className="text-xs uppercase font-bold tracking-wider hover:text-[#C6A969] transition-colors border-b border-transparent hover:border-[#C6A969] pb-0.5"
+            className="text-xs uppercase font-bold tracking-wider hover:text-luxury-gold transition-colors border-b border-transparent hover:border-luxury-gold pb-0.5"
           >
             Back To Website
           </a>
@@ -261,7 +261,7 @@ export default function LogisticsCalculator({ onOpenQuote }) {
         <h2 className="text-3xl sm:text-4xl font-display font-black tracking-tight uppercase max-w-2xl mx-auto">
           Calculate Your Cargo Loading & Truck Requirements
         </h2>
-        <p className="text-sm text-[#E8E6DF]/70 max-w-xl mx-auto leading-relaxed">
+        <p className="text-sm text-stone-gray/70 max-w-xl mx-auto leading-relaxed">
           Input your container and specimen quantities below to calculate cargo weight, volume, and visual truck capacity for bulk B2B landscaping layouts.
         </p>
       </div>
@@ -273,15 +273,15 @@ export default function LogisticsCalculator({ onOpenQuote }) {
         <div className="lg:col-span-7 space-y-6">
           
           {/* Preset templates selector */}
-          <div className="bg-[#FAF8F2]/5 border border-[#C6A969]/10 rounded-2xl p-5 space-y-3.5">
-            <div className="flex items-center justify-between border-b border-[#C6A969]/10 pb-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#C6A969] flex items-center gap-1.5">
+          <div className="bg-warm-ivory/[0.04] border border-luxury-gold/15 rounded-2xl p-5 space-y-3.5">
+            <div className="flex items-center justify-between border-b border-luxury-gold/15 pb-2">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-luxury-gold flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4" />
                 Select A Logistics Preset
               </h3>
               <button
                 onClick={handleClearAll}
-                className="text-[10px] uppercase font-semibold text-[#E8E6DF]/60 hover:text-red-400 transition-colors flex items-center gap-1 cursor-pointer"
+                className="text-[10px] uppercase font-semibold text-stone-gray/60 hover:text-red-400 transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 Reset Cargo
@@ -292,12 +292,12 @@ export default function LogisticsCalculator({ onOpenQuote }) {
                 <button
                   key={preset.name}
                   onClick={() => handleLoadPreset(preset)}
-                  className="text-left bg-[#08120B] border border-[#C6A969]/15 hover:border-[#C6A969] p-3 rounded-xl hover:shadow-lg transition-all duration-200 cursor-pointer group"
+                  className="text-left bg-forest-black-secondary border border-luxury-gold/15 hover:border-luxury-gold p-3 rounded-xl hover:shadow-lg transition-all duration-200 cursor-pointer group"
                 >
-                  <h4 className="text-xs font-bold text-[#FAF8F2] group-hover:text-[#C6A969] transition-colors line-clamp-1">
+                  <h4 className="text-xs font-bold text-warm-ivory group-hover:text-luxury-gold transition-colors line-clamp-1">
                     {preset.name}
                   </h4>
-                  <p className="text-[9px] text-[#E8E6DF]/50 mt-1 line-clamp-2 leading-relaxed">
+                  <p className="text-[9px] text-stone-gray/50 mt-1 line-clamp-2 leading-relaxed">
                     {preset.description}
                   </p>
                 </button>
@@ -306,8 +306,8 @@ export default function LogisticsCalculator({ onOpenQuote }) {
           </div>
 
           {/* Plant Add options */}
-          <div className="bg-[#FAF8F2]/5 border border-[#C6A969]/10 rounded-2xl p-5 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#C6A969]">
+          <div className="bg-warm-ivory/[0.04] border border-luxury-gold/15 rounded-2xl p-5 space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-luxury-gold">
               Add Plant Containers to Cargo List
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -315,14 +315,14 @@ export default function LogisticsCalculator({ onOpenQuote }) {
                 <button
                   key={size.id}
                   onClick={() => handleAddCargoType(size.id)}
-                  className="flex items-center gap-3 p-3.5 rounded-xl border border-[#C6A969]/10 bg-[#08120B]/50 hover:bg-[#C6A969]/10 hover:border-[#C6A969]/30 transition-all text-left cursor-pointer group"
+                  className="flex items-center gap-3 p-3.5 rounded-xl border border-luxury-gold/12 bg-forest-black-secondary hover:bg-luxury-gold/10 hover:border-luxury-gold/30 transition-all text-left cursor-pointer group"
                 >
-                  <div className="p-2 rounded-lg bg-[#C6A969]/10 text-[#C6A969] group-hover:bg-[#C6A969] group-hover:text-[#08120B] transition-colors">
+                  <div className="p-2 rounded-lg bg-luxury-gold/10 text-luxury-gold group-hover:bg-luxury-gold group-hover:text-bg-opposite transition-colors">
                     <Plus className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#FAF8F2]">{size.name}</h4>
-                    <p className="text-[10px] text-[#E8E6DF]/50 mt-0.5 line-clamp-1">
+                    <h4 className="text-xs font-bold text-warm-ivory">{size.name}</h4>
+                    <p className="text-[10px] text-stone-gray/50 mt-0.5 line-clamp-1">
                       {size.weight} kg | {size.volume} cu ft
                     </p>
                   </div>
@@ -332,14 +332,14 @@ export default function LogisticsCalculator({ onOpenQuote }) {
           </div>
 
           {/* Loaded Cargo List */}
-          <div className="bg-[#FAF8F2]/5 border border-[#C6A969]/10 rounded-2xl p-5 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#C6A969] flex items-center gap-1.5">
+          <div className="bg-warm-ivory/[0.04] border border-luxury-gold/15 rounded-2xl p-5 space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-luxury-gold flex items-center gap-1.5">
               <Box className="w-4 h-4" />
               Active Cargo Stack Configuration
             </h3>
             
             {cargoList.length === 0 ? (
-              <div className="py-12 text-center text-[#E8E6DF]/40 space-y-2 border border-dashed border-[#C6A969]/10 rounded-xl">
+              <div className="py-12 text-center text-stone-gray/40 space-y-2 border border-dashed border-luxury-gold/15 rounded-xl">
                 <Box className="w-8 h-8 mx-auto stroke-1" />
                 <p className="text-xs font-medium">Cargo stack is empty. Click presets or add containers above.</p>
               </div>
@@ -351,24 +351,24 @@ export default function LogisticsCalculator({ onOpenQuote }) {
                   return (
                     <div
                       key={item.containerId}
-                      className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-[#08120B] border border-[#C6A969]/15"
+                      className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-forest-black-secondary border border-luxury-gold/15"
                     >
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-xs font-bold text-[#FAF8F2] truncate">{size.name}</h4>
-                        <p className="text-[10px] text-[#E8E6DF]/50 mt-0.5">
+                        <h4 className="text-xs font-bold text-warm-ivory truncate">{size.name}</h4>
+                        <p className="text-[10px] text-stone-gray/50 mt-0.5">
                           Unit volume: {size.volume} cu ft | Unit weight: {size.weight} kg
                         </p>
                       </div>
 
                       <div className="flex items-center gap-3.5 w-full sm:w-auto justify-between sm:justify-end">
                         <div className="flex items-center gap-2">
-                          <label className="text-[9px] uppercase font-bold tracking-wider text-[#E8E6DF]/40">Qty:</label>
+                          <label className="text-[9px] uppercase font-bold tracking-wider text-stone-gray/40">Qty:</label>
                           <input
                             type="number"
                             min="0"
                             value={item.qty}
                             onChange={(e) => handleUpdateQty(item.containerId, e.target.value)}
-                            className="w-20 px-2.5 py-1.5 rounded-lg border border-[#C6A969]/20 bg-[#FAF8F2]/5 text-[#FAF8F2] text-center font-bold text-xs focus:outline-none focus:border-[#C6A969]"
+                            className="w-20 px-2.5 py-1.5 rounded-lg border border-luxury-gold/20 bg-forest-black text-warm-ivory text-center font-bold text-xs focus:outline-none focus:border-luxury-gold"
                           />
                         </div>
                         <button
@@ -391,21 +391,21 @@ export default function LogisticsCalculator({ onOpenQuote }) {
         <div className="lg:col-span-5 space-y-6">
           
           {/* Active stats panel */}
-          <div className="bg-[#FAF8F2]/5 border border-[#C6A969]/10 rounded-2xl p-5 space-y-5">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#C6A969] flex items-center gap-1.5">
+          <div className="bg-warm-ivory/[0.04] border border-luxury-gold/15 rounded-2xl p-5 space-y-5">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-luxury-gold flex items-center gap-1.5">
               <Truck className="w-4 h-4" />
               Logistics visualizer
             </h3>
 
             {/* Target Truck Selector */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#E8E6DF]/50">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-stone-gray/50">
                 Simulated Truck Class
               </label>
               <select
                 value={selectedTruckId}
                 onChange={(e) => setSelectedTruckId(e.target.value)}
-                className="w-full border border-[#C6A969]/20 rounded-xl px-3.5 py-3 text-xs bg-[#08120B] text-[#FAF8F2] font-semibold focus:outline-none focus:border-[#C6A969] cursor-pointer"
+                className="w-full border border-luxury-gold/20 rounded-xl px-3.5 py-3 text-xs bg-forest-black-secondary text-warm-ivory font-semibold focus:outline-none focus:border-luxury-gold cursor-pointer"
               >
                 {TRUCK_TYPES.map((t) => (
                   <option key={t.id} value={t.id}>
@@ -413,24 +413,24 @@ export default function LogisticsCalculator({ onOpenQuote }) {
                   </option>
                 ))}
               </select>
-              <p className="text-[10px] text-[#E8E6DF]/60 italic leading-relaxed pt-1">
+              <p className="text-[10px] text-stone-gray/60 italic leading-relaxed pt-1">
                 {selectedTruck.description}
               </p>
             </div>
 
             {/* Visual Stacking Container */}
-            <div className="bg-[#08120B] border border-[#C6A969]/15 rounded-xl p-4 space-y-3.5">
-              <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-[#E8E6DF]/40">
+            <div className="bg-forest-black border border-luxury-gold/15 rounded-xl p-4 space-y-3.5">
+              <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-stone-gray/40">
                 <span>Truck Bed Capacity</span>
-                <span className={volumePercentage > 100 ? "text-red-400 font-extrabold" : "text-[#C6A969]"}>
+                <span className={volumePercentage > 100 ? "text-red-400 font-extrabold" : "text-luxury-gold"}>
                   {volumePercentage}% Stacked
                 </span>
               </div>
               
               {/* Actual 3D-like box bar */}
-              <div className="relative w-full h-32 bg-[#FAF8F2]/5 border border-[#C6A969]/20 rounded-xl overflow-hidden flex flex-col justify-end">
+              <div className="relative w-full h-32 bg-forest-black-secondary/50 border border-luxury-gold/20 rounded-xl overflow-hidden flex flex-col justify-end">
                 {totals.totalItems === 0 ? (
-                  <div className="absolute inset-0 flex items-center justify-center text-[10px] uppercase font-bold tracking-widest text-[#E8E6DF]/30">
+                  <div className="absolute inset-0 flex items-center justify-center text-[10px] uppercase font-bold tracking-widest text-stone-gray/30">
                     Empty Load
                   </div>
                 ) : (
@@ -441,11 +441,11 @@ export default function LogisticsCalculator({ onOpenQuote }) {
                         height: `${Math.min(volumePercentage, 100)}%`,
                         background: volumePercentage > 100 
                           ? "linear-gradient(180deg, rgba(239, 68, 68, 0.45) 0%, rgba(239, 68, 68, 0.2) 100%)"
-                          : "linear-gradient(180deg, rgba(198, 169, 105, 0.45) 0%, rgba(198, 169, 105, 0.15) 100%)",
-                        borderTop: `2px solid ${volumePercentage > 100 ? "#ef4444" : "#C6A969"}`
+                          : "linear-gradient(180deg, var(--border-color) 0%, var(--card-bg) 100%)",
+                        borderTop: `2px solid ${volumePercentage > 100 ? "#ef4444" : "var(--accent-color)"}`
                       }}
                     >
-                      <span className="text-[#FAF8F2] select-none">
+                      <span className="text-warm-ivory select-none">
                         {volumePercentage > 100 ? "OVERLOADED" : `${totals.totalItems.toLocaleString()} PLANTS`}
                       </span>
                     </div>
@@ -463,53 +463,53 @@ export default function LogisticsCalculator({ onOpenQuote }) {
 
             {/* Metrics parameters */}
             <div className="grid grid-cols-2 gap-3 text-center">
-              <div className="p-3 bg-[#08120B] border border-[#C6A969]/15 rounded-xl">
-                <div className="flex justify-center text-[#C6A969] mb-1">
+              <div className="p-3 bg-forest-black border border-luxury-gold/15 rounded-xl">
+                <div className="flex justify-center text-luxury-gold mb-1">
                   <Box className="w-4 h-4" />
                 </div>
-                <span className="block text-[9px] uppercase font-bold tracking-wider text-[#E8E6DF]/40">
+                <span className="block text-[9px] uppercase font-bold tracking-wider text-stone-gray/40">
                   Total Volume
                 </span>
-                <span className="block font-display font-extrabold text-sm text-[#FAF8F2] mt-0.5">
+                <span className="block font-display font-extrabold text-sm text-warm-ivory mt-0.5">
                   {totals.totalVolume.toFixed(1)} cu ft
                 </span>
-                <span className="block text-[9px] text-[#E8E6DF]/30 mt-0.5">
+                <span className="block text-[9px] text-stone-gray/30 mt-0.5">
                   Limit: {selectedTruck.volumeLimit} cu ft
                 </span>
                 
                 {/* Micro volume bar */}
-                <div className="w-full bg-[#FAF8F2]/10 h-1.5 rounded-full mt-2 overflow-hidden">
+                <div className="w-full bg-warm-ivory/10 h-1.5 rounded-full mt-2 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-300"
                     style={{
                       width: `${Math.min(volumePercentage, 100)}%`,
-                      backgroundColor: volumePercentage > 100 ? "#ef4444" : "#C6A969",
+                      backgroundColor: volumePercentage > 100 ? "#ef4444" : "var(--accent-color)",
                     }}
                   />
                 </div>
               </div>
 
-              <div className="p-3 bg-[#08120B] border border-[#C6A969]/15 rounded-xl">
-                <div className="flex justify-center text-[#C6A969] mb-1">
+              <div className="p-3 bg-forest-black border border-luxury-gold/15 rounded-xl">
+                <div className="flex justify-center text-luxury-gold mb-1">
                   <Scale className="w-4 h-4" />
                 </div>
-                <span className="block text-[9px] uppercase font-bold tracking-wider text-[#E8E6DF]/40">
+                <span className="block text-[9px] uppercase font-bold tracking-wider text-stone-gray/40">
                   Cargo Weight
                 </span>
-                <span className="block font-display font-extrabold text-sm text-[#FAF8F2] mt-0.5">
+                <span className="block font-display font-extrabold text-sm text-warm-ivory mt-0.5">
                   {(totals.totalWeight / 1000).toFixed(2)} Tons
                 </span>
-                <span className="block text-[9px] text-[#E8E6DF]/30 mt-0.5">
+                <span className="block text-[9px] text-stone-gray/30 mt-0.5">
                   Limit: {selectedTruck.weightLimit / 1000} Tons
                 </span>
                 
                 {/* Micro weight bar */}
-                <div className="w-full bg-[#FAF8F2]/10 h-1.5 rounded-full mt-2 overflow-hidden">
+                <div className="w-full bg-warm-ivory/10 h-1.5 rounded-full mt-2 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-300"
                     style={{
                       width: `${Math.min(weightPercentage, 100)}%`,
-                      backgroundColor: weightPercentage > 100 ? "#ef4444" : "#C6A969",
+                      backgroundColor: weightPercentage > 100 ? "#ef4444" : "var(--accent-color)",
                     }}
                   />
                 </div>
@@ -518,15 +518,15 @@ export default function LogisticsCalculator({ onOpenQuote }) {
 
             {/* Logistics Recommendation Outcome */}
             {totals.totalItems > 0 && (
-              <div className="bg-[#C6A969]/5 border border-[#C6A969]/20 rounded-xl p-4 space-y-2">
-                <span className="block text-[9px] uppercase font-bold tracking-wider text-[#C6A969]">
+              <div className="bg-luxury-gold/5 border border-luxury-gold/20 rounded-xl p-4 space-y-2">
+                <span className="block text-[9px] uppercase font-bold tracking-wider text-luxury-gold">
                   Logistical Recommendation
                 </span>
-                <h4 className="text-sm font-display font-extrabold text-[#FAF8F2] flex items-center gap-2">
-                  <Truck className="w-4 h-4 text-[#C6A969]" />
+                <h4 className="text-sm font-display font-extrabold text-warm-ivory flex items-center gap-2">
+                  <Truck className="w-4 h-4 text-luxury-gold" />
                   {logisticsRecommendation.label}
                 </h4>
-                <p className="text-[10px] text-[#E8E6DF]/60 leading-relaxed">
+                <p className="text-[10px] text-stone-gray/60 leading-relaxed">
                   {logisticsRecommendation.sub}
                 </p>
               </div>
@@ -536,7 +536,7 @@ export default function LogisticsCalculator({ onOpenQuote }) {
             <button
               onClick={handleRequestQuote}
               disabled={totals.totalItems === 0}
-              className="w-full py-4 text-center rounded-xl bg-[#C6A969] hover:bg-[#B29555] disabled:bg-[#C6A969]/20 text-[#08120B] disabled:text-[#FAF8F2]/30 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer disabled:cursor-not-allowed shadow-lg shadow-[#C6A969]/10 flex items-center justify-center gap-2"
+              className="w-full py-4 text-center rounded-xl bg-luxury-gold hover:opacity-90 disabled:opacity-40 text-bg-opposite disabled:text-warm-ivory/30 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer disabled:cursor-not-allowed shadow-lg flex items-center justify-center gap-2 border border-transparent"
             >
               <Send className="w-4 h-4" />
               Inquire Logistics Quote

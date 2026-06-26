@@ -34,8 +34,8 @@ function App() {
     if (!isBillingAuthenticated) {
       return (
         <Suspense fallback={
-          <div className="min-h-screen bg-[#08120B] flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-[#C6A969]"></div>
+          <div className="min-h-screen bg-forest-black flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-luxury-gold"></div>
           </div>
         }>
           <BillingPasswordGate onSuccess={() => setIsBillingAuthenticated(true)} />
@@ -45,8 +45,8 @@ function App() {
 
     return (
       <Suspense fallback={
-        <div className="min-h-screen bg-slate-100 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-slate-700"></div>
+        <div className="min-h-screen bg-forest-black flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-luxury-gold"></div>
         </div>
       }>
         <InvoiceApp onLock={() => {
@@ -60,8 +60,8 @@ function App() {
   if (isLogistics) {
     return (
       <Suspense fallback={
-        <div className="min-h-screen bg-[#08120B] flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-[#C6A969]"></div>
+        <div className="min-h-screen bg-forest-black flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-luxury-gold"></div>
         </div>
       }>
         <LogisticsCalculator onOpenQuote={(logisticsData) => handleOpenQuoteWithLogistics(logisticsData)} />

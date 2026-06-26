@@ -107,7 +107,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
 
   if (!isOpen) return null;
 
-  const inputClass = "w-full p-4 rounded-xl border border-[#C6A969]/18 bg-[#FAF8F2]/60 text-sm text-[#08120B] focus:outline-none focus:border-[#C6A969] focus:shadow-[0_0_0_3px_rgba(198,169,105,0.1)] transition-all duration-200 placeholder:text-[#08120B]/35 font-medium";
+  const inputClass = "w-full p-4 rounded-xl border border-luxury-gold/18 bg-forest-black-secondary/40 text-sm text-warm-ivory focus:outline-none focus:border-luxury-gold focus:shadow-[0_0_0_3px_var(--border-color)] transition-all duration-200 placeholder:text-warm-ivory/30 font-medium";
 
   return (
     <AnimatePresence>
@@ -118,7 +118,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={handleClose}
-          className="absolute inset-0 bg-[#08120B]/88 backdrop-blur-lg"
+          className="absolute inset-0 bg-forest-black/92 backdrop-blur-lg"
         />
 
         {/* Modal Window */}
@@ -127,19 +127,19 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, y: 24 }}
           transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-          className="relative w-full max-w-2xl bg-[#FAF8F2] rounded-3xl overflow-hidden shadow-[0_32px_80px_rgba(8,18,11,0.4)] border border-[#C6A969]/12 z-10 text-left text-[#08120B]"
+          className="relative w-full max-w-2xl bg-forest-black text-warm-ivory rounded-3xl overflow-hidden shadow-[0_32px_80px_rgba(8,18,11,0.4)] border border-luxury-gold/12 z-10 text-left"
         >
           {/* Subtle gradient header strip */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#C6A969]/0 via-[#C6A969] to-[#C6A969]/0" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-luxury-gold/0 via-luxury-gold to-luxury-gold/0" />
 
           {/* Header */}
-          <div className="flex justify-between items-start px-7 md:px-8 pt-7 pb-5 border-b border-[#C6A969]/12">
+          <div className="flex justify-between items-start px-7 md:px-8 pt-7 pb-5 border-b border-luxury-gold/12">
             <div className="space-y-3 flex-1 mr-4">
               <div>
-                <h3 className="font-display font-extrabold text-xl md:text-2xl text-[#08120B] tracking-tight uppercase">
+                <h3 className="font-display font-extrabold text-xl md:text-2xl text-warm-ivory tracking-tight uppercase">
                   {formData.type === 'quote' ? 'Request Bulk Quote' : 'Schedule Nursery Visit'}
                 </h3>
-                <p className="text-[11px] text-[#08120B]/50 font-sans mt-1 tracking-wide">
+                <p className="text-[11px] text-stone-gray/50 font-sans mt-1 tracking-wide">
                   Step {currentDisplayStep} of {totalSteps} · Gangadhara VIP Desk
                 </p>
               </div>
@@ -150,7 +150,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
             </div>
             <button
               onClick={handleClose}
-              className="p-2.5 rounded-full hover:bg-[#08120B]/7 text-[#08120B]/55 hover:text-[#08120B] transition-all duration-200 cursor-pointer flex-shrink-0"
+              className="p-2.5 rounded-full hover:bg-warm-ivory/10 text-stone-gray hover:text-warm-ivory transition-all duration-200 cursor-pointer flex-shrink-0"
             >
               <X className="w-5 h-5" />
             </button>
@@ -170,11 +170,11 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                 >
                   <div className="space-y-1.5">
                     <h4 className="font-display font-bold text-lg uppercase tracking-wide">Which best describes your role?</h4>
-                    <p className="text-sm text-[#08120B]/60 font-sans">Select a category to customize your inquiry.</p>
+                    <p className="text-sm text-stone-gray/60 font-sans">Select a category to customize your inquiry.</p>
                   </div>
 
                   {/* Inquiry Type toggle */}
-                  <div className="flex gap-2 p-1.5 bg-[#E8E6DF]/40 rounded-2xl border border-[#E8E6DF]/80">
+                  <div className="flex gap-2 p-1.5 bg-forest-black-secondary rounded-2xl border border-luxury-gold/15">
                     {['quote', 'visit'].map((t) => (
                       <button
                         key={t}
@@ -182,8 +182,8 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                         onClick={() => setFormData({ ...formData, type: t })}
                         className={`flex-1 py-2.5 text-center rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
                           formData.type === t
-                            ? 'bg-[#08120B] text-[#FAF8F2] shadow-md'
-                            : 'text-[#08120B]/60 hover:text-[#08120B] hover:bg-[#E8E6DF]/60'
+                            ? 'bg-luxury-gold text-bg-opposite shadow-md'
+                            : 'text-stone-gray/60 hover:text-warm-ivory hover:bg-warm-ivory/10'
                         }`}
                       >
                         {t === 'quote' ? 'Request Pricing Catalog' : 'Schedule Guided Tour'}
@@ -194,18 +194,18 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {roles.map((r) => (
                       <button
-                        key={r.value}
                         type="button"
+                        key={r.value}
                         onClick={() => handleSelectRole(r.value)}
                         className={`text-left px-4 py-3.5 rounded-xl border text-sm font-semibold transition-all duration-200 flex items-center justify-between cursor-pointer group ${
                           formData.role === r.value
-                            ? 'bg-[#C6A969]/12 border-[#C6A969] text-[#08120B] shadow-[0_0_0_3px_rgba(198,169,105,0.08)]'
-                            : 'bg-white border-[#E8E6DF] hover:border-[#C6A969]/50 hover:bg-[#C6A969]/5 text-[#08120B]/85'
+                            ? 'bg-luxury-gold/12 border-luxury-gold text-luxury-gold shadow-[0_0_0_3px_var(--border-color)]'
+                            : 'bg-forest-black-secondary border-luxury-gold/15 hover:border-luxury-gold/50 hover:bg-luxury-gold/5 text-warm-ivory/85'
                         }`}
                       >
                         <span>{r.label}</span>
                         <ChevronRight className={`w-4 h-4 transition-all duration-200 ${
-                          formData.role === r.value ? 'text-[#C6A969]' : 'text-[#08120B]/25 group-hover:text-[#C6A969]/60'
+                          formData.role === r.value ? 'text-luxury-gold' : 'text-stone-gray/25 group-hover:text-luxury-gold/60'
                         }`} />
                       </button>
                     ))}
@@ -224,28 +224,28 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                 >
                   <div className="space-y-1.5">
                     <h4 className="font-display font-bold text-lg uppercase tracking-wide">What are you looking to supply?</h4>
-                    <p className="text-sm text-[#08120B]/60 font-sans">Select primary variety and expected quantities.</p>
+                    <p className="text-sm text-stone-gray/60 font-sans">Select primary variety and expected quantities.</p>
                   </div>
 
                   <div className="space-y-2 text-left">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-[#08120B]/55">Primary Plant Category</label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-stone-gray/55">Primary Plant Category</label>
                     <div className="relative">
                       <select
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className={`${inputClass} appearance-none pr-10 bg-white`}
+                        className={`${inputClass} appearance-none pr-10 bg-forest-black-secondary`}
                       >
                         <option value="">Select category...</option>
                         {plantCategories.map((c) => (
-                          <option key={c} value={c}>{c}</option>
+                          <option key={c.id || c} value={c.name || c}>{c.name || c}</option>
                         ))}
                       </select>
-                      <ChevronRight className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#08120B]/35 rotate-90 pointer-events-none" />
+                      <ChevronRight className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-gray/35 rotate-90 pointer-events-none" />
                     </div>
                   </div>
 
                   <div className="space-y-3 text-left">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-[#08120B]/55">Required Plant Quantity</label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-stone-gray/55">Required Plant Quantity</label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {quantities.map((q) => (
                         <button
@@ -254,8 +254,8 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                           onClick={() => setFormData({ ...formData, quantity: q.value })}
                           className={`text-left px-4 py-3.5 rounded-xl border text-sm font-semibold transition-all duration-200 cursor-pointer ${
                             formData.quantity === q.value
-                              ? 'bg-[#C6A969]/12 border-[#C6A969] text-[#08120B] shadow-[0_0_0_3px_rgba(198,169,105,0.08)]'
-                              : 'bg-white border-[#E8E6DF] hover:border-[#C6A969]/50 hover:bg-[#C6A969]/5 text-[#08120B]/80'
+                              ? 'bg-luxury-gold/12 border-luxury-gold text-luxury-gold shadow-[0_0_0_3px_var(--border-color)]'
+                              : 'bg-forest-black-secondary border-luxury-gold/15 hover:border-luxury-gold/50 hover:bg-luxury-gold/5 text-warm-ivory/80'
                           }`}
                         >
                           {q.label}
@@ -264,11 +264,11 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center pt-5 border-t border-[#C6A969]/12 mt-2">
+                  <div className="flex justify-between items-center pt-5 border-t border-luxury-gold/12 mt-2">
                     <button
                       type="button"
                       onClick={handlePrevStep}
-                      className="flex items-center gap-1.5 px-5 py-2.5 rounded-full hover:bg-[#08120B]/6 font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer text-[#08120B]/70"
+                      className="flex items-center gap-1.5 px-5 py-2.5 rounded-full hover:bg-warm-ivory/5 font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer text-stone-gray/70"
                     >
                       <ChevronLeft className="w-4 h-4" />
                       Back
@@ -276,7 +276,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                     <button
                       type="button"
                       onClick={handleNextStep}
-                      className="flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#C6A969] to-[#B29555] hover:shadow-[0_6px_20px_rgba(198,169,105,0.3)] text-[#08120B] font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer btn-press"
+                      className="flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-luxury-gold to-luxury-gold-deep hover:shadow-glass text-bg-opposite font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer btn-press"
                     >
                       Continue
                       <ChevronRight className="w-4 h-4" />
@@ -296,7 +296,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                 >
                   <div className="space-y-1.5">
                     <h4 className="font-display font-bold text-lg uppercase tracking-wide">Contact Information</h4>
-                    <p className="text-sm text-[#08120B]/60 font-sans">Our cargo desk responds within 4 business hours.</p>
+                    <p className="text-sm text-stone-gray/60 font-sans">Our cargo desk responds within 4 business hours.</p>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
@@ -308,8 +308,8 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                         { label: 'Site Location', key: 'location', type: 'text', placeholder: 'e.g. Bangalore, KA', required: false },
                       ].map(({ label, key, type, placeholder, required }) => (
                         <div key={key} className="space-y-1.5">
-                          <label className="text-[10px] font-bold uppercase tracking-wider text-[#08120B]/50">
-                            {label}{required && <span className="text-[#C6A969] ml-0.5">*</span>}
+                          <label className="text-[10px] font-bold uppercase tracking-wider text-stone-gray/50">
+                            {label}{required && <span className="text-luxury-gold ml-0.5">*</span>}
                           </label>
                           <input
                             type={type}
@@ -324,7 +324,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-[#08120B]/50">Additional Message / Blueprint Specs</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-stone-gray/50">Additional Message / Blueprint Specs</label>
                       <textarea
                         rows="3"
                         value={formData.message}
@@ -334,18 +334,18 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                       />
                     </div>
 
-                    <div className="flex justify-between items-center pt-5 border-t border-[#C6A969]/12">
+                    <div className="flex justify-between items-center pt-5 border-t border-luxury-gold/12">
                       <button
                         type="button"
                         onClick={handlePrevStep}
-                        className="flex items-center gap-1.5 px-5 py-2.5 rounded-full hover:bg-[#08120B]/6 font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer text-[#08120B]/70"
+                        className="flex items-center gap-1.5 px-5 py-2.5 rounded-full hover:bg-warm-ivory/5 font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer text-stone-gray/70"
                       >
                         <ChevronLeft className="w-4 h-4" />
                         Back
                       </button>
                       <button
                         type="submit"
-                        className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-[#C6A969] to-[#B29555] hover:shadow-[0_8px_24px_rgba(198,169,105,0.35)] text-[#08120B] font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer btn-press"
+                        className="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-luxury-gold to-luxury-gold-deep hover:shadow-glass text-bg-opposite font-bold uppercase text-xs tracking-wider transition-all duration-200 cursor-pointer btn-press"
                       >
                         <span>Submit Details</span>
                         <Send className="w-3.5 h-3.5" />
@@ -365,22 +365,22 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                 >
                   {/* Success icon */}
                   <div className="relative">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#C6A969]/15 to-[#0E9F6E]/10 border border-[#C6A969]/30 text-[#C6A969] flex items-center justify-center shadow-[0_0_40px_rgba(198,169,105,0.12)] animate-gold-pulse">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-luxury-gold/15 to-luxury-gold-deep/10 border border-luxury-gold/30 text-luxury-gold flex items-center justify-center shadow-[0_0_40px_var(--border-color)] animate-gold-pulse">
                       <Check className="w-9 h-9" strokeWidth={2.5} />
                     </div>
-                    <div className="absolute -top-1.5 -right-1.5 bg-gradient-to-br from-[#C6A969] to-[#B29555] text-[#08120B] p-1.5 rounded-full shadow-md">
+                    <div className="absolute -top-1.5 -right-1.5 bg-gradient-to-br from-luxury-gold to-luxury-gold-deep text-bg-opposite p-1.5 rounded-full shadow-md">
                       <Sparkles className="w-3.5 h-3.5" />
                     </div>
                   </div>
 
                   <div className="space-y-2.5">
                     <h4 className="font-display font-black text-2xl tracking-tight uppercase">Request Logged!</h4>
-                    <p className="text-sm text-[#08120B]/65 font-sans max-w-sm mx-auto leading-relaxed">
-                      Thank you, <strong className="text-[#08120B]">{formData.name}</strong>. Our botanical accounts desk will compile your details and connect within 4 hours.
+                    <p className="text-sm text-stone-gray/65 font-sans max-w-sm mx-auto leading-relaxed">
+                      Thank you, <strong className="text-warm-ivory">{formData.name}</strong>. Our botanical accounts desk will compile your details and connect within 4 hours.
                     </p>
                   </div>
 
-                  <div className="pt-5 border-t border-[#C6A969]/15 w-full max-w-xs flex flex-col gap-3">
+                  <div className="pt-5 border-t border-luxury-gold/15 w-full max-w-xs flex flex-col gap-3">
                     <a
                       href={`https://wa.me/${companyDetails.whatsappNumber}?text=Hi%20${encodeURIComponent(companyDetails.name)},%20I%20have%20submitted%20a%20pricing%20request%20for%20${formData.quantity}%20plants%20under%20the%20${formData.category}%20category.%20My%20name%20is%20${formData.name}.`}
                       target="_blank"
@@ -393,7 +393,7 @@ export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, pres
                     <button
                       type="button"
                       onClick={handleClose}
-                      className="w-full py-3.5 text-center rounded-xl bg-[#08120B] text-[#FAF8F2] font-bold text-xs uppercase tracking-wider hover:bg-[#08120B]/90 transition-all duration-200 cursor-pointer btn-press"
+                      className="w-full py-3.5 text-center rounded-xl bg-bg-opposite text-text-opposite font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-all duration-200 cursor-pointer btn-press"
                     >
                       Close Dialog
                     </button>

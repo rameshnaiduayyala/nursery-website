@@ -1,11 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Leaf, ChevronRight, Compass } from 'lucide-react';
+import { Menu, X, Leaf, ChevronRight, Compass, Sun, Moon } from 'lucide-react';
 import { companyDetails } from '../data/nurseryData';
 
 export default function Navbar({ onOpenQuote }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'dark';
+    }
+    return 'dark';
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'light') {
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,14 +60,14 @@ export default function Navbar({ onOpenQuote }) {
     <nav
       className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 max-w-7xl w-[calc(100%-2rem)] md:w-[calc(100%-4rem)] rounded-2xl ${
         scrolled
-          ? 'top-3 py-3 bg-[#030704]/92 backdrop-blur-2xl border border-[#10B981]/18 shadow-[0_20px_60px_0_rgba(3,7,4,0.7)]'
-          : 'top-5 py-4 bg-[#030704]/35 backdrop-blur-md border border-white/5 shadow-lg'
+          ? 'top-3 py-3 bg-forest-black/92 backdrop-blur-2xl border border-luxury-gold/18 shadow-glass'
+          : 'top-5 py-4 bg-forest-black/35 backdrop-blur-md border border-warm-ivory/5 shadow-lg'
       }`}
     >
       {/* Scroll progress bar — ultra-thin, green */}
       <div className="absolute bottom-0 left-4 right-4 h-[1.5px] rounded-full overflow-hidden opacity-60">
         <div
-          className="h-full bg-gradient-to-r from-[#10B981] via-[#FAF8F2] to-[#10B981] transition-all duration-150 ease-out"
+          className="h-full bg-gradient-to-r from-luxury-gold via-warm-ivory to-luxury-gold transition-all duration-150 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -63,14 +83,14 @@ export default function Navbar({ onOpenQuote }) {
             />
           ) : (
             <>
-              <div className="relative flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-tr from-[#10B981] to-[#0E9F6E] shadow-md shadow-[#10B981]/20 group-hover:rotate-6 group-hover:shadow-[#10B981]/40 transition-all duration-300">
-                <Leaf className="w-4 h-4 text-[#030704]" />
+              <div className="relative flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-tr from-luxury-gold to-luxury-gold-deep shadow-md shadow-luxury-gold/20 group-hover:rotate-6 group-hover:shadow-luxury-gold/40 transition-all duration-300">
+                <Leaf className="w-4 h-4 text-forest-black" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="font-display font-black text-sm md:text-[15px] tracking-tight text-[#FAF8F2] group-hover:text-[#10B981] transition-colors duration-300 leading-none">
+                <span className="font-display font-black text-sm md:text-[15px] tracking-tight text-warm-ivory group-hover:text-luxury-gold transition-colors duration-300 leading-none">
                   {companyDetails.name.toUpperCase()}
                 </span>
-                <span className="font-sans text-[7px] tracking-[0.28em] text-[#10B981] font-bold uppercase leading-none mt-[3px]">
+                <span className="font-sans text-[7px] tracking-[0.28em] text-luxury-gold font-bold uppercase leading-none mt-[3px]">
                   {companyDetails.subtitle}
                 </span>
               </div>
@@ -79,7 +99,7 @@ export default function Navbar({ onOpenQuote }) {
         </a>
 
         {/* Desktop Menu — pill pill style */}
-        <div className="hidden lg:flex items-center space-x-1 bg-[#FAF8F2]/[0.04] border border-white/[0.06] px-5 py-1.5 rounded-full backdrop-blur-sm">
+        <div className="hidden lg:flex items-center space-x-1 bg-warm-ivory/[0.04] border border-warm-ivory/[0.06] px-5 py-1.5 rounded-full backdrop-blur-sm">
           {navItems.map((item) => {
             const activeLink = item.href === '/logistics'
               ? window.location.pathname === '/logistics'
@@ -90,8 +110,8 @@ export default function Navbar({ onOpenQuote }) {
                 href={getHref(item.href)}
                 className={`relative text-[9.5px] tracking-[0.14em] uppercase transition-all duration-250 font-bold px-3 py-1.5 rounded-full flex items-center gap-1 group ${
                   activeLink
-                    ? 'text-[#10B981] bg-[#10B981]/8'
-                    : 'text-[#FAF8F2]/75 hover:text-[#10B981] hover:bg-[#10B981]/5'
+                    ? 'text-luxury-gold bg-luxury-gold/8'
+                    : 'text-warm-ivory/75 hover:text-luxury-gold hover:bg-luxury-gold/5'
                 }`}
               >
                 {item.name}
@@ -104,31 +124,50 @@ export default function Navbar({ onOpenQuote }) {
         </div>
 
         {/* CTA Button — desktop */}
-        <div className="hidden lg:flex items-center flex-shrink-0">
+        <div className="hidden lg:flex items-center space-x-3 flex-shrink-0">
+          <button
+            onClick={toggleTheme}
+            className="p-2.5 rounded-xl bg-warm-ivory/[0.04] hover:bg-warm-ivory/[0.08] text-warm-ivory border border-warm-ivory/[0.08] hover:border-luxury-gold/30 hover:text-luxury-gold hover:scale-105 transition-all duration-350 cursor-pointer"
+            aria-label="Toggle theme"
+            title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+          </button>
+
           <button
             onClick={onOpenQuote}
-            className="relative px-5 py-2.5 rounded-full overflow-hidden text-[9.5px] uppercase tracking-wider font-extrabold text-[#030704] bg-gradient-to-r from-[#0E9F6E] to-[#4ade80] hover:shadow-[0_8px_24px_rgba(74,222,128,0.3)] hover:scale-[1.04] transition-all duration-300 flex items-center gap-1.5 cursor-pointer btn-press"
+            className="relative px-5 py-2.5 rounded-full overflow-hidden text-[9.5px] uppercase tracking-wider font-extrabold text-forest-black bg-gradient-to-r from-[#0E9F6E] to-[#4ade80] hover:shadow-[0_8px_24px_rgba(74,222,128,0.3)] hover:scale-[1.04] transition-all duration-300 flex items-center gap-1.5 cursor-pointer btn-press"
           >
             {/* Sheen overlay */}
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 -skew-x-12" />
             <span className="relative">Request Bulk Quote</span>
-            <ChevronRight className="w-3.5 h-3.5 text-[#030704] relative" />
+            <ChevronRight className="w-3.5 h-3.5 text-forest-black relative" />
           </button>
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-[#FAF8F2] focus:outline-none hover:text-[#10B981] transition-colors cursor-pointer"
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        {/* Mobile Menu Toggle & Actions */}
+        <div className="lg:hidden flex items-center space-x-2">
+          <button
+            onClick={toggleTheme}
+            className="p-2 text-warm-ivory hover:text-luxury-gold transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 text-warm-ivory focus:outline-none hover:text-luxury-gold transition-colors cursor-pointer"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer */}
       <div
-        className={`absolute left-0 w-full bg-[#030704]/98 border border-[#10B981]/20 rounded-2xl mt-3 backdrop-blur-2xl lg:hidden transition-all duration-400 ease-in-out origin-top overflow-y-auto max-h-[78vh] ${
+        className={`absolute left-0 w-full bg-forest-black/98 border border-luxury-gold/20 rounded-2xl mt-3 backdrop-blur-2xl lg:hidden transition-all duration-400 ease-in-out origin-top overflow-y-auto max-h-[78vh] ${
           mobileMenuOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-0 pointer-events-none'
         }`}
       >
@@ -139,24 +178,24 @@ export default function Navbar({ onOpenQuote }) {
                 key={item.name}
                 href={getHref(item.href)}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-3 px-4 rounded-xl text-[13px] font-display font-semibold text-[#FAF8F2]/90 hover:text-[#10B981] hover:bg-[#10B981]/5 transition-all duration-200"
+                className="flex items-center justify-between py-3 px-4 rounded-xl text-[13px] font-display font-semibold text-warm-ivory/90 hover:text-luxury-gold hover:bg-luxury-gold/5 transition-all duration-200"
                 style={{ animationDelay: `${i * 40}ms` }}
               >
                 <span>{item.name}</span>
-                <ChevronRight className="w-4 h-4 text-[#10B981]/30" />
+                <ChevronRight className="w-4 h-4 text-luxury-gold/30" />
               </a>
             ))}
           </div>
-          <div className="pt-4 border-t border-white/8">
+          <div className="pt-4 border-t border-warm-ivory/8">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenQuote();
               }}
-              className="w-full py-3.5 text-center rounded-xl bg-gradient-to-r from-[#0E9F6E] to-[#4ade80] text-[#030704] font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 cursor-pointer btn-press"
+              className="w-full py-3.5 text-center rounded-xl bg-gradient-to-r from-[#0E9F6E] to-[#4ade80] text-forest-black font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 cursor-pointer btn-press"
             >
               Request Bulk Quote
-              <ChevronRight className="w-4 h-4 text-[#030704]" />
+              <ChevronRight className="w-4 h-4 text-forest-black" />
             </button>
           </div>
         </div>

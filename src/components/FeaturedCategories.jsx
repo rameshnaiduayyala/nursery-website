@@ -10,7 +10,7 @@ export default function FeaturedCategories() {
   const filters = ['all', 'outdoor', 'indoor', 'commercial'];
 
   return (
-    <section id="categories" className="py-24 md:py-36 bg-[#FAF8F2] text-[#08120B] overflow-hidden">
+    <section id="categories" className="py-24 md:py-36 bg-bg-opposite text-text-opposite overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
         {/* Header */}
@@ -26,15 +26,15 @@ export default function FeaturedCategories() {
           </div>
 
           {/* Filters */}
-          <div className="flex flex-wrap gap-2 bg-[#E8E6DF]/35 p-1.5 rounded-2xl self-start border border-[#E8E6DF]/70">
+          <div className="flex flex-wrap gap-2 bg-forest-black-secondary/40 p-1.5 rounded-2xl self-start border border-forest-black-secondary/80">
             {filters.map((t) => (
               <button
                 key={t}
                 onClick={() => setFilter(t)}
                 className={`px-5 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-250 cursor-pointer ${
                   filter === t
-                    ? 'bg-[#08120B] text-[#FAF8F2] shadow-md'
-                    : 'text-[#08120B]/60 hover:text-[#08120B] hover:bg-[#E8E6DF]/60'
+                    ? 'bg-forest-black text-warm-ivory shadow-md'
+                    : 'text-text-opposite/60 hover:text-text-opposite hover:bg-forest-black-secondary/60'
                 }`}
               >
                 {t}
@@ -54,25 +54,25 @@ export default function FeaturedCategories() {
                 exit={{ opacity: 0, scale: 0.94 }}
                 transition={{ duration: 0.35 }}
                 key={cat.id}
-                className="group relative h-[360px] md:h-[400px] rounded-3xl overflow-hidden shadow-lg border border-[#08120B]/6 cursor-pointer card-lift hover:shadow-[0_20px_60px_rgba(8,18,11,0.15)]"
+                className="group relative h-[360px] md:h-[400px] rounded-3xl overflow-hidden shadow-lg border border-forest-black-secondary/15 cursor-pointer card-lift hover:shadow-[0_20px_60px_rgba(8,18,11,0.15)]"
               >
                 {/* Background Image */}
-                <div className="absolute inset-0 bg-[#08120B] overflow-hidden">
+                <div className="absolute inset-0 bg-forest-black overflow-hidden">
                   <img
                     src={cat.image}
                     alt={cat.name}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 opacity-90 group-hover:opacity-100"
                   />
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#08120B]/95 via-[#08120B]/35 to-transparent z-10" />
+                  {/* Premium dark gradient overlay (remains dark for photo contrast) */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent z-10" />
                 </div>
 
                 {/* Hover inner border */}
                 <div className="absolute inset-0 border border-transparent group-hover:border-[#C6A969]/30 rounded-3xl m-3.5 transition-all duration-500 z-[15] pointer-events-none" />
 
                 {/* Card Content */}
-                <div className="absolute inset-0 z-20 p-6 flex flex-col justify-end text-left text-[#FAF8F2]">
+                <div className="absolute inset-0 z-20 p-6 flex flex-col justify-end text-left text-white">
                   <div className="space-y-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
 
                     {/* Count badge */}
@@ -86,7 +86,7 @@ export default function FeaturedCategories() {
                     </h3>
 
                     {/* Description — appears on hover */}
-                    <p className="text-xs sm:text-sm text-[#E8E6DF]/75 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-sans leading-relaxed">
+                    <p className="text-xs sm:text-sm text-white/75 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-sans leading-relaxed">
                       {cat.description}
                     </p>
 
