@@ -69,7 +69,7 @@ const INITIAL_STATE = {
     email: companyDetails.email,
     gstin: companyDetails.gstin,
     pan: companyDetails.pan,
-    logo: null,
+    logo: companyDetails.logo || null,
     bankName: companyDetails.bankName,
     accountNo: companyDetails.accountNo,
     ifsc: companyDetails.ifsc,

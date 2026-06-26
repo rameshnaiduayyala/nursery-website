@@ -1,11 +1,12 @@
 import landscapeAfter from '../assets/landscape_after.png';
 import nurseryAerial from '../assets/nursery_aerial.png';
+import companyLogo from '../assets/Logo.png';
 
 // 0. Centralized Nursery Branding & Contact Info (For website and billing portal fallback)
 export const companyDetails = {
-  name: "Gangadhara Nursery",
+  name: "GreenLeaf Nursery",
   subtitle: "Nursery & Exports",
-  address: "Nh-5, Venkayammapeta",
+  address: "Venkayammapeta",
   city: "Rajahmundry, Andhra Pradesh 533126",
   phone: "+91 79894 19864",
   phoneAlt: "+91 98765 43210",
@@ -18,6 +19,7 @@ export const companyDetails = {
   branch: "Banjara Hills Branch",
   whatsappNumber: "917989419864",
   billingPassword: "admin123",
+  logo: companyLogo, // Path or URL to the logo image. If empty/null, it falls back to the text logo.
 };
 
 // 1. Hero Slideshow Database

@@ -55,17 +55,27 @@ export default function Navbar({ onOpenQuote }) {
       <div className="px-5 md:px-8 flex items-center justify-between">
         {/* Logo */}
         <a href={isHome ? '#home' : '/'} className="flex items-center space-x-2.5 group flex-shrink-0">
-          <div className="relative flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-tr from-[#C6A969] to-[#B29555] shadow-md shadow-[#C6A969]/20 group-hover:rotate-6 group-hover:shadow-[#C6A969]/40 transition-all duration-300">
-            <Leaf className="w-4 h-4 text-[#08120B]" />
-          </div>
-          <div className="flex flex-col text-left">
-            <span className="font-display font-black text-sm md:text-[15px] tracking-tight text-[#FAF8F2] group-hover:text-[#C6A969] transition-colors duration-300 leading-none">
-              {companyDetails.name.toUpperCase()}
-            </span>
-            <span className="font-sans text-[7px] tracking-[0.28em] text-[#C6A969] font-bold uppercase leading-none mt-[3px]">
-              {companyDetails.subtitle}
-            </span>
-          </div>
+          {companyDetails.logo ? (
+            <img
+              src={companyDetails.logo}
+              alt={companyDetails.name}
+              className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <>
+              <div className="relative flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-tr from-[#C6A969] to-[#B29555] shadow-md shadow-[#C6A969]/20 group-hover:rotate-6 group-hover:shadow-[#C6A969]/40 transition-all duration-300">
+                <Leaf className="w-4 h-4 text-[#08120B]" />
+              </div>
+              <div className="flex flex-col text-left">
+                <span className="font-display font-black text-sm md:text-[15px] tracking-tight text-[#FAF8F2] group-hover:text-[#C6A969] transition-colors duration-300 leading-none">
+                  {companyDetails.name.toUpperCase()}
+                </span>
+                <span className="font-sans text-[7px] tracking-[0.28em] text-[#C6A969] font-bold uppercase leading-none mt-[3px]">
+                  {companyDetails.subtitle}
+                </span>
+              </div>
+            </>
+          )}
         </a>
 
         {/* Desktop Menu — pill pill style */}

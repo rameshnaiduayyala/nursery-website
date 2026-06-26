@@ -23,17 +23,27 @@ export default function Footer({ onOpenQuote }) {
         {/* Brand details */}
         <div className="lg:col-span-4 space-y-6">
           <a href="#home" className="flex items-center space-x-2.5 group w-fit">
-            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-[#C6A969] to-[#B29555] shadow-md shadow-[#C6A969]/15 group-hover:rotate-6 transition-transform duration-300">
-              <Leaf className="w-5 h-5 text-[#08120B]" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-bold text-base tracking-tight text-[#FAF8F2] leading-none group-hover:text-[#C6A969] transition-colors duration-300">
-                {companyDetails.name.toUpperCase()}
-              </span>
-              <span className="font-sans text-[8px] tracking-[0.25em] text-[#C6A969] font-semibold uppercase leading-none mt-1.5">
-                {companyDetails.subtitle}
-              </span>
-            </div>
+            {companyDetails.logo ? (
+              <img
+                src={companyDetails.logo}
+                alt={companyDetails.name}
+                className="h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              />
+            ) : (
+              <>
+                <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-[#C6A969] to-[#B29555] shadow-md shadow-[#C6A969]/15 group-hover:rotate-6 transition-transform duration-300">
+                  <Leaf className="w-5 h-5 text-[#08120B]" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-display font-bold text-base tracking-tight text-[#FAF8F2] leading-none group-hover:text-[#C6A969] transition-colors duration-300">
+                    {companyDetails.name.toUpperCase()}
+                  </span>
+                  <span className="font-sans text-[8px] tracking-[0.25em] text-[#C6A969] font-semibold uppercase leading-none mt-1.5">
+                    {companyDetails.subtitle}
+                  </span>
+                </div>
+              </>
+            )}
           </a>
 
           <p className="text-xs sm:text-sm text-[#E8E6DF]/60 leading-relaxed font-sans max-w-[280px]">
