@@ -110,12 +110,12 @@ export default function Hero({ onOpenQuote }) {
 
         {/* Ambient glows — organic depth */}
         <div className="absolute top-[10%] left-[5%] w-[40vw] h-[40vw] rounded-full bg-[#0E9F6E]/6 blur-[160px] pointer-events-none" />
-        <div className="absolute bottom-[20%] right-[10%] w-[30vw] h-[30vw] rounded-full bg-[#C6A969]/6 blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-[20%] right-[10%] w-[30vw] h-[30vw] rounded-full bg-[#4ade80]/6 blur-[130px] pointer-events-none" />
       </div>
 
       {/* Floating Leaves */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
-        <Leaf className="absolute top-[18%] right-[18%] w-8 h-8 text-[#C6A969] animate-float-slow opacity-20 rotate-12" />
+        <Leaf className="absolute top-[18%] right-[18%] w-8 h-8 text-[#4ade80] animate-float-slow opacity-20 rotate-12" />
         <Leaf className="absolute bottom-[32%] left-[9%] w-10 h-10 text-[#0E9F6E] animate-float-medium opacity-12 -rotate-45" />
       </div>
 
@@ -126,14 +126,14 @@ export default function Hero({ onOpenQuote }) {
         <div className="absolute right-4 md:right-12 bottom-1/3 hidden md:flex flex-col space-y-2.5 z-30">
           <button
             onClick={handlePrev}
-            className="p-3 rounded-full border border-[#FAF8F2]/10 hover:border-[#C6A969]/60 bg-[#08120B]/40 hover:bg-[#C6A969] text-[#FAF8F2] hover:text-[#08120B] hover:scale-105 transition-all duration-300 cursor-pointer backdrop-blur-sm"
+            className="p-3 rounded-full border border-[#FAF8F2]/10 hover:border-[#10B981]/60 bg-[#030704]/40 hover:bg-[#10B981] text-[#FAF8F2] hover:text-[#030704] hover:scale-105 transition-all duration-300 cursor-pointer backdrop-blur-sm"
             aria-label="Previous slide"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={handleNext}
-            className="p-3 rounded-full border border-[#FAF8F2]/10 hover:border-[#C6A969]/60 bg-[#08120B]/40 hover:bg-[#C6A969] text-[#FAF8F2] hover:text-[#08120B] hover:scale-105 transition-all duration-300 cursor-pointer backdrop-blur-sm"
+            className="p-3 rounded-full border border-[#FAF8F2]/10 hover:border-[#10B981]/60 bg-[#030704]/40 hover:bg-[#10B981] text-[#FAF8F2] hover:text-[#030704] hover:scale-105 transition-all duration-300 cursor-pointer backdrop-blur-sm"
             aria-label="Next slide"
           >
             <ChevronRight className="w-4 h-4" />
@@ -266,20 +266,20 @@ export default function Hero({ onOpenQuote }) {
               <div
                 className="relative flex items-center justify-center w-7 h-7 rounded-full text-[10px] font-bold transition-all duration-300"
                 style={{
-                  background: isActive ? 'rgba(198,169,105,0.15)' : 'transparent',
-                  border: isActive ? '1px solid rgba(198,169,105,0.5)' : '1px solid rgba(250,248,242,0.12)',
-                  color: isActive ? '#C6A969' : 'rgba(250,248,242,0.3)',
+                  background: isActive ? 'rgba(16,185,129,0.15)' : 'transparent',
+                  border: isActive ? '1px solid rgba(16,185,129,0.5)' : '1px solid rgba(250,248,242,0.12)',
+                  color: isActive ? '#10B981' : 'rgba(250,248,242,0.3)',
                 }}
               >
                 {String(idx + 1).padStart(2, '0')}
                 {/* Arc progress ring */}
                 {isActive && (
                   <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 28 28">
-                    <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(198,169,105,0.12)" strokeWidth="1.5" />
+                    <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(16,185,129,0.12)" strokeWidth="1.5" />
                     <circle
                       cx="14" cy="14" r="12"
                       fill="none"
-                      stroke="#C6A969"
+                      stroke="#10B981"
                       strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeDasharray={`${2 * Math.PI * 12}`}
@@ -292,7 +292,7 @@ export default function Hero({ onOpenQuote }) {
               {/* Label */}
               <span
                 className="text-[9px] tracking-[0.16em] uppercase font-semibold transition-all duration-300 hidden sm:block"
-                style={{ color: isActive ? '#C6A969' : 'rgba(250,248,242,0.25)' }}
+                style={{ color: isActive ? '#10B981' : 'rgba(250,248,242,0.25)' }}
               >
                 {slide.lines[0].split(' ')[0]}
               </span>
