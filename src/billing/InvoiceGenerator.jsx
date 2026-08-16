@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { companyDetails } from "../data/nurseryData";
+import { useNursery } from "../context/NurseryContext";
 
 const CURRENCY_OPTIONS = [
   { code: "INR", symbol: "₹", label: "Indian Rupee" },
@@ -54,41 +54,43 @@ function computeAmount(row) {
   return discounted + (discounted * tax) / 100;
 }
 
-const INITIAL_STATE = {
-  docType: "INVOICE",
-  invoiceNo: "INV-2026-001",
-  invoiceDate: new Date().toISOString().split("T")[0],
-  dueDate: "",
-  poNumber: "",
-  currency: CURRENCY_OPTIONS[0],
-  company: {
-    name: companyDetails.name,
-    address: companyDetails.address,
-    city: companyDetails.city,
-    phone: companyDetails.phone,
-    email: companyDetails.email,
-    gstin: companyDetails.gstin,
-    pan: companyDetails.pan,
-    logo: companyDetails.logo || null,
-    bankName: companyDetails.bankName,
-    accountNo: companyDetails.accountNo,
-    ifsc: companyDetails.ifsc,
-    branch: companyDetails.branch,
-  },
-  client: { name: "", address: "", city: "", gstin: "", email: "", phone: "" },
-  columns: DEFAULT_COLUMNS,
-  rows: [makeRow(DEFAULT_COLUMNS), makeRow(DEFAULT_COLUMNS)],
-  extraCharges: [],
-  taxOnCharges: false,
-  discount: { type: "percent", value: "" },
-  showSignature: true,
-  termsTitle: "Terms & Conditions",
-  terms: "1. Payment due within 30 days of invoice date.\n2. Goods once sold are non-returnable.\n3. Subject to Hyderabad jurisdiction.",
-  notes: "",
-  showBankDetails: true,
-  showStamp: true,
-  theme: "navy",
-};
+function getInitialState(companyDetails) {
+  return {
+    docType: "INVOICE",
+    invoiceNo: "INV-2026-001",
+    invoiceDate: new Date().toISOString().split("T")[0],
+    dueDate: "",
+    poNumber: "",
+    currency: CURRENCY_OPTIONS[0],
+    company: {
+      name: companyDetails?.name || "",
+      address: companyDetails?.address || "",
+      city: companyDetails?.city || "",
+      phone: companyDetails?.phone || "",
+      email: companyDetails?.email || "",
+      gstin: companyDetails?.gstin || "",
+      pan: companyDetails?.pan || "",
+      logo: companyDetails?.logo || null,
+      bankName: companyDetails?.bankName || "",
+      accountNo: companyDetails?.accountNo || "",
+      ifsc: companyDetails?.ifsc || "",
+      branch: companyDetails?.branch || "",
+    },
+    client: { name: "", address: "", city: "", gstin: "", email: "", phone: "" },
+    columns: DEFAULT_COLUMNS,
+    rows: [makeRow(DEFAULT_COLUMNS), makeRow(DEFAULT_COLUMNS)],
+    extraCharges: [],
+    taxOnCharges: false,
+    discount: { type: "percent", value: "" },
+    showSignature: true,
+    termsTitle: "Terms & Conditions",
+    terms: "1. Payment due within 30 days of invoice date.\n2. Goods once sold are non-returnable.\n3. Subject to Hyderabad jurisdiction.",
+    notes: "",
+    showBankDetails: true,
+    showStamp: true,
+    theme: "navy",
+  };
+}
 
 const THEMES = {
   navy:    { primary: "#1a2e4a", accent: "#2563eb", light: "#eff6ff", border: "#bfdbfe", text: "#1e3a5f" },
@@ -122,10 +124,21 @@ function toWords(amount) {
 }
 
 // ─── MAIN APP ───────────────────────────────────────────────────────────────
+function getInvoicePageTitle(inv) {
+  const parts = [
+    inv.docType || "INVOICE",
+    inv.invoiceNo,
+    inv.client?.name || inv.company?.name,
+  ].filter(Boolean);
+
+  return parts.join(" - ");
+}
+
 export default function InvoiceApp({ onLock }) {
+  const { companyDetails } = useNursery();
   const [inv, setInv] = useState(() => {
-    try { const s = localStorage.getItem("invoice_app_v4"); return s ? JSON.parse(s) : INITIAL_STATE; }
-    catch { return INITIAL_STATE; }
+    try { const s = localStorage.getItem("invoice_app_v4"); return s ? JSON.parse(s) : getInitialState(companyDetails); }
+    catch { return getInitialState(companyDetails); }
   });
   const [view, setView] = useState("edit");
   const [activeTab, setActiveTab] = useState("details");
@@ -139,6 +152,10 @@ export default function InvoiceApp({ onLock }) {
   useEffect(() => {
     try { localStorage.setItem("invoice_app_v4", JSON.stringify(inv)); } catch {}
   }, [inv]);
+
+  useEffect(() => {
+    document.title = getInvoicePageTitle(inv);
+  }, [inv.docType, inv.invoiceNo, inv.client?.name, inv.company?.name]);
 
   const upd = useCallback((patch) => setInv((p) => ({ ...p, ...patch })), []);
   const updCompany = (patch) => setInv((p) => ({ ...p, company: { ...p.company, ...patch } }));
@@ -194,9 +211,13 @@ export default function InvoiceApp({ onLock }) {
     reader.readAsDataURL(file);
   };
 
-  const resetAll = () => { setInv(INITIAL_STATE); showToast("Reset to defaults"); };
-  const newDoc   = () => { setInv({ ...INITIAL_STATE, invoiceNo: `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-4)}`, invoiceDate: new Date().toISOString().split("T")[0] }); showToast("New document created"); };
-  const handlePrint = () => { setView("preview"); setTimeout(() => window.print(), 400); };
+  const resetAll = () => { setInv(getInitialState(companyDetails)); showToast("Reset to defaults"); };
+  const newDoc   = () => { setInv({ ...getInitialState(companyDetails), invoiceNo: `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-4)}`, invoiceDate: new Date().toISOString().split("T")[0] }); showToast("New document created"); };
+  const handlePrint = () => {
+    document.title = getInvoicePageTitle(inv);
+    setView("preview");
+    setTimeout(() => window.print(), 400);
+  };
 
   const tabs = [
     { id: "details",  icon: "📋", label: "Details"  },
@@ -823,7 +844,7 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
       {/* FOOTER */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-2 px-4 sm:px-8 py-3 text-center sm:text-left" style={{ background: theme.primary }}>
         <span className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>Thank you for your business!</span>
-        <span className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>Developed For {companyDetails.name} • {new Date().getFullYear()}</span>
+        <span className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>Developed For {inv.company.name || "Nursery"} • {new Date().getFullYear()}</span>
       </div>
     </div>
   );
