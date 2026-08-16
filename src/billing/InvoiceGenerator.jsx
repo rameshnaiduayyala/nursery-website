@@ -45,6 +45,7 @@ function makeHeadingRow(columns) {
 
 function computeAmount(row) {
   if (row.rowType === "heading") return 0;
+  if (row.amountManual && row.amount !== "") return parseFloat(row.amount) || 0;
   const qty = parseFloat(row.qty) || 0;
   const rate = parseFloat(row.rate) || 0;
   const discount = parseFloat(row.discount) || 0;
@@ -149,7 +150,14 @@ export default function InvoiceApp({ onLock }) {
   const addRow  = () => setInv((p) => ({ ...p, rows: [...p.rows, makeRow(p.columns)] }));
   const addHeadingRow = () => setInv((p) => ({ ...p, rows: [...p.rows, makeHeadingRow(p.columns)] }));
   const delRow  = (id) => setInv((p) => ({ ...p, rows: p.rows.filter((r) => r.id !== id) }));
-  const updRow  = (id, field, val) => setInv((p) => ({ ...p, rows: p.rows.map((r) => r.id === id ? { ...r, [field]: val } : r) }));
+  const updRow  = (id, field, val) => setInv((p) => ({
+    ...p,
+    rows: p.rows.map((r) => (
+      r.id === id
+        ? { ...r, [field]: val, ...(field === "amount" ? { amountManual: val !== "" } : {}) }
+        : r
+    )),
+  }));
   const moveRow = (idx, dir) => setInv((p) => {
     const rows = [...p.rows]; const target = idx + dir;
     if (target < 0 || target >= rows.length) return p;
@@ -459,7 +467,6 @@ export default function InvoiceApp({ onLock }) {
                   <MobileItemsEditor
                     inv={inv}
                     theme={theme}
-                    sym={sym}
                     onUpdRow={updRow}
                     onDelRow={delRow}
                     onMoveRow={moveRow}
@@ -644,6 +651,7 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
               {inv.rows.map((row, idx) => {
                 const isHeading = row.rowType === "heading";
                 const amt = computeAmount(row);
+                const autoAmt = computeAmount({ ...row, amountManual: false, amount: "" });
                 const rowBg = isHeading ? theme.light : idx % 2 === 0 ? "#ffffff" : theme.light;
                 const rowStyle = isHeading
                   ? {
@@ -678,7 +686,16 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
                                   </div>
                               : <span className="block h-5" />)
                           : col.type === "computed"
-                          ? <span className="font-semibold text-sm" style={{ color: theme.primary }}>{f(amt)}</span>
+                          ? editMode
+                            ? <input
+                                type="number"
+                                value={row.amountManual ? row[col.id] || "" : autoAmt.toFixed(2)}
+                                onChange={e => onUpdRow(row.id, col.id, e.target.value)}
+                                placeholder="0.00"
+                                className="w-full min-w-0 bg-transparent border-0 outline-none text-sm text-right font-semibold placeholder-slate-300"
+                                style={{ color: theme.primary, fontFamily: "inherit" }}
+                              />
+                            : <span className="font-semibold text-sm" style={{ color: theme.primary }}>{f(amt)}</span>
                           : editMode
                             ? col.id === "size"
                               ? <>
@@ -889,14 +906,12 @@ function Toggle({ label, checked, onChange, theme }) {
 }
 
 // ─── MOBILE ONLY CARD EDITOR FOR ITEMS ───────────────────────────────────────
-function MobileItemsEditor({ inv, theme, sym, onUpdRow, onDelRow, onMoveRow, onAddRow, onAddHeadingRow }) {
-  const f = (n) => fmt(n, sym);
-
+function MobileItemsEditor({ inv, theme, onUpdRow, onDelRow, onMoveRow, onAddRow, onAddHeadingRow }) {
   return (
     <div className="space-y-4">
       {inv.rows.map((row, idx) => {
         const isHeading = row.rowType === "heading";
-        const amt = computeAmount(row);
+        const autoAmt = computeAmount({ ...row, amountManual: false, amount: "" });
 
         return (
           <div
@@ -1034,11 +1049,16 @@ function MobileItemsEditor({ inv, theme, sym, onUpdRow, onDelRow, onMoveRow, onA
                 </div>
 
                 {/* Card footer: subtotal */}
-                <div className="flex justify-between items-center pt-2 mt-1 border-t border-dashed border-slate-100 text-xs">
-                  <span className="text-slate-400 uppercase tracking-wider font-semibold">Total Amount</span>
-                  <span className="font-bold text-sm" style={{ color: theme.primary }}>
-                    {f(amt)}
-                  </span>
+                <div className="flex items-center gap-3 pt-2 mt-1 border-t border-dashed border-slate-100 text-xs">
+                  <span className="text-slate-400 uppercase tracking-wider font-semibold flex-1">Total Amount</span>
+                  <input
+                    type="number"
+                    value={row.amountManual ? row.amount || "" : autoAmt.toFixed(2)}
+                    onChange={(e) => onUpdRow(row.id, "amount", e.target.value)}
+                    placeholder="0.00"
+                    className="w-28 border border-slate-200 rounded-md px-2.5 py-1.5 text-sm text-right font-bold focus:outline-none focus:border-blue-400 bg-white"
+                    style={{ color: theme.primary }}
+                  />
                 </div>
               </div>
             )}
