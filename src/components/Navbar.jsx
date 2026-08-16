@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Leaf, ChevronRight, Compass, Sun, Moon } from 'lucide-react';
-import { companyDetails } from '../data/nurseryData';
+import { useNursery } from '../context/NurseryContext';
 
 export default function Navbar({ onOpenQuote }) {
+  const { companyDetails } = useNursery();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);

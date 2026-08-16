@@ -1,8 +1,9 @@
 import React from 'react';
 import { Leaf, Phone, Mail, MapPin, Send, MessageSquare } from 'lucide-react';
-import { companyDetails } from '../data/nurseryData';
+import { useNursery } from '../context/NurseryContext';
 
 export default function Footer({ onOpenQuote }) {
+  const { companyDetails } = useNursery();
   const currentYear = new Date().getFullYear();
 
   const handleInquirySubmit = (e) => {
@@ -107,6 +108,9 @@ export default function Footer({ onOpenQuote }) {
               </button>
             </li>
             <li className="pt-2 border-t border-warm-ivory/8 flex flex-col gap-1.5">
+              <a href="/admin" className="hover:text-luxury-gold transition-colors duration-200 text-[11px] font-bold uppercase tracking-wider text-luxury-gold/80">
+                Admin Console
+              </a>
               <a href="/billing" className="hover:text-luxury-gold transition-colors duration-200 text-[11px] font-bold uppercase tracking-wider text-luxury-gold/80">
                 Invoice System
               </a>

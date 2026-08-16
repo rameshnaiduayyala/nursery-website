@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { companyDetails } from "../data/nurseryData";
+import { useNursery } from "../context/NurseryContext";
 import { Lock, Eye, EyeOff, ShieldAlert, ArrowLeft, Leaf } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -22,6 +22,7 @@ function ChevronRight(props) {
 }
 
 export default function BillingPasswordGate({ onSuccess }) {
+  const { companyDetails } = useNursery();
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");

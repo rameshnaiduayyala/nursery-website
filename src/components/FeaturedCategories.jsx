@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { plantCategories } from '../data/nurseryData';
+import { useNursery } from '../context/NurseryContext';
 
 export default function FeaturedCategories() {
+  const { plantCategories } = useNursery();
   const [filter, setFilter] = useState('all');
-  const categories = plantCategories;
+  const categories = plantCategories || [];
   const filteredCategories = filter === 'all' ? categories : categories.filter(c => c.group === filter);
   const filters = ['all', 'outdoor', 'indoor', 'commercial'];
 

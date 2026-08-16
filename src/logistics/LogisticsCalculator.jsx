@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { companyDetails } from "../data/nurseryData";
+import { useNursery } from "../context/NurseryContext";
 import { Truck, Scale, Box, Plus, Trash2, ArrowLeft, RefreshCw, Send, Sparkles } from "lucide-react";
 
 // 1. Truck specifications
@@ -111,6 +111,7 @@ const LOAD_PRESETS = [
 ];
 
 export default function LogisticsCalculator({ onOpenQuote }) {
+  const { companyDetails } = useNursery();
   // State for added cargo items
   const [cargoList, setCargoList] = useState([
     { containerId: "large_bag", qty: 100 },
