@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, MapPin, Calendar, Award, ArrowUpRight } from 'lucide-react';
-import { projectMilestones } from '../data/nurseryData';
+import { useNursery } from '../context/NurseryContext';
 import landscapeBefore from '../assets/landscape_before.png';
 import landscapeAfter from '../assets/landscape_after.png';
 
 export default function ProjectShowcase({ onSelectProject = () => {}, onViewDetails = () => {} }) {
+  const { projectMilestones } = useNursery();
   const [sliderPos, setSliderPos] = useState(50);
   const [activeFilter, setActiveFilter] = useState('All');
   const containerRef = useRef(null);
@@ -21,8 +22,8 @@ export default function ProjectShowcase({ onSelectProject = () => {}, onViewDeta
   const handleMouseMove = (e) => handleSliderMove(e.clientX);
   const handleTouchMove = (e) => { if (e.touches[0]) handleSliderMove(e.touches[0].clientX); };
 
-  const categories = ['All', 'Resorts & Hotels', 'Farmhouses', 'Highways & Infrastructure', 'Corporate Parks'];
-  const projects = projectMilestones;
+  const categories = ['All', ...new Set((projectMilestones || []).map(p => p.category))];
+  const projects = projectMilestones || [];
   const filteredProjects = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
 
   return (

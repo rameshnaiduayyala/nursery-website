@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
-import { testimonialsData } from '../data/nurseryData';
+import { useNursery } from '../context/NurseryContext';
 
 export default function Testimonials() {
-  const reviews = testimonialsData;
+  const { testimonialsData } = useNursery();
+  const reviews = testimonialsData || [];
 
   return (
     <section className="relative py-24 md:py-36 bg-bg-opposite text-text-opposite overflow-hidden">
