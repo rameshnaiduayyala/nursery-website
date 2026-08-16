@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ShoppingBag, Info } from 'lucide-react';
-import { plantsCollection } from '../data/nurseryData';
+import { useNursery } from '../context/NurseryContext';
 
 export default function PlantCatalog({ onSelectPlant, onViewDetails = () => {} }) {
+  const { plantsCollection, plantCategories } = useNursery();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const categories = ['All', 'Avenue Trees', 'Flowering Plants', 'Fruit Plants', 'Palm Trees', 'Indoor Plants'];
+  // Derive categories from categories table
+  const categories = ['All', ...new Set((plantCategories || []).map((c) => c.name))];
 
-  const filteredPlants = plantsCollection.filter((plant) => {
+  const filteredPlants = (plantsCollection || []).filter((plant) => {
     const matchesSearch =
-      plant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      plant.botanical.toLowerCase().includes(searchTerm.toLowerCase());
+      (plant.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (plant.botanical || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = activeCategory === 'All' || plant.category === activeCategory;
     return matchesSearch && matchesCategory;
   });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Leaf, ChevronRight, ChevronLeft } from 'lucide-react';
-import { heroSlides } from '../data/nurseryData';
+import { useNursery } from '../context/NurseryContext';
 
 // Custom CountUp helper for stats
 function CountUp({ end, duration = 2000, suffix = "" }) {
@@ -46,11 +46,12 @@ function CountUp({ end, duration = 2000, suffix = "" }) {
 }
 
 export default function Hero({ onOpenQuote }) {
+  const { heroSlides } = useNursery();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progress, setProgress] = useState(0);
   const timerRef = useRef(null);
   const progressIntervalRef = useRef(null);
-  const slides = heroSlides;
+  const slides = heroSlides || [];
   const SLIDE_DURATION = 6500;
 
   useEffect(() => {

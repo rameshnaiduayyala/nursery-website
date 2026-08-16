@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight, ChevronLeft, Check, Send, Sparkles, MessageSquare } from 'lucide-react';
-import { companyDetails } from '../data/nurseryData';
+import { useNursery } from '../context/NurseryContext';
 
 export default function BulkQuoteModal({ isOpen, onClose, preselectedPlant, preselectedCategory, preselectedProject, preselectedLogistics }) {
+  const { companyDetails } = useNursery();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     role: '',
