@@ -84,6 +84,7 @@ function getInitialState(companyDetails) {
     taxOnCharges: false,
     discount: { type: "percent", value: "" },
     advancePaid: "",
+    advanceLabel: "Less: Advance Paid",
     showSignature: true,
     termsTitle: "Terms & Conditions",
     terms: "1. Payment due within 30 days of invoice date.\n2. Goods once sold are non-returnable.\n3. Subject to Hyderabad jurisdiction.",
@@ -396,6 +397,7 @@ export default function InvoiceApp() {
         columns: inv.columns,
         discount: inv.discount,
         advancePaid: inv.advancePaid,
+        advanceLabel: inv.advanceLabel,
         taxOnCharges: inv.taxOnCharges,
       },
       savedInvoices: savedInvoices,
@@ -792,7 +794,13 @@ export default function InvoiceApp() {
               </Sec>
 
               <Sec title="Advance Payment / Deduction">
-                <div className="space-y-1.5">
+                <div className="space-y-2">
+                  <Field
+                    label="Advance Label / Description"
+                    placeholder="e.g. Less: Advance Paid, Token Advance..."
+                    value={inv.advanceLabel ?? "Less: Advance Paid"}
+                    onChange={v => upd({ advanceLabel: v })}
+                  />
                   <Field
                     label="Advance Paid / Received"
                     type="number"
@@ -855,13 +863,21 @@ export default function InvoiceApp() {
               </Sec>
 
               <Sec title="Advance Payment / Deduction">
-                <Field
-                  label="Advance Paid / Received"
-                  type="number"
-                  placeholder="0.00"
-                  value={inv.advancePaid || ""}
-                  onChange={v => upd({ advancePaid: v })}
-                />
+                <div className="space-y-2">
+                  <Field
+                    label="Advance Label / Description"
+                    placeholder="e.g. Less: Advance Paid, Token Advance..."
+                    value={inv.advanceLabel ?? "Less: Advance Paid"}
+                    onChange={v => upd({ advanceLabel: v })}
+                  />
+                  <Field
+                    label="Advance Paid / Received"
+                    type="number"
+                    placeholder="0.00"
+                    value={inv.advancePaid || ""}
+                    onChange={v => upd({ advancePaid: v })}
+                  />
+                </div>
               </Sec>
 
               <Sec title="Invoice Options">
@@ -1143,7 +1159,7 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
               <>
                 <div className="h-px my-1.5" style={{ background: theme.border }} />
                 <TotalRow label="Total Amount" value={f(grandTotal)} />
-                <TotalRow label="Less: Advance Paid" value={`− ${f(advanceAmt)}`} red />
+                <TotalRow label={inv.advanceLabel || "Less: Advance Paid"} value={`− ${f(advanceAmt)}`} red />
                 <div className="h-px my-2" style={{ background: theme.border }} />
                 <div className="flex justify-between items-center rounded-xl px-4 py-3 text-white"
                   style={{ background: theme.primary }}>
