@@ -83,6 +83,7 @@ function getInitialState(companyDetails) {
     extraCharges: [],
     taxOnCharges: false,
     discount: { type: "percent", value: "" },
+    advancePaid: "",
     showSignature: true,
     termsTitle: "Terms & Conditions",
     terms: "1. Payment due within 30 days of invoice date.\n2. Goods once sold are non-returnable.\n3. Subject to Hyderabad jurisdiction.",
@@ -135,11 +136,35 @@ function getInvoicePageTitle(inv) {
   return parts.join(" - ");
 }
 
-export default function InvoiceApp({ onLock }) {
+function getInvoiceSaveTitle(inv) {
+  return [
+    inv.invoiceNo || "Untitled",
+    inv.client?.name,
+    inv.docType,
+  ].filter(Boolean).join(" - ");
+}
+
+function safeFileName(value) {
+  return (value || "invoice")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80) || "invoice";
+}
+
+export default function InvoiceApp() {
   const { companyDetails } = useNursery();
   const [inv, setInv] = useState(() => {
-    try { const s = localStorage.getItem("invoice_app_v4"); return s ? JSON.parse(s) : getInitialState(companyDetails); }
-    catch { return getInitialState(companyDetails); }
+    try {
+      const stored = sessionStorage.getItem('nursery-billing-current');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed && Array.isArray(parsed.rows) && Array.isArray(parsed.columns)) {
+          return parsed;
+        }
+      }
+    } catch {}
+    return getInitialState(companyDetails);
   });
   const [view, setView] = useState("edit");
   const [activeTab, setActiveTab] = useState("details");
@@ -147,12 +172,30 @@ export default function InvoiceApp({ onLock }) {
   const [newColLabel, setNewColLabel] = useState("New Column");
   const [newColType, setNewColType] = useState("text");
   const [toast, setToast] = useState(null);
+  const [savedInvoices, setSavedInvoices] = useState(() => {
+    try {
+      const stored = sessionStorage.getItem('nursery-billing-saved');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch {}
+    return [];
+  });
 
   const theme = THEMES[inv.theme] || THEMES.navy;
 
   useEffect(() => {
-    try { localStorage.setItem("invoice_app_v4", JSON.stringify(inv)); } catch {}
+    try {
+      sessionStorage.setItem('nursery-billing-current', JSON.stringify(inv));
+    } catch {}
   }, [inv]);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('nursery-billing-saved', JSON.stringify(savedInvoices));
+    } catch {}
+  }, [savedInvoices]);
 
   useEffect(() => {
     document.title = getInvoicePageTitle(inv);
@@ -210,6 +253,8 @@ export default function InvoiceApp({ onLock }) {
     ? (subtotal * (parseFloat(inv.discount.value) || 0)) / 100
     : parseFloat(inv.discount.value) || 0;
   const grandTotal  = subtotal - discountAmt + extraTotal;
+  const advanceAmt  = parseFloat(inv.advancePaid) || 0;
+  const balanceDue  = Math.max(0, grandTotal - advanceAmt);
   const sym         = inv.currency.symbol;
 
   const handleLogo = (e) => {
@@ -219,8 +264,220 @@ export default function InvoiceApp({ onLock }) {
     reader.readAsDataURL(file);
   };
 
-  const resetAll = () => { setInv(getInitialState(companyDetails)); showToast("Reset to defaults"); };
-  const newDoc   = () => { setInv({ ...getInitialState(companyDetails), invoiceNo: `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-4)}`, invoiceDate: new Date().toISOString().split("T")[0] }); showToast("New document created"); };
+  const saveInvoice = () => {
+    const now = new Date().toISOString();
+    const savedId = inv.savedId || `invoice_${Date.now()}`;
+    const invoiceData = { ...inv, savedId, savedAt: now };
+    const savedItem = {
+      id: savedId,
+      title: getInvoiceSaveTitle(invoiceData),
+      invoiceNo: invoiceData.invoiceNo || "",
+      clientName: invoiceData.client?.name || "",
+      docType: invoiceData.docType || "INVOICE",
+      updatedAt: now,
+      data: invoiceData,
+    };
+
+    setSavedInvoices((prev) => [savedItem, ...prev.filter((item) => item.id !== savedId)]);
+    setInv(invoiceData);
+    showToast("Invoice saved");
+  };
+
+  const saveInvoiceFile = () => {
+    const now = new Date().toISOString();
+    const savedId = inv.savedId || `invoice_${Date.now()}`;
+    const invoiceData = { ...inv, savedId, savedAt: now };
+    const payload = {
+      type: "nursery-billing-invoice",
+      version: 1,
+      savedAt: now,
+      data: invoiceData,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const title = safeFileName(getInvoiceSaveTitle(invoiceData));
+
+    link.href = url;
+    link.download = `${title}.nursery-invoice.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+
+    setInv(invoiceData);
+    showToast("Invoice file saved");
+  };
+
+  const loadInvoiceFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const parsed = JSON.parse(ev.target.result);
+        const invoiceData = parsed?.data || parsed;
+        if (!invoiceData || !Array.isArray(invoiceData.rows) || !Array.isArray(invoiceData.columns)) {
+          showToast("Invalid invoice file");
+          return;
+        }
+
+        const now = new Date().toISOString();
+        const loadedInvoice = {
+          ...invoiceData,
+          savedId: invoiceData.savedId || `invoice_${Date.now()}`,
+          savedAt: invoiceData.savedAt || now,
+        };
+        setInv(loadedInvoice);
+        setView("edit");
+        setActiveTab("details");
+        showToast("Invoice file loaded");
+      } catch {
+        showToast("Could not load file");
+      } finally {
+        e.target.value = "";
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const loadInvoice = (id) => {
+    const saved = savedInvoices.find((item) => item.id === id);
+    if (!saved) return;
+    setInv(saved.data);
+    setView("edit");
+    setActiveTab("details");
+    showToast("Invoice loaded");
+  };
+
+  const deleteSavedInvoice = () => {
+    if (!inv.savedId) {
+      showToast("No saved invoice selected");
+      return;
+    }
+    setSavedInvoices((prev) => prev.filter((item) => item.id !== inv.savedId));
+    setInv((p) => {
+      const next = { ...p };
+      delete next.savedId;
+      delete next.savedAt;
+      return next;
+    });
+    showToast("Saved invoice removed");
+  };
+
+  const exportAllData = () => {
+    const now = new Date().toISOString();
+    const payload = {
+      type: "nursery-billing-all-data",
+      version: 1,
+      exportedAt: now,
+      companySettings: {
+        name: inv.company.name,
+        address: inv.company.address,
+        city: inv.company.city,
+        phone: inv.company.phone,
+        email: inv.company.email,
+        gstin: inv.company.gstin,
+        pan: inv.company.pan,
+        logo: inv.company.logo,
+        bankName: inv.company.bankName,
+        accountNo: inv.company.accountNo,
+        ifsc: inv.company.ifsc,
+        branch: inv.company.branch,
+        showBankDetails: inv.showBankDetails,
+        showStamp: inv.showStamp,
+        showSignature: inv.showSignature,
+        termsTitle: inv.termsTitle,
+        terms: inv.terms,
+        notes: inv.notes,
+        theme: inv.theme,
+        currency: inv.currency,
+        columns: inv.columns,
+        discount: inv.discount,
+        advancePaid: inv.advancePaid,
+        taxOnCharges: inv.taxOnCharges,
+      },
+      savedInvoices: savedInvoices,
+      currentInvoice: inv,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `nursery-billing-backup-${new Date().toISOString().split("T")[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    showToast("All data exported");
+  };
+
+  const importAllData = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const parsed = JSON.parse(ev.target.result);
+        if (parsed?.type !== "nursery-billing-all-data" && parsed?.type !== "nursery-billing-invoice") {
+          showToast("Invalid backup file");
+          return;
+        }
+        const data = parsed.data || parsed;
+        const now = new Date().toISOString();
+        if (parsed.type === "nursery-billing-all-data" || parsed.type === "nursery-billing-invoice") {
+          if (Array.isArray(data.savedInvoices)) {
+            setSavedInvoices(data.savedInvoices);
+          }
+          if (data.currentInvoice && Array.isArray(data.currentInvoice.rows)) {
+            const restored = {
+              ...data.currentInvoice,
+              savedId: data.currentInvoice.savedId || `invoice_${Date.now()}`,
+              savedAt: data.currentInvoice.savedAt || now,
+            };
+            setInv(restored);
+          } else if (data.rows && Array.isArray(data.rows)) {
+            const restored = {
+              ...data,
+              savedId: data.savedId || `invoice_${Date.now()}`,
+              savedAt: data.savedAt || now,
+            };
+            setInv(restored);
+          }
+          if (data.companySettings) {
+            setInv((p) => ({
+              ...p,
+              company: { ...p.company, ...data.companySettings },
+              showBankDetails: data.companySettings.showBankDetails ?? p.showBankDetails,
+              showStamp: data.companySettings.showStamp ?? p.showStamp,
+              showSignature: data.companySettings.showSignature ?? p.showSignature,
+              termsTitle: data.companySettings.termsTitle ?? p.termsTitle,
+              terms: data.companySettings.terms ?? p.terms,
+              notes: data.companySettings.notes ?? p.notes,
+              theme: data.companySettings.theme ?? p.theme,
+              currency: data.companySettings.currency ?? p.currency,
+              columns: data.companySettings.columns ?? p.columns,
+              discount: data.companySettings.discount ?? p.discount,
+              advancePaid: data.companySettings.advancePaid ?? p.advancePaid,
+              taxOnCharges: data.companySettings.taxOnCharges ?? p.taxOnCharges,
+            }));
+          }
+          setView("edit");
+          setActiveTab("details");
+          showToast("All data restored");
+        }
+      } catch {
+        showToast("Could not load backup file");
+      } finally {
+        e.target.value = "";
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const resetAll = () => { setInv(getInitialState(inv.company)); showToast("Reset to defaults"); };
+  const newDoc   = () => { setInv({ ...getInitialState(inv.company), invoiceNo: `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-4)}`, invoiceDate: new Date().toISOString().split("T")[0] }); showToast("New document created"); };
   const handlePrint = () => {
     document.title = getInvoicePageTitle(inv);
     setView("preview");
@@ -275,8 +532,18 @@ export default function InvoiceApp({ onLock }) {
 
       {/* Print-only invoice */}
       <div className="print-only">
-        <InvoiceDocument inv={inv} theme={theme} sym={sym} subtotal={subtotal}
-          extraTotal={extraTotal} discountAmt={discountAmt} grandTotal={grandTotal} editMode={false} />
+        <InvoiceDocument
+          inv={inv}
+          theme={theme}
+          sym={sym}
+          subtotal={subtotal}
+          extraTotal={extraTotal}
+          discountAmt={discountAmt}
+          grandTotal={grandTotal}
+          advanceAmt={advanceAmt}
+          balanceDue={balanceDue}
+          editMode={false}
+        />
       </div>
 
       {/* Toast */}
@@ -308,7 +575,57 @@ export default function InvoiceApp({ onLock }) {
           {Object.keys(THEMES).map(t => <option key={t} value={t} className="text-black bg-white">{t.charAt(0).toUpperCase()+t.slice(1)}</option>)}
         </select>
 
+        <select value={inv.savedId || ""} onChange={(e) => loadInvoice(e.target.value)}
+          className="flex-shrink-0 max-w-[130px] sm:max-w-[220px] text-[11px] sm:text-sm font-semibold rounded-md px-1.5 py-1 cursor-pointer focus:outline-none bg-white/20 text-white border border-white/30"
+          style={{ color: "#fff" }}>
+          <option value="" className="text-black bg-white">Load saved</option>
+          {savedInvoices.map((item) => (
+            <option key={item.id} value={item.id} className="text-black bg-white">
+              {item.title}
+            </option>
+          ))}
+        </select>
+
         <div className="flex gap-1 flex-shrink-0">
+          <button onClick={saveInvoice}
+            className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm font-semibold text-white cursor-pointer border-0 flex items-center gap-1"
+            style={{ background: theme.accent }}>
+            <span>Save</span>
+          </button>
+          <button onClick={exportAllData}
+            className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm font-semibold text-white cursor-pointer border-0 flex items-center gap-1"
+            style={{ background: theme.accent }}>
+            <span className="hidden sm:inline">Export All</span>
+            <span className="sm:hidden">Export</span>
+          </button>
+          <label
+            className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm text-white cursor-pointer"
+            style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>
+            <span className="hidden sm:inline">Import All</span>
+            <span className="sm:hidden">Import</span>
+            <input type="file" accept=".json,application/json" onChange={importAllData} className="hidden" />
+          </label>
+          <button onClick={saveInvoiceFile}
+            className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm font-semibold text-white cursor-pointer border-0 flex items-center gap-1"
+            style={{ background: theme.accent }}>
+            <span className="hidden sm:inline">Save File</span>
+            <span className="sm:hidden">File</span>
+          </button>
+          <label
+            className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm text-white cursor-pointer"
+            style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>
+            <span className="hidden sm:inline">Load File</span>
+            <span className="sm:hidden">Load</span>
+            <input type="file" accept=".json,.nursery-invoice.json,application/json" onChange={loadInvoiceFile} className="hidden" />
+          </label>
+          {inv.savedId && (
+            <button onClick={deleteSavedInvoice}
+              className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm text-white cursor-pointer"
+              style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>
+              <span className="hidden sm:inline">Delete</span>
+              <span className="sm:hidden">Del</span>
+            </button>
+          )}
           <button onClick={handlePrint}
             className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm font-semibold text-white cursor-pointer border-0 flex items-center gap-1"
             style={{ background: theme.accent }}>
@@ -327,14 +644,6 @@ export default function InvoiceApp({ onLock }) {
             <span className="hidden sm:inline">↺ Reset</span>
             <span className="sm:hidden">↺</span>
           </button>
-          {onLock && (
-            <button onClick={onLock}
-              className="px-2 sm:px-3 py-1 rounded-md text-[11px] sm:text-sm text-white cursor-pointer hover:bg-white/10 transition-colors"
-              style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.4)" }}>
-              <span className="hidden sm:inline">🔒 Lock</span>
-              <span className="sm:hidden">🔒</span>
-            </button>
-          )}
         </div>
       </div>
 
@@ -482,6 +791,24 @@ export default function InvoiceApp({ onLock }) {
                 </div>
               </Sec>
 
+              <Sec title="Advance Payment / Deduction">
+                <div className="space-y-1.5">
+                  <Field
+                    label="Advance Paid / Received"
+                    type="number"
+                    placeholder="0.00"
+                    value={inv.advancePaid || ""}
+                    onChange={v => upd({ advancePaid: v })}
+                  />
+                  {advanceAmt > 0 && (
+                    <div className="flex justify-between items-center px-2.5 py-1.5 rounded text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      <span>Balance Due:</span>
+                      <span className="font-bold">{fmt(balanceDue, sym)}</span>
+                    </div>
+                  )}
+                </div>
+              </Sec>
+
               {/* Mobile-only item card list (to add/edit plants natively on mobile viewport) */}
               <div className="block lg:hidden mt-4 pt-4 border-t border-slate-200">
                 <Sec title="Invoice Items / Plants">
@@ -527,6 +854,16 @@ export default function InvoiceApp({ onLock }) {
                 )}
               </Sec>
 
+              <Sec title="Advance Payment / Deduction">
+                <Field
+                  label="Advance Paid / Received"
+                  type="number"
+                  placeholder="0.00"
+                  value={inv.advancePaid || ""}
+                  onChange={v => upd({ advancePaid: v })}
+                />
+              </Sec>
+
               <Sec title="Invoice Options">
                 <Toggle label="Show Signature Block" checked={inv.showSignature}  onChange={v => upd({ showSignature: v })}  theme={theme} />
                 <Toggle label="Show Stamp"           checked={inv.showStamp}      onChange={v => upd({ showStamp: v })}      theme={theme} />
@@ -558,6 +895,7 @@ export default function InvoiceApp({ onLock }) {
             <InvoiceDocument
               inv={inv} theme={theme} sym={sym}
               subtotal={subtotal} extraTotal={extraTotal} discountAmt={discountAmt} grandTotal={grandTotal}
+              advanceAmt={advanceAmt} balanceDue={balanceDue}
               editMode={view === "edit"}
               onUpdRow={updRow} onDelRow={delRow} onMoveRow={moveRow} onAddRow={addRow} onAddHeadingRow={addHeadingRow}
             />
@@ -598,7 +936,7 @@ export default function InvoiceApp({ onLock }) {
 }
 
 // ─── INVOICE DOCUMENT ────────────────────────────────────────────────────────
-function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, grandTotal, editMode, onUpdRow, onDelRow, onMoveRow, onAddRow, onAddHeadingRow }) {
+function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, grandTotal, advanceAmt = 0, balanceDue = grandTotal, editMode, onUpdRow, onDelRow, onMoveRow, onAddRow, onAddHeadingRow }) {
   const f = (n) => fmt(n, sym);
 
   return (
@@ -613,9 +951,19 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
           }
           {inv.company.logo && <div className="text-sm sm:text-base font-bold mb-1">{inv.company.name}</div>}
           <div className="text-[11px] sm:text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.8)" }}>
-            <div>{inv.company.address}</div>
-            <div>{inv.company.city}</div>
-            <div>{inv.company.phone} | {inv.company.email}</div>
+            {inv.company.address && <div>{inv.company.address}</div>}
+            {inv.company.city    && <div>{inv.company.city}</div>}
+            <div>
+              {(() => {
+                const rawP = inv.company.phone ? inv.company.phone.trim() : "";
+                const p = rawP.endsWith("|") ? rawP.slice(0, -1).trim() : rawP;
+                const e = inv.company.email ? inv.company.email.trim() : "";
+                if (p && e) return `${p} | ${e}`;
+                if (p) return p;
+                if (e) return e;
+                return null;
+              })()}
+            </div>
             {inv.company.gstin && <div>GSTIN: {inv.company.gstin} | PAN: {inv.company.pan}</div>}
           </div>
         </div>
@@ -642,14 +990,10 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
             {inv.client.address && <div>{inv.client.address}</div>}
             {inv.client.city    && <div>{inv.client.city}</div>}
             {inv.client.gstin   && <div>GSTIN: {inv.client.gstin}</div>}
-            {inv.client.phone   && <div>{inv.client.phone}</div>}
+            {inv.client.phone   && <div>{inv.client.phone.trim().endsWith("|") ? inv.client.phone.trim().slice(0, -1).trim() : inv.client.phone.trim()}</div>}
             {inv.client.email   && <div>{inv.client.email}</div>}
           </div>
         </div>
-        {/* <div className="text-white rounded-xl px-6 py-3 text-right flex-shrink-0 ml-4" style={{ background: theme.primary }}>
-          <div className="text-[11px] opacity-75 mb-0.5">Grand Total</div>
-          <div className="text-2xl font-extrabold">{f(grandTotal)}</div>
-        </div> */}
       </div>
 
       {/* ITEMS TABLE */}
@@ -794,16 +1138,37 @@ function InvoiceDocument({ inv, theme, sym, subtotal, extraTotal, discountAmt, g
             {inv.extraCharges.map(c => (
               <TotalRow key={c.id} label={c.label || "Extra Charge"} value={f(parseFloat(c.amount)||0)} />
             ))}
-            <div className="h-px my-2" style={{ background: theme.border }} />
-            <div className="flex justify-between items-center rounded-xl px-4 py-3 text-white"
-              style={{ background: theme.primary }}>
-              <span className="font-bold text-sm">GRAND TOTAL</span>
-              <span className="font-extrabold text-xl">{f(grandTotal)}</span>
-            </div>
-            <div className="mt-2 px-3 py-2 rounded-lg border text-xs" style={{ background: theme.light, borderColor: theme.border }}>
-              <div className="text-slate-400 mb-0.5 text-[10px] uppercase tracking-wide">Amount in Words</div>
-              <div className="font-semibold italic leading-snug" style={{ color: theme.primary }}>{toWords(grandTotal)}</div>
-            </div>
+            
+            {advanceAmt > 0 ? (
+              <>
+                <div className="h-px my-1.5" style={{ background: theme.border }} />
+                <TotalRow label="Total Amount" value={f(grandTotal)} />
+                <TotalRow label="Less: Advance Paid" value={`− ${f(advanceAmt)}`} red />
+                <div className="h-px my-2" style={{ background: theme.border }} />
+                <div className="flex justify-between items-center rounded-xl px-4 py-3 text-white"
+                  style={{ background: theme.primary }}>
+                  <span className="font-bold text-sm">BALANCE DUE</span>
+                  <span className="font-extrabold text-xl">{f(balanceDue)}</span>
+                </div>
+                <div className="mt-2 px-3 py-2 rounded-lg border text-xs" style={{ background: theme.light, borderColor: theme.border }}>
+                  <div className="text-slate-400 mb-0.5 text-[10px] uppercase tracking-wide">Balance Due in Words</div>
+                  <div className="font-semibold italic leading-snug" style={{ color: theme.primary }}>{toWords(balanceDue)}</div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="h-px my-2" style={{ background: theme.border }} />
+                <div className="flex justify-between items-center rounded-xl px-4 py-3 text-white"
+                  style={{ background: theme.primary }}>
+                  <span className="font-bold text-sm">GRAND TOTAL</span>
+                  <span className="font-extrabold text-xl">{f(grandTotal)}</span>
+                </div>
+                <div className="mt-2 px-3 py-2 rounded-lg border text-xs" style={{ background: theme.light, borderColor: theme.border }}>
+                  <div className="text-slate-400 mb-0.5 text-[10px] uppercase tracking-wide">Amount in Words</div>
+                  <div className="font-semibold italic leading-snug" style={{ color: theme.primary }}>{toWords(grandTotal)}</div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -900,12 +1265,17 @@ function SideLabel({ children }) {
   return <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1">{children}</label>;
 }
 
-function Field({ label, type = "text", value, onChange }) {
+function Field({ label, type = "text", placeholder, value, onChange }) {
   return (
     <div>
       <SideLabel>{label}</SideLabel>
-      <input type={type} value={value} onChange={e => onChange(e.target.value)}
-        className="w-full border border-slate-200 rounded-md px-2 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white" />
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        className="w-full border border-slate-200 rounded-md px-2 py-1.5 text-sm text-slate-800 focus:outline-none focus:border-blue-400 bg-white"
+      />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Leaf, ChevronRight, Compass, Sun, Moon } from 'lucide-react';
+import { Menu, X, Leaf, ChevronRight, Compass } from 'lucide-react';
 import { useNursery } from '../context/NurseryContext';
 
 export default function Navbar({ onOpenQuote }) {
@@ -7,26 +7,6 @@ export default function Navbar({ onOpenQuote }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') || 'dark';
-    }
-    return 'dark';
-  });
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (theme === 'light') {
-      root.classList.add('light');
-    } else {
-      root.classList.remove('light');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
-  };
 
   useEffect(() => {
     const handleScroll = () => {

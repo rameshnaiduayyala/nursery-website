@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Database, FileText, Lock, RefreshCw, Settings, Tag } from 'lucide-react';
+import { ArrowLeft, Database, FileText, RefreshCw, Settings, Tag } from 'lucide-react';
 import { useNursery } from '../context/NurseryContext';
 
-export default function AdminDashboard({ onLock }) {
+export default function AdminDashboard() {
   const {
     companyDetails,
     plantCategories,
@@ -64,13 +64,6 @@ export default function AdminDashboard({ onLock }) {
               <ArrowLeft className="w-4 h-4" />
               Site
             </a>
-            <button
-              onClick={onLock}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-luxury-gold text-forest-black text-xs font-bold uppercase tracking-wider"
-            >
-              <Lock className="w-4 h-4" />
-              Lock
-            </button>
           </div>
         </div>
       </header>
