@@ -107,15 +107,6 @@ export default function Navbar({ onOpenQuote }) {
         {/* CTA Button — desktop */}
         <div className="hidden lg:flex items-center space-x-3 flex-shrink-0">
           <button
-            onClick={toggleTheme}
-            className="p-2.5 rounded-xl bg-warm-ivory/[0.04] hover:bg-warm-ivory/[0.08] text-warm-ivory border border-warm-ivory/[0.08] hover:border-luxury-gold/30 hover:text-luxury-gold hover:scale-105 transition-all duration-350 cursor-pointer"
-            aria-label="Toggle theme"
-            title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          >
-            {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
-          </button>
-
-          <button
             onClick={onOpenQuote}
             className="relative px-5 py-2.5 rounded-full overflow-hidden text-[9.5px] uppercase tracking-wider font-extrabold text-forest-black bg-gradient-to-r from-[#0E9F6E] to-[#4ade80] hover:shadow-[0_8px_24px_rgba(74,222,128,0.3)] hover:scale-[1.04] transition-all duration-300 flex items-center gap-1.5 cursor-pointer btn-press"
           >
@@ -128,14 +119,6 @@ export default function Navbar({ onOpenQuote }) {
 
         {/* Mobile Menu Toggle & Actions */}
         <div className="lg:hidden flex items-center space-x-2">
-          <button
-            onClick={toggleTheme}
-            className="p-2 text-warm-ivory hover:text-luxury-gold transition-colors cursor-pointer"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
-
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 text-warm-ivory focus:outline-none hover:text-luxury-gold transition-colors cursor-pointer"
